@@ -1,0 +1,7 @@
+node_modules/
+dist/
+*.log
+.env
+.embedding-cache.json
+.embedding-cache.json.tmp
+.embedding-cache.json.corrupt

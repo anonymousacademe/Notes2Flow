@@ -1,0 +1,523 @@
+{
+  "graph_id": "366a726e-9b35-4137-ad07-1675c74756c3",
+  "map_type": "plan",
+  "nodes": [
+    {
+      "id": "n1",
+      "label": "Maple Street stormwater flooding worsening",
+      "kind": "claim",
+      "provenance": [
+        {
+          "source_range": "Problem section",
+          "quote": "Stormwater flooding in the Maple Street neighborhood has gotten worse over the last five years."
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n2",
+      "label": "October storms flooded 400 block basements",
+      "kind": "claim",
+      "provenance": [
+        {
+          "source_range": "Problem section",
+          "quote": "Three of the last four October storms produced street flooding that damaged basements on the 400 block."
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n3",
+      "label": "1958 storm drains undersized for current rainfall",
+      "kind": "claim",
+      "provenance": [
+        {
+          "source_range": "Problem section",
+          "quote": "The city's storm drains were built in 1958 and are undersized for current rainfall intensity."
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n4",
+      "label": "Pilot budget of $250,000 from resilience fund",
+      "kind": "prereq",
+      "provenance": [
+        {
+          "source_range": "Constraints section, bullet 1",
+          "quote": "The budget for the pilot is $250,000 from the resilience fund."
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n5",
+      "label": "Maintainability by current public works crew",
+      "kind": "assumption",
+      "provenance": [
+        {
+          "source_range": "Constraints section, bullet 2",
+          "quote": "Any solution must be maintainable by the current public works crew."
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n6",
+      "label": "School route kept open during academic year",
+      "kind": "assumption",
+      "provenance": [
+        {
+          "source_range": "Constraints section, bullet 3",
+          "quote": "Work cannot block the school route during the academic year."
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n7",
+      "label": "Green infrastructure option",
+      "kind": "option",
+      "provenance": [
+        {
+          "source_range": "Options section, item 1",
+          "quote": "**Green infrastructure**: permeable pavement on the 400 block plus two bioswales."
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n8",
+      "label": "Permeable pavement on the 400 block",
+      "kind": "option",
+      "provenance": [
+        {
+          "source_range": "Options section, item 1",
+          "quote": "permeable pavement on the 400 block plus two bioswales"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n9",
+      "label": "Two bioswales",
+      "kind": "option",
+      "provenance": [
+        {
+          "source_range": "Options section, item 1",
+          "quote": "permeable pavement on the 400 block plus two bioswales"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n10",
+      "label": "2024 pilot reduced peak runoff 30%",
+      "kind": "claim",
+      "provenance": [
+        {
+          "source_range": "Options section, item 1",
+          "quote": "The city's 2024 green infrastructure pilot reduced peak runoff by 30% on a comparable street, which supports this option."
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n11",
+      "label": "Pipe upsizing with larger culverts",
+      "kind": "option",
+      "provenance": [
+        {
+          "source_range": "Options section, item 2",
+          "quote": "**Pipe upsizing**: replace the 1958 drains under Maple Street with larger culverts."
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n12",
+      "label": "Lane closure permit",
+      "kind": "prereq",
+      "provenance": [
+        {
+          "source_range": "Options section, item 2",
+          "quote": "This requires a lane closure permit and heavy equipment the crew does not own."
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n13",
+      "label": "Heavy equipment the crew does not own",
+      "kind": "prereq",
+      "provenance": [
+        {
+          "source_range": "Options section, item 2",
+          "quote": "This requires a lane closure permit and heavy equipment the crew does not own."
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n14",
+      "label": "Choose green infrastructure option",
+      "kind": "decision",
+      "provenance": [
+        {
+          "source_range": "Decision section",
+          "quote": "We propose the green infrastructure option because it fits the budget and requires no new equipment."
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n15",
+      "label": "Green infrastructure fits the pilot budget",
+      "kind": "claim",
+      "provenance": [
+        {
+          "source_range": "Decision section",
+          "quote": "We propose the green infrastructure option because it fits the budget"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n16",
+      "label": "Green infrastructure requires no new equipment",
+      "kind": "claim",
+      "provenance": [
+        {
+          "source_range": "Decision section",
+          "quote": "because it fits the budget and requires no new equipment"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n17",
+      "label": "Compaction-tested subgrade for permeable pavement",
+      "kind": "prereq",
+      "provenance": [
+        {
+          "source_range": "Decision section",
+          "quote": "The permeable pavement requires a compaction-tested subgrade"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n18",
+      "label": "City landscaping sign-off for bioswales",
+      "kind": "prereq",
+      "provenance": [
+        {
+          "source_range": "Decision section",
+          "quote": "the bioswales require city landscaping sign-off before construction"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n19",
+      "label": "Culvert replacement estimates exceed $600,000",
+      "kind": "claim",
+      "provenance": [
+        {
+          "source_range": "Decision section",
+          "quote": "The pipe upsizing option contradicts the budget constraint: engineering estimates for culvert replacement exceed $600,000."
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n20",
+      "label": "Resilience fund eligibility for permeable pavement",
+      "kind": "question",
+      "provenance": [
+        {
+          "source_range": "Open questions section, bullet 1",
+          "quote": "Does the resilience fund allow spending on permeable pavement surfaces?"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n21",
+      "label": "Alley right-of-way ownership on 400 block",
+      "kind": "question",
+      "provenance": [
+        {
+          "source_range": "Open questions section, bullet 2",
+          "quote": "Who owns the alley right-of-way on the 400 block?"
+        }
+      ],
+      "provenance_status": "verified"
+    }
+  ],
+  "edges": [
+    {
+      "from": "n2",
+      "to": "n1",
+      "relation": "supports",
+      "grounding": "implied",
+      "label": "October storm damage evidences worsening flooding",
+      "quote": "Three of the last four October storms produced street flooding that damaged basements on the 400 block.",
+      "source_range": "Problem section",
+      "status": "verified"
+    },
+    {
+      "from": "n3",
+      "to": "n1",
+      "relation": "causes",
+      "grounding": "implied",
+      "label": "Undersized drains drive the flooding",
+      "quote": "The city's storm drains were built in 1958 and are undersized for current rainfall intensity.",
+      "source_range": "Problem section",
+      "status": "verified"
+    },
+    {
+      "from": "n1",
+      "to": "n14",
+      "relation": "causes",
+      "grounding": "implied",
+      "label": "Flooding drives the solution decision",
+      "quote": "Stormwater flooding in the Maple Street neighborhood has gotten worse over the last five years.",
+      "source_range": "Problem section",
+      "status": "verified"
+    },
+    {
+      "from": "n3",
+      "to": "n11",
+      "relation": "causes",
+      "grounding": "implied",
+      "label": "Undersized 1958 drains motivate pipe upsizing",
+      "quote": "replace the 1958 drains under Maple Street with larger culverts",
+      "source_range": "Options section, item 2",
+      "status": "verified"
+    },
+    {
+      "from": "n7",
+      "to": "n14",
+      "relation": "part_of",
+      "grounding": "implied",
+      "label": "Green infrastructure is one alternative in the decision",
+      "quote": "We propose the green infrastructure option because it fits the budget",
+      "source_range": "Decision section",
+      "status": "verified"
+    },
+    {
+      "from": "n11",
+      "to": "n14",
+      "relation": "part_of",
+      "grounding": "implied",
+      "label": "Pipe upsizing is one alternative in the decision",
+      "quote": "The pipe upsizing option contradicts the budget constraint",
+      "source_range": "Decision section",
+      "status": "verified"
+    },
+    {
+      "from": "n8",
+      "to": "n7",
+      "relation": "part_of",
+      "grounding": "implied",
+      "label": "Permeable pavement is a component of green infrastructure",
+      "quote": "permeable pavement on the 400 block plus two bioswales",
+      "source_range": "Options section, item 1",
+      "status": "verified"
+    },
+    {
+      "from": "n9",
+      "to": "n7",
+      "relation": "part_of",
+      "grounding": "implied",
+      "label": "Bioswales are a component of green infrastructure",
+      "quote": "permeable pavement on the 400 block plus two bioswales",
+      "source_range": "Options section, item 1",
+      "status": "verified"
+    },
+    {
+      "from": "n10",
+      "to": "n7",
+      "relation": "supports",
+      "grounding": "explicit",
+      "label": "2024 pilot results support green infrastructure",
+      "quote": "reduced peak runoff by 30% on a comparable street, which supports this option",
+      "source_range": "Options section, item 1",
+      "status": "verified"
+    },
+    {
+      "from": "n11",
+      "to": "n12",
+      "relation": "requires",
+      "grounding": "explicit",
+      "label": "Pipe upsizing requires a lane closure permit",
+      "quote": "This requires a lane closure permit and heavy equipment the crew does not own.",
+      "source_range": "Options section, item 2",
+      "status": "verified"
+    },
+    {
+      "from": "n11",
+      "to": "n13",
+      "relation": "requires",
+      "grounding": "explicit",
+      "label": "Pipe upsizing requires heavy equipment",
+      "quote": "This requires a lane closure permit and heavy equipment the crew does not own.",
+      "source_range": "Options section, item 2",
+      "status": "verified"
+    },
+    {
+      "from": "n15",
+      "to": "n14",
+      "relation": "supports",
+      "grounding": "explicit",
+      "label": "Budget fit supports choosing green infrastructure",
+      "quote": "We propose the green infrastructure option because it fits the budget",
+      "source_range": "Decision section",
+      "status": "verified"
+    },
+    {
+      "from": "n16",
+      "to": "n14",
+      "relation": "supports",
+      "grounding": "explicit",
+      "label": "No new equipment supports choosing green infrastructure",
+      "quote": "because it fits the budget and requires no new equipment",
+      "source_range": "Decision section",
+      "status": "verified"
+    },
+    {
+      "from": "n8",
+      "to": "n17",
+      "relation": "requires",
+      "grounding": "explicit",
+      "label": "Permeable pavement requires compaction-tested subgrade",
+      "quote": "The permeable pavement requires a compaction-tested subgrade",
+      "source_range": "Decision section",
+      "status": "verified"
+    },
+    {
+      "from": "n9",
+      "to": "n18",
+      "relation": "requires",
+      "grounding": "explicit",
+      "label": "Bioswales require landscaping sign-off",
+      "quote": "the bioswales require city landscaping sign-off before construction",
+      "source_range": "Decision section",
+      "status": "verified"
+    },
+    {
+      "from": "n19",
+      "to": "n4",
+      "relation": "contradicts",
+      "grounding": "explicit",
+      "label": "Culvert cost estimate conflicts with the budget",
+      "quote": "The pipe upsizing option contradicts the budget constraint: engineering estimates for culvert replacement exceed $600,000.",
+      "source_range": "Decision section",
+      "status": "verified"
+    },
+    {
+      "from": "n11",
+      "to": "n4",
+      "relation": "contradicts",
+      "grounding": "explicit",
+      "label": "Pipe upsizing contradicts the budget constraint",
+      "quote": "The pipe upsizing option contradicts the budget constraint",
+      "source_range": "Decision section",
+      "status": "verified"
+    },
+    {
+      "from": "n19",
+      "to": "n14",
+      "relation": "supports",
+      "grounding": "implied",
+      "label": "Culvert cost overrun supports green infrastructure choice",
+      "quote": "The pipe upsizing option contradicts the budget constraint",
+      "source_range": "Decision section",
+      "status": "verified"
+    },
+    {
+      "from": "n7",
+      "to": "n4",
+      "relation": "requires",
+      "grounding": "implied",
+      "label": "Green infrastructure requires the pilot budget",
+      "quote": "The budget for the pilot is $250,000 from the resilience fund.",
+      "source_range": "Constraints section, bullet 1",
+      "status": "verified"
+    },
+    {
+      "from": "n7",
+      "to": "n5",
+      "relation": "requires",
+      "grounding": "implied",
+      "label": "Green infrastructure requires crew maintainability",
+      "quote": "Any solution must be maintainable by the current public works crew.",
+      "source_range": "Constraints section, bullet 2",
+      "status": "verified"
+    },
+    {
+      "from": "n11",
+      "to": "n5",
+      "relation": "requires",
+      "grounding": "implied",
+      "label": "Pipe upsizing requires crew maintainability",
+      "quote": "Any solution must be maintainable by the current public works crew.",
+      "source_range": "Constraints section, bullet 2",
+      "status": "verified"
+    },
+    {
+      "from": "n7",
+      "to": "n6",
+      "relation": "requires",
+      "grounding": "implied",
+      "label": "Green infrastructure requires open school route",
+      "quote": "Work cannot block the school route during the academic year.",
+      "source_range": "Constraints section, bullet 3",
+      "status": "verified"
+    },
+    {
+      "from": "n11",
+      "to": "n6",
+      "relation": "requires",
+      "grounding": "implied",
+      "label": "Pipe upsizing requires open school route",
+      "quote": "Work cannot block the school route during the academic year.",
+      "source_range": "Constraints section, bullet 3",
+      "status": "verified"
+    },
+    {
+      "from": "n4",
+      "to": "n20",
+      "relation": "causes",
+      "grounding": "implied",
+      "label": "Resilience fund budget raises eligibility question",
+      "quote": "The budget for the pilot is $250,000 from the resilience fund.",
+      "source_range": "Constraints section, bullet 1",
+      "status": "verified"
+    },
+    {
+      "from": "n7",
+      "to": "n21",
+      "relation": "causes",
+      "grounding": "implied",
+      "label": "400 block work raises alley ownership question",
+      "quote": "permeable pavement on the 400 block plus two bioswales",
+      "source_range": "Options section, item 1",
+      "status": "verified"
+    }
+  ],
+  "meta": {
+    "created": "2026-10-11T03:19:01.115Z",
+    "model_used": "z-ai/glm-5.3",
+    "structured": "strict",
+    "granularity": "medium",
+    "prompt_sha": "e7cfaa2c5b54",
+    "verification": {
+      "exact": 33,
+      "normalized": 13,
+      "fuzzy": 0,
+      "unverified": 0
+    }
+  }
+}

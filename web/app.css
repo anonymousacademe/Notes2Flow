@@ -1,0 +1,403 @@
+/* ------------------------------------------------------------------ */
+/* Themes. Switched via <html data-theme="...">; --font can be        */
+/* overridden by the Font picker (inline style on <html>).            */
+/* ------------------------------------------------------------------ */
+
+:root,
+:root[data-theme="clean"] {
+  --font: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --ink: #1f2937;
+  --muted: #64748b;
+  --paper: #f6f7f9;
+  --panel: #ffffff;
+  --border: #d9dde3;
+  --hover: #eef1f5;
+  --accent: #2563eb;
+  --accent-ink: #ffffff;
+  --warn: #b45309;
+  --warn-bg: #fffaf2;
+
+  --node-ink: #1f2937;
+  --node-border: #94a3b8;
+  --node-shadow: 0 1px 3px rgba(15, 23, 42, 0.15);
+  --node-shadow-filter: drop-shadow(0 1px 2px rgba(15, 23, 42, 0.2));
+
+  --kind-claim: #e8f0fe;
+  --kind-assumption: #f3e8fd;
+  --kind-option: #e6f4ea;
+  --kind-decision: #fef7e0;
+  --kind-action: #e0f2f1;
+  --kind-prereq: #fce8e6;
+  --kind-question: #fff8e1;
+  --kind-note: #f1f3f4;
+}
+
+:root[data-theme="sketch"] {
+  --font: "Segoe Print", "Bradley Hand", "Comic Sans MS", cursive, sans-serif;
+  --ink: #1e1e1e;
+  --muted: #666666;
+  --paper: #faf9f6;
+  --panel: #ffffff;
+  --border: #d4cfc4;
+  --hover: #f0ede6;
+  --accent: #4a6fa5;
+  --node-ink: #1e1e1e;
+  --node-border: #1e1e1e;
+  --node-shadow: 2px 3px 0 rgba(30, 30, 30, 0.25);
+  --node-shadow-filter: drop-shadow(2px 3px 0 rgba(30, 30, 30, 0.25));
+}
+
+:root[data-theme="dark"] {
+  --font: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --ink: #e2e8f0;
+  --muted: #94a3b8;
+  --paper: #0f172a;
+  --panel: #1e293b;
+  --border: #334155;
+  --hover: #2b3a52;
+  --accent: #60a5fa;
+  --accent-ink: #0f172a;
+  --warn: #f59e0b;
+  --warn-bg: #2d2412;
+
+  --node-ink: #f1f5f9;
+  --node-border: #64748b;
+  --node-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+  --node-shadow-filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.6));
+
+  --kind-claim: #1e3a5f;
+  --kind-assumption: #4c2a6b;
+  --kind-option: #14532d;
+  --kind-decision: #5b4a0f;
+  --kind-action: #134e4a;
+  --kind-prereq: #6b2a2a;
+  --kind-question: #78350f;
+  --kind-note: #374151;
+}
+
+/* ------------------------------------------------------------------ */
+/* Layout                                                              */
+/* ------------------------------------------------------------------ */
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: var(--font);
+  color: var(--ink);
+  background: var(--paper);
+}
+
+#root { height: 100vh; }
+
+.app {
+  display: grid;
+  grid-template-columns: 380px 1fr 320px;
+  grid-template-rows: 56px 1fr;
+  grid-template-areas:
+    "header header header"
+    "notes canvas review";
+  height: 100vh;
+}
+
+.header {
+  grid-area: header;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 16px;
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+  overflow-x: auto;
+}
+
+.header h1 {
+  font-size: 20px;
+  margin: 0;
+  font-weight: 600;
+}
+
+.header .grow { flex: 1; }
+
+.btn {
+  font-family: inherit;
+  font-size: 14px;
+  padding: 7px 16px;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  background: var(--panel);
+  color: var(--ink);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.btn:hover { background: var(--hover); }
+.btn:disabled { opacity: 0.5; cursor: default; }
+.btn.small { font-size: 12px; padding: 5px 10px; }
+.btn.danger { color: #dc2626; border-color: #dc2626; }
+
+.btn.primary {
+  background: var(--accent);
+  color: var(--accent-ink);
+  border-color: var(--accent);
+}
+.btn.primary:hover { filter: brightness(1.08); background: var(--accent); }
+
+select, textarea, input {
+  font-family: inherit;
+  font-size: 13px;
+  color: var(--ink);
+  border: 1.5px solid var(--border);
+  border-radius: 6px;
+  padding: 5px 8px;
+  background: var(--panel);
+}
+
+.toolbar-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--muted);
+  white-space: nowrap;
+}
+.toolbar-sep { width: 1px; height: 22px; background: var(--border); }
+
+.panel {
+  overflow-y: auto;
+  padding: 14px;
+  background: var(--panel);
+}
+
+.notes-panel { grid-area: notes; border-right: 1px solid var(--border); }
+.review-panel { grid-area: review; border-left: 1px solid var(--border); }
+
+.panel h2 {
+  font-size: 15px;
+  margin: 0 0 10px 0;
+  color: var(--muted);
+}
+
+.notes-panel textarea {
+  width: 100%;
+  height: calc(100% - 90px);
+  resize: none;
+  line-height: 1.5;
+  white-space: pre-wrap;
+}
+
+.canvas-area {
+  grid-area: canvas;
+  position: relative;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.canvas-area .react-flow {
+  position: absolute;
+  inset: 0;
+}
+
+.react-flow { --xy-background-color: var(--paper); }
+
+.empty-state {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--muted);
+  font-size: 18px;
+  text-align: center;
+  padding: 40px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ------------------------------------------------------------------ */
+/* Review + inspector                                                  */
+/* ------------------------------------------------------------------ */
+
+.issue {
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  padding: 10px;
+  margin-bottom: 10px;
+  font-size: 13px;
+  cursor: pointer;
+  line-height: 1.45;
+}
+.issue:hover { background: var(--hover); }
+.issue.warn { border-color: var(--warn); background: var(--warn-bg); }
+.issue .targets { color: var(--muted); font-size: 11px; margin-top: 5px; }
+
+.stats { font-size: 12px; color: var(--muted); margin-top: 8px; line-height: 1.45; }
+.stats.hint { margin-top: 0; }
+
+.legend { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+.legend span {
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  color: var(--node-ink);
+}
+
+.inspector .field { display: block; margin-bottom: 10px; }
+.inspector .field > span {
+  display: block;
+  font-size: 11px;
+  color: var(--muted);
+  margin-bottom: 3px;
+}
+.inspector .field textarea,
+.inspector .field select { width: 100%; }
+.inspector .field textarea { resize: vertical; line-height: 1.4; }
+.edge-ends { font-size: 12px; margin-bottom: 10px; line-height: 1.5; word-break: break-word; }
+
+.shape-row, .swatch-row { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+
+.shape-btn {
+  width: 36px;
+  height: 30px;
+  border: 1.5px solid var(--border);
+  background: var(--panel);
+  color: var(--ink);
+  border-radius: 6px;
+  font-size: 17px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0;
+}
+.shape-btn:hover { background: var(--hover); }
+.shape-btn.active { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent); }
+
+.swatch {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border);
+  cursor: pointer;
+  padding: 0;
+}
+.swatch.active { box-shadow: 0 0 0 2px var(--accent); }
+.swatch-custom {
+  width: 28px;
+  height: 26px;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.btn-row { display: flex; gap: 8px; margin-top: 6px; flex-wrap: wrap; }
+
+/* ------------------------------------------------------------------ */
+/* Canvas: nodes, handles, edges, toolbar                              */
+/* ------------------------------------------------------------------ */
+
+.react-flow__node { font-family: inherit; }
+
+.n2f-node {
+  position: relative;
+  width: 220px;
+  min-height: 56px;
+  padding: 10px 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 13px;
+  line-height: 1.35;
+  color: var(--node-ink);
+  background: var(--node-bg);
+  border: var(--nbw, 1.5px) var(--nbs, solid) var(--nb, var(--node-border));
+  border-radius: 12px;
+  box-shadow: var(--node-shadow);
+}
+
+.n2f-node.is-selected { --nb: var(--accent); --nbw: 3px; }
+.n2f-node.is-highlight { --nb: var(--warn); --nbw: 3px; }
+.n2f-node.is-unverified { --nbs: dashed; }
+
+.n2f-node.shape-rectangle { border-radius: 3px; }
+.n2f-node.shape-rounded { border-radius: 12px; }
+.n2f-node.shape-pill { border-radius: 999px; padding: 12px 26px; }
+.n2f-node.shape-ellipse { border-radius: 50%; padding: 16px 30px; min-height: 76px; }
+.n2f-node.shape-diamond {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  min-height: 104px;
+  padding: 22px 46px;
+}
+
+:root[data-theme="sketch"] .n2f-node.shape-rounded {
+  border-radius: 10px 14px 10px 16px / 14px 10px 16px 10px;
+  border-width: 2px;
+}
+:root[data-theme="sketch"] .n2f-node.shape-rectangle { border-width: 2px; }
+
+.n2f-diamond {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+  filter: var(--node-shadow-filter);
+}
+.n2f-diamond polygon {
+  fill: var(--node-bg);
+  stroke: var(--nb, var(--node-border));
+  stroke-width: var(--nbw, 1.5px);
+}
+.n2f-node.is-unverified .n2f-diamond polygon { stroke-dasharray: 6 4; }
+
+.n2f-label, .n2f-node .badge { position: relative; z-index: 1; }
+.n2f-node .badge { font-size: 10px; opacity: 0.65; display: block; margin-top: 4px; }
+
+.n2f-handle {
+  width: 10px;
+  height: 10px;
+  background: var(--accent);
+  border: 2px solid var(--panel);
+}
+/* Never override `transform` here: React Flow positions handles with it, and moving a handle
+   on hover makes it jump out from under the cursor so arrows can't be drawn. */
+.n2f-handle:hover { box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.35); }
+
+.n2f-edge-label { font-size: 11px; font-family: inherit; }
+
+.editor-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 8px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
+}
+
+:root[data-theme="sketch"] .btn {
+  border-width: 2px;
+  border-color: var(--ink);
+  border-radius: 8px 10px 8px 12px / 10px 8px 12px 8px;
+}
+:root[data-theme="sketch"] .btn.primary { border-color: #38547d; }
+
+.toast {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--ink);
+  color: var(--paper);
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 13px;
+  z-index: 10;
+}

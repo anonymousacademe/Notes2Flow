@@ -1,0 +1,24 @@
+{
+  "nodes": [
+    { "label": "Extend Riverside Trail 1.2 miles", "kind": "decision" },
+    { "label": "Use abandoned rail bed alignment", "kind": "option" },
+    { "label": "Railroad easement", "kind": "prereq" },
+    { "label": "Wetland delineation", "kind": "prereq" },
+    { "label": "Signed maintenance agreement", "kind": "prereq" },
+    { "label": "Request easement application packet", "kind": "action" },
+    { "label": "Commission wetland delineation", "kind": "action" },
+    { "label": "Draft maintenance agreement", "kind": "action" },
+    { "label": "Solicit construction bids", "kind": "action" },
+    { "label": "Budget fixed at 180,000 dollars", "kind": "assumption" },
+    { "label": "Finish before October festival season", "kind": "assumption" }
+  ],
+  "edges": [
+    { "from": "Use abandoned rail bed alignment", "to": "Extend Riverside Trail 1.2 miles", "relation": "part_of" },
+    { "from": "Request easement application packet", "to": "Railroad easement", "relation": "requires" },
+    { "from": "Commission wetland delineation", "to": "Wetland delineation", "relation": "requires" },
+    { "from": "Draft maintenance agreement", "to": "Signed maintenance agreement", "relation": "requires" },
+    { "from": "Request easement application packet", "to": "Commission wetland delineation", "relation": "next" },
+    { "from": "Commission wetland delineation", "to": "Draft maintenance agreement", "relation": "next" },
+    { "from": "Draft maintenance agreement", "to": "Solicit construction bids", "relation": "next" }
+  ]
+}

@@ -1,0 +1,1437 @@
+{
+  "graph_id": "ab6b0f86-5af3-4e50-b584-fc6e4b58106d",
+  "map_type": "plan",
+  "nodes": [
+    {
+      "id": "n1",
+      "label": "Node builder is the v0.2 flagship feature",
+      "kind": "claim",
+      "provenance": [
+        {
+          "source_range": "Status paragraph",
+          "quote": "names this the v0.2 headline"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n2",
+      "label": "Owner sign-off on design required before build",
+      "kind": "prereq",
+      "provenance": [
+        {
+          "source_range": "End of draft",
+          "quote": "after owner sign-off on this design (and on the phase order)"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n3",
+      "label": "Owner converses with graph-aware agent to build node",
+      "kind": "claim",
+      "provenance": [
+        {
+          "source_range": "Status paragraph, owner's words",
+          "quote": "converse with an agent that can see the surrounding graph, and it implements the node"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n4",
+      "label": "Add 'Describe it' item to quick-add menu",
+      "kind": "action",
+      "provenance": [
+        {
+          "source_range": "§1.1 step 1",
+          "quote": "Describe it and let AI build it"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n5",
+      "label": "Assemble bounded graph context for agent",
+      "kind": "action",
+      "provenance": [
+        {
+          "source_range": "§2.1 item 1",
+          "quote": "produce a bounded, structured"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n6",
+      "label": "Builder emits proposal with ghost preview",
+      "kind": "action",
+      "provenance": [
+        {
+          "source_range": "§1.1 step 3",
+          "quote": "a ghost step (or ghost sub-steps) plus a plain-language"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n7",
+      "label": "Run sandbox trial on sample input",
+      "kind": "action",
+      "provenance": [
+        {
+          "source_range": "§1.1 step 4",
+          "quote": "the ghost step runs on a sample input inside the restricted runner"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n8",
+      "label": "Without sandbox, feature degrades to config-only",
+      "kind": "claim",
+      "provenance": [
+        {
+          "source_range": "§1.1 step 4",
+          "quote": "the feature degrades to T0 (config-only), never to unsandboxed execution (D10)."
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n9",
+      "label": "Approver task in inbox for owner decision",
+      "kind": "action",
+      "provenance": [
+        {
+          "source_range": "§1.1 step 5",
+          "quote": "an approver `human.task` in the inbox"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n10",
+      "label": "Builder never approves its own node",
+      "kind": "claim",
+      "provenance": [
+        {
+          "source_range": "Standing UX rules, rule 4",
+          "quote": "The builder never approves its own node"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n11",
+      "label": "Ghost becomes real step after approval",
+      "kind": "action",
+      "provenance": [
+        {
+          "source_range": "§1.1 step 6",
+          "quote": "After approval the ghost becomes a real step"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n12",
+      "label": "Canvas-only keys never touch engine hashes",
+      "kind": "claim",
+      "provenance": [
+        {
+          "source_range": "Standing UX rules, rule 6",
+          "quote": "Nothing touches the engine's hashes: canvas-only keys live in `node.ui`, never planned."
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n13",
+      "label": "Builder speaks plain language, not JSON",
+      "kind": "note",
+      "provenance": [
+        {
+          "source_range": "Standing UX rules, rule 1",
+          "quote": "Plain language. The canvas speaks in steps, not JSON"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n14",
+      "label": "Choose which proposal kind to emit",
+      "kind": "decision",
+      "provenance": [
+        {
+          "source_range": "§2.2",
+          "quote": "A proposal is a JSON document with a `kind` discriminator:"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n15",
+      "label": "Config proposal for existing node type",
+      "kind": "option",
+      "provenance": [
+        {
+          "source_range": "§2.2, kind config",
+          "quote": "params for an *existing* node type (v0 slice)"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n16",
+      "label": "Subgraph proposal from existing types",
+      "kind": "option",
+      "provenance": [
+        {
+          "source_range": "§2.2, kind subgraph",
+          "quote": "a small workflow fragment (nodes + edges, existing types only)"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n17",
+      "label": "Python tool proposal with manifest",
+      "kind": "option",
+      "provenance": [
+        {
+          "source_range": "§2.2, kind tool_python",
+          "quote": "`{code_path, entry: module:function, manifest}`"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n18",
+      "label": "Full custom node type proposal",
+      "kind": "option",
+      "provenance": [
+        {
+          "source_range": "§2.2, kind node_type",
+          "quote": "Highest risk, last."
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n19",
+      "label": "Proposal schema validated mechanically before display",
+      "kind": "claim",
+      "provenance": [
+        {
+          "source_range": "§2.2 closing paragraph",
+          "quote": "Schema validation is mechanical: unknown fields rejected"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n20",
+      "label": "Lower self-declared tier than scan fails",
+      "kind": "claim",
+      "provenance": [
+        {
+          "source_range": "§2.2 common fields",
+          "quote": "treats a *lower* self-declaration than the scan finds as a hard fail"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n21",
+      "label": "Run five-stage check pipeline",
+      "kind": "action",
+      "provenance": [
+        {
+          "source_range": "§2.1 item 4",
+          "quote": "Runs the five D20 stages and produces a report bundle."
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n22",
+      "label": "Static scan of code",
+      "kind": "action",
+      "provenance": [
+        {
+          "source_range": "§2.3 table, stage a",
+          "quote": "AST + regex scan of the code: dangerous imports/calls"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n23",
+      "label": "Check capabilities covered by manifest",
+      "kind": "action",
+      "provenance": [
+        {
+          "source_range": "§2.3 table, stage b",
+          "quote": "Every capability the scan finds must be covered by the manifest declaration"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n24",
+      "label": "Reviewer judge from different model family",
+      "kind": "action",
+      "provenance": [
+        {
+          "source_range": "§2.3 table, stage c",
+          "quote": "One `llm.decision`/`judge.binary` call over code + manifest + scan findings, model family ≠ builder family"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n25",
+      "label": "Observed smoke test in restricted runner",
+      "kind": "action",
+      "provenance": [
+        {
+          "source_range": "§2.3 table, stage d",
+          "quote": "The manifest's smoke case runs in the restricted runner"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n26",
+      "label": "Produce report bundle and code diff",
+      "kind": "action",
+      "provenance": [
+        {
+          "source_range": "§2.3 table, stage e",
+          "quote": "A report bundle: scan findings, judge verdict + rationale, smoke output, full code diff"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n27",
+      "label": "Check informs owner, never replaces approval",
+      "kind": "claim",
+      "provenance": [
+        {
+          "source_range": "§2.3 honesty rule",
+          "quote": "the check informs the owner and never replaces approval;"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n28",
+      "label": "Restricted subprocess runner",
+      "kind": "prereq",
+      "provenance": [
+        {
+          "source_range": "§2.4",
+          "quote": "A subprocess wrapper used by (d) and later by the scheduler for workspace nodes"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n29",
+      "label": "Tier ceiling applies where enforcement impossible",
+      "kind": "claim",
+      "provenance": [
+        {
+          "source_range": "§2.4, Network bullet",
+          "quote": "the tier ceiling applies: no T2 claims without a real"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n30",
+      "label": "Stage artifact without touching live palette",
+      "kind": "action",
+      "provenance": [
+        {
+          "source_range": "§2.5 step 1",
+          "quote": "The pipeline stages the artifact"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n31",
+      "label": "Code digest voids approval on edit",
+      "kind": "claim",
+      "provenance": [
+        {
+          "source_range": "§2.5 step 5",
+          "quote": "Any later edit to the file invalidates the approval and reruns the check (D20)"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n32",
+      "label": "Workspace node registry of approved types",
+      "kind": "prereq",
+      "provenance": [
+        {
+          "source_range": "§2.6",
+          "quote": "The registry loader merges: core registry (frozen) + workspace entries (approved digests only)."
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n33",
+      "label": "Unapproved entries invisible to planner",
+      "kind": "claim",
+      "provenance": [
+        {
+          "source_range": "§2.6",
+          "quote": "Unapproved/staged entries are invisible to the planner"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n34",
+      "label": "Compose existing types (no new code)",
+      "kind": "claim",
+      "provenance": [
+        {
+          "source_range": "§3 trust tiers table, T0",
+          "quote": "Config of an existing type; composed subgraph (existing types only)"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n35",
+      "label": "Pure Python code with no network",
+      "kind": "claim",
+      "provenance": [
+        {
+          "source_range": "§3 trust tiers table, T1",
+          "quote": "`tool_python` code: no network, no secrets, files only in the node's own folder, no subprocess"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n36",
+      "label": "Declared network hosts and secrets by name",
+      "kind": "claim",
+      "provenance": [
+        {
+          "source_range": "§3 trust tiers table, T2",
+          "quote": "Adds declared network hosts + secrets-by-name"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n37",
+      "label": "Executables, GPU, host reach",
+      "kind": "claim",
+      "provenance": [
+        {
+          "source_range": "§3 trust tiers table, T3",
+          "quote": "Executables, GPU, host reach"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n58",
+      "label": "Container-class sandbox for top tier",
+      "kind": "prereq",
+      "provenance": [
+        {
+          "source_range": "§6 Sandboxing",
+          "quote": "T3 additionally requires a container-class sandbox."
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n38",
+      "label": "Built step must pass planner validation rules",
+      "kind": "claim",
+      "provenance": [
+        {
+          "source_range": "§4 intro",
+          "quote": "An agent-built step becomes a first-class citizen, so it must pass everything a hand-built one"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n39",
+      "label": "Determinism and side effects declared honestly",
+      "kind": "claim",
+      "provenance": [
+        {
+          "source_range": "§4 item 3",
+          "quote": "`determinism` and `side_effects` must be declared honestly"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n40",
+      "label": "Graph content passed as quoted data",
+      "kind": "claim",
+      "provenance": [
+        {
+          "source_range": "§6 Prompt injection",
+          "quote": "graph content enters the builder prompt as delimited, quoted data"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n41",
+      "label": "Reviewer must be different family than builder",
+      "kind": "claim",
+      "provenance": [
+        {
+          "source_range": "§2.1 item 2",
+          "quote": "the *reviewer* in the check pipeline must be a different family than the builder"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n42",
+      "label": "Check pipeline can be defeated by craft",
+      "kind": "claim",
+      "provenance": [
+        {
+          "source_range": "Risks, bullet 1",
+          "quote": "The check pipeline can be *defeated by craft*"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n43",
+      "label": "Owner's review is the real gate",
+      "kind": "claim",
+      "provenance": [
+        {
+          "source_range": "Risks, bullet 1",
+          "quote": "with the owner's eyes as the real gate"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n44",
+      "label": "Uneven enforcement on Windows and macOS",
+      "kind": "claim",
+      "provenance": [
+        {
+          "source_range": "Risks, bullet 2",
+          "quote": "The restricted runner on Windows/macOS has uneven enforcement primitives"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n45",
+      "label": "Conversation quality is main product risk",
+      "kind": "claim",
+      "provenance": [
+        {
+          "source_range": "Risks, bullet 3",
+          "quote": "Conversation quality is the actual product risk"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n46",
+      "label": "Scope tends to explode for this feature",
+      "kind": "claim",
+      "provenance": [
+        {
+          "source_range": "Risks, bullet 4",
+          "quote": "this feature is famously where scope explodes"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n47",
+      "label": "Config-only builder for existing node types",
+      "kind": "action",
+      "provenance": [
+        {
+          "source_range": "§7 Phase 0",
+          "quote": "emits `kind: config` proposals for *existing* node types only"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n48",
+      "label": "Builder composes multi-step subgraph fragments",
+      "kind": "action",
+      "provenance": [
+        {
+          "source_range": "§7 Phase 1",
+          "quote": "`kind: subgraph`: the builder composes small multi-step fragments"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n49",
+      "label": "Python tool nodes with full check pipeline",
+      "kind": "action",
+      "provenance": [
+        {
+          "source_range": "§7 Phase 2",
+          "quote": "Workspace registry + staging + full check pipeline (a–e)"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n50",
+      "label": "Declared hosts and secrets enforcement",
+      "kind": "action",
+      "provenance": [
+        {
+          "source_range": "§7 Phase 3",
+          "quote": "Enforcement probes, allowlist, secrets channel."
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n51",
+      "label": "Container sandbox and full custom node types",
+      "kind": "action",
+      "provenance": [
+        {
+          "source_range": "§7 Phase 4",
+          "quote": "Container sandbox (M4.12), per-node explicit"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n52",
+      "label": "Polish: fix-hints and judge calibration",
+      "kind": "action",
+      "provenance": [
+        {
+          "source_range": "§7 Phase 5",
+          "quote": "Fix-hints library, smoke-test editing, calibration of the reviewer judge"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n53",
+      "label": "Pull params-only builder into v0.1.x?",
+      "kind": "question",
+      "provenance": [
+        {
+          "source_range": "§8 question 1",
+          "quote": "Should Phase 0 (params-only builder) be pulled into v0.1.x as a preview, or stay the v0.2 opener?"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n54",
+      "label": "Which default model for the builder?",
+      "kind": "question",
+      "provenance": [
+        {
+          "source_range": "§8 question 2",
+          "quote": "Which model should the builder use by default"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n55",
+      "label": "Do subgraph proposals need approver task?",
+      "kind": "question",
+      "provenance": [
+        {
+          "source_range": "§8 question 3",
+          "quote": "Should T0 subgraph proposals require an approver task too, or is the existing save+validate gate enough?"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n56",
+      "label": "Is canvas Inbox view in scope for v0.2?",
+      "kind": "question",
+      "provenance": [
+        {
+          "source_range": "§8 question 5",
+          "quote": "Is a canvas Inbox view of approver tasks in scope for v0.2"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n57",
+      "label": "Require judge calibration set before shipping?",
+      "kind": "question",
+      "provenance": [
+        {
+          "source_range": "§8 question 8",
+          "quote": "Do we require the reviewer-judge calibration set (labeled benign/malicious) before any T1 ships"
+        }
+      ],
+      "provenance_status": "verified"
+    }
+  ],
+  "edges": [
+    {
+      "from": "n1",
+      "to": "n2",
+      "relation": "requires",
+      "grounding": "explicit",
+      "label": null,
+      "quote": "after owner sign-off on this design (and on the phase order)",
+      "source_range": "End of draft",
+      "status": "verified"
+    },
+    {
+      "from": "n3",
+      "to": "n1",
+      "relation": "part_of",
+      "grounding": "implied",
+      "label": null,
+      "quote": "converse with an agent that can see the surrounding graph, and it implements the node",
+      "source_range": "Status paragraph",
+      "status": "verified"
+    },
+    {
+      "from": "n4",
+      "to": "n3",
+      "relation": "part_of",
+      "grounding": "explicit",
+      "label": null,
+      "quote": "The quick-add menu gains one new item",
+      "source_range": "§1.1 step 1",
+      "status": "verified"
+    },
+    {
+      "from": "n4",
+      "to": "n5",
+      "relation": "next",
+      "grounding": "explicit",
+      "label": null,
+      "quote": "When the conversation starts, the server assembles a",
+      "source_range": "§1.1 step 2",
+      "status": "verified"
+    },
+    {
+      "from": "n5",
+      "to": "n6",
+      "relation": "next",
+      "grounding": "explicit",
+      "label": null,
+      "quote": "then emits a",
+      "source_range": "§1.1 step 3",
+      "status": "verified"
+    },
+    {
+      "from": "n6",
+      "to": "n7",
+      "relation": "next",
+      "grounding": "explicit",
+      "label": null,
+      "quote": "For anything below T0-only, the proposal first runs a",
+      "source_range": "§1.1 step 4",
+      "status": "verified"
+    },
+    {
+      "from": "n7",
+      "to": "n9",
+      "relation": "next",
+      "grounding": "explicit",
+      "label": null,
+      "quote": "an approver `human.task` in the inbox",
+      "source_range": "§1.1 step 5",
+      "status": "verified"
+    },
+    {
+      "from": "n9",
+      "to": "n11",
+      "relation": "next",
+      "grounding": "explicit",
+      "label": null,
+      "quote": "Approving applies the proposal to the workspace and the",
+      "source_range": "§1.1 step 5",
+      "status": "verified"
+    },
+    {
+      "from": "n7",
+      "to": "n28",
+      "relation": "requires",
+      "grounding": "explicit",
+      "label": null,
+      "quote": "the ghost step runs on a sample input inside the restricted runner",
+      "source_range": "§1.1 step 4",
+      "status": "verified"
+    },
+    {
+      "from": "n8",
+      "to": "n29",
+      "relation": "supports",
+      "grounding": "implied",
+      "label": null,
+      "quote": "the feature degrades to T0 (config-only), never to unsandboxed execution (D10)",
+      "source_range": "§1.1 step 4",
+      "status": "verified"
+    },
+    {
+      "from": "n9",
+      "to": "n10",
+      "relation": "supports",
+      "grounding": "explicit",
+      "label": null,
+      "quote": "nothing that can approve is ever returned to the agent",
+      "source_range": "§3 cross-cutting",
+      "status": "verified"
+    },
+    {
+      "from": "n6",
+      "to": "n19",
+      "relation": "requires",
+      "grounding": "explicit",
+      "label": null,
+      "quote": "Validated before it is ever shown",
+      "source_range": "§2.1 item 3",
+      "status": "verified"
+    },
+    {
+      "from": "n13",
+      "to": "n3",
+      "relation": "supports",
+      "grounding": "implied",
+      "label": null,
+      "quote": "Plain language. The canvas speaks in steps, not JSON",
+      "source_range": "Standing UX rules",
+      "status": "verified"
+    },
+    {
+      "from": "n14",
+      "to": "n6",
+      "relation": "part_of",
+      "grounding": "implied",
+      "label": null,
+      "quote": "A proposal is a JSON document with a `kind` discriminator:",
+      "source_range": "§2.2",
+      "status": "verified"
+    },
+    {
+      "from": "n15",
+      "to": "n14",
+      "relation": "part_of",
+      "grounding": "explicit",
+      "label": null,
+      "quote": "params for an *existing* node type (v0 slice)",
+      "source_range": "§2.2",
+      "status": "verified"
+    },
+    {
+      "from": "n16",
+      "to": "n14",
+      "relation": "part_of",
+      "grounding": "explicit",
+      "label": null,
+      "quote": "a small workflow fragment (nodes + edges, existing types only)",
+      "source_range": "§2.2",
+      "status": "verified"
+    },
+    {
+      "from": "n17",
+      "to": "n14",
+      "relation": "part_of",
+      "grounding": "explicit",
+      "label": null,
+      "quote": "`{code_path, entry: module:function, manifest}`",
+      "source_range": "§2.2",
+      "status": "verified"
+    },
+    {
+      "from": "n18",
+      "to": "n14",
+      "relation": "part_of",
+      "grounding": "explicit",
+      "label": null,
+      "quote": "Highest risk, last.",
+      "source_range": "§2.2",
+      "status": "verified"
+    },
+    {
+      "from": "n15",
+      "to": "n34",
+      "relation": "part_of",
+      "grounding": "implied",
+      "label": null,
+      "quote": "Config of an existing type; composed subgraph (existing types only)",
+      "source_range": "§3 table, T0",
+      "status": "verified"
+    },
+    {
+      "from": "n16",
+      "to": "n34",
+      "relation": "part_of",
+      "grounding": "implied",
+      "label": null,
+      "quote": "Config of an existing type; composed subgraph (existing types only)",
+      "source_range": "§3 table, T0",
+      "status": "verified"
+    },
+    {
+      "from": "n20",
+      "to": "n21",
+      "relation": "part_of",
+      "grounding": "implied",
+      "label": null,
+      "quote": "treats a *lower* self-declaration than the scan finds as a hard fail",
+      "source_range": "§2.2",
+      "status": "verified"
+    },
+    {
+      "from": "n22",
+      "to": "n21",
+      "relation": "part_of",
+      "grounding": "explicit",
+      "label": null,
+      "quote": "Runs the five D20 stages and produces a report bundle.",
+      "source_range": "§2.1 item 4",
+      "status": "verified"
+    },
+    {
+      "from": "n23",
+      "to": "n21",
+      "relation": "part_of",
+      "grounding": "explicit",
+      "label": null,
+      "quote": "Runs the five D20 stages and produces a report bundle.",
+      "source_range": "§2.1 item 4",
+      "status": "verified"
+    },
+    {
+      "from": "n24",
+      "to": "n21",
+      "relation": "part_of",
+      "grounding": "explicit",
+      "label": null,
+      "quote": "Runs the five D20 stages and produces a report bundle.",
+      "source_range": "§2.1 item 4",
+      "status": "verified"
+    },
+    {
+      "from": "n25",
+      "to": "n21",
+      "relation": "part_of",
+      "grounding": "explicit",
+      "label": null,
+      "quote": "Runs the five D20 stages and produces a report bundle.",
+      "source_range": "§2.1 item 4",
+      "status": "verified"
+    },
+    {
+      "from": "n26",
+      "to": "n21",
+      "relation": "part_of",
+      "grounding": "explicit",
+      "label": null,
+      "quote": "Runs the five D20 stages and produces a report bundle.",
+      "source_range": "§2.1 item 4",
+      "status": "verified"
+    },
+    {
+      "from": "n22",
+      "to": "n23",
+      "relation": "next",
+      "grounding": "explicit",
+      "label": null,
+      "quote": "Every capability the scan finds must be covered by the manifest declaration",
+      "source_range": "§2.3 table",
+      "status": "verified"
+    },
+    {
+      "from": "n23",
+      "to": "n24",
+      "relation": "next",
+      "grounding": "implied",
+      "label": null,
+      "quote": "One `llm.decision`/`judge.binary` call over code + manifest + scan findings, model family ≠ builder family",
+      "source_range": "§2.3 table",
+      "status": "verified"
+    },
+    {
+      "from": "n24",
+      "to": "n25",
+      "relation": "next",
+      "grounding": "implied",
+      "label": null,
+      "quote": "The manifest's smoke case runs in the restricted runner",
+      "source_range": "§2.3 table",
+      "status": "verified"
+    },
+    {
+      "from": "n25",
+      "to": "n26",
+      "relation": "next",
+      "grounding": "implied",
+      "label": null,
+      "quote": "A report bundle: scan findings, judge verdict + rationale, smoke output, full code diff",
+      "source_range": "§2.3 table",
+      "status": "verified"
+    },
+    {
+      "from": "n25",
+      "to": "n28",
+      "relation": "requires",
+      "grounding": "explicit",
+      "label": null,
+      "quote": "The manifest's smoke case runs in the restricted runner",
+      "source_range": "§2.3 table, stage d",
+      "status": "verified"
+    },
+    {
+      "from": "n23",
+      "to": "n22",
+      "relation": "requires",
+      "grounding": "explicit",
+      "label": null,
+      "quote": "Every capability the scan finds must be covered by the manifest declaration",
+      "source_range": "§2.3 table, stage b",
+      "status": "verified"
+    },
+    {
+      "from": "n41",
+      "to": "n24",
+      "relation": "supports",
+      "grounding": "explicit",
+      "label": null,
+      "quote": "model family ≠ builder family",
+      "source_range": "§2.3 table, stage c",
+      "status": "verified"
+    },
+    {
+      "from": "n9",
+      "to": "n26",
+      "relation": "requires",
+      "grounding": "explicit",
+      "label": null,
+      "quote": "context carries the report bundle and the diff",
+      "source_range": "§2.5 step 2",
+      "status": "verified"
+    },
+    {
+      "from": "n27",
+      "to": "n9",
+      "relation": "supports",
+      "grounding": "implied",
+      "label": null,
+      "quote": "the check informs the owner and never replaces approval;",
+      "source_range": "§2.3",
+      "status": "verified"
+    },
+    {
+      "from": "n30",
+      "to": "n9",
+      "relation": "next",
+      "grounding": "explicit",
+      "label": null,
+      "quote": "Shaped exactly like audition `promote`",
+      "source_range": "§2.5",
+      "status": "verified"
+    },
+    {
+      "from": "n31",
+      "to": "n9",
+      "relation": "part_of",
+      "grounding": "explicit",
+      "label": "approval record",
+      "quote": "the code digest (already the cache-key ingredient via `entry_sha256`) is part",
+      "source_range": "§2.5 step 5",
+      "status": "verified"
+    },
+    {
+      "from": "n33",
+      "to": "n32",
+      "relation": "part_of",
+      "grounding": "explicit",
+      "label": null,
+      "quote": "Unapproved/staged entries are invisible to the planner",
+      "source_range": "§2.6",
+      "status": "verified"
+    },
+    {
+      "from": "n11",
+      "to": "n32",
+      "relation": "requires",
+      "grounding": "implied",
+      "label": null,
+      "quote": "appears in the palette for reuse (workspace registry)",
+      "source_range": "§1.1 step 6",
+      "status": "verified"
+    },
+    {
+      "from": "n35",
+      "to": "n21",
+      "relation": "requires",
+      "grounding": "explicit",
+      "label": null,
+      "quote": "Full pipeline (a–e)",
+      "source_range": "§3 table, T1",
+      "status": "verified"
+    },
+    {
+      "from": "n35",
+      "to": "n28",
+      "relation": "requires",
+      "grounding": "explicit",
+      "label": null,
+      "quote": "Trial in restricted runner",
+      "source_range": "§3 table, T1",
+      "status": "verified"
+    },
+    {
+      "from": "n36",
+      "to": "n29",
+      "relation": "requires",
+      "grounding": "explicit",
+      "label": null,
+      "quote": "if network cannot be enforced on this machine, the node is capped at T1",
+      "source_range": "§3 table, T2",
+      "status": "verified"
+    },
+    {
+      "from": "n37",
+      "to": "n58",
+      "relation": "requires",
+      "grounding": "explicit",
+      "label": null,
+      "quote": "Only in a full sandbox (M4.12)",
+      "source_range": "§3 table, T3",
+      "status": "verified"
+    },
+    {
+      "from": "n11",
+      "to": "n38",
+      "relation": "requires",
+      "grounding": "implied",
+      "label": null,
+      "quote": "An agent-built step becomes a first-class citizen, so it must pass everything a hand-built one",
+      "source_range": "§4 intro",
+      "status": "verified"
+    },
+    {
+      "from": "n39",
+      "to": "n38",
+      "relation": "part_of",
+      "grounding": "implied",
+      "label": null,
+      "quote": "`determinism` and `side_effects` must be declared honestly",
+      "source_range": "§4 item 3",
+      "status": "verified"
+    },
+    {
+      "from": "n12",
+      "to": "n38",
+      "relation": "supports",
+      "grounding": "implied",
+      "label": null,
+      "quote": "nothing about the document format changes",
+      "source_range": "§4 item 6",
+      "status": "verified"
+    },
+    {
+      "from": "n9",
+      "to": "n40",
+      "relation": "supports",
+      "grounding": "explicit",
+      "label": "limits hijack damage",
+      "quote": "even a fully hijacked builder can at worst produce a",
+      "source_range": "§6 Prompt injection",
+      "status": "verified"
+    },
+    {
+      "from": "n42",
+      "to": "n27",
+      "relation": "supports",
+      "grounding": "implied",
+      "label": null,
+      "quote": "The design treats it as a filter that raises cost",
+      "source_range": "Risks, bullet 1",
+      "status": "verified"
+    },
+    {
+      "from": "n43",
+      "to": "n9",
+      "relation": "supports",
+      "grounding": "implied",
+      "label": null,
+      "quote": "with the owner's eyes as the real gate",
+      "source_range": "Risks, bullet 1",
+      "status": "verified"
+    },
+    {
+      "from": "n44",
+      "to": "n29",
+      "relation": "causes",
+      "grounding": "explicit",
+      "label": null,
+      "quote": "keeps us honest but may frustrate",
+      "source_range": "Risks, bullet 2",
+      "status": "verified"
+    },
+    {
+      "from": "n45",
+      "to": "n47",
+      "relation": "causes",
+      "grounding": "explicit",
+      "label": null,
+      "quote": "The T0-only first slice keeps the risk low while the dialogue matures.",
+      "source_range": "Risks, bullet 3",
+      "status": "verified"
+    },
+    {
+      "from": "n46",
+      "to": "n47",
+      "relation": "causes",
+      "grounding": "implied",
+      "label": "motivates phasing",
+      "quote": "phased plan exists precisely to make each slice independently shippable and stoppable",
+      "source_range": "Risks, bullet 4",
+      "status": "verified"
+    },
+    {
+      "from": "n47",
+      "to": "n15",
+      "relation": "requires",
+      "grounding": "explicit",
+      "label": null,
+      "quote": "emits `kind: config` proposals for *existing* node types only",
+      "source_range": "§7 Phase 0",
+      "status": "verified"
+    },
+    {
+      "from": "n47",
+      "to": "n5",
+      "relation": "requires",
+      "grounding": "explicit",
+      "label": null,
+      "quote": "Proves the conversation and the graph context.",
+      "source_range": "§7 Phase 0",
+      "status": "verified"
+    },
+    {
+      "from": "n48",
+      "to": "n16",
+      "relation": "requires",
+      "grounding": "explicit",
+      "label": null,
+      "quote": "`kind: subgraph`: the builder composes small multi-step fragments",
+      "source_range": "§7 Phase 1",
+      "status": "verified"
+    },
+    {
+      "from": "n49",
+      "to": "n35",
+      "relation": "requires",
+      "grounding": "implied",
+      "label": null,
+      "quote": "This is D20's core",
+      "source_range": "§7 Phase 2",
+      "status": "verified"
+    },
+    {
+      "from": "n49",
+      "to": "n32",
+      "relation": "requires",
+      "grounding": "explicit",
+      "label": null,
+      "quote": "Workspace registry + staging + full check pipeline (a–e)",
+      "source_range": "§7 Phase 2",
+      "status": "verified"
+    },
+    {
+      "from": "n49",
+      "to": "n21",
+      "relation": "requires",
+      "grounding": "explicit",
+      "label": null,
+      "quote": "Workspace registry + staging + full check pipeline (a–e)",
+      "source_range": "§7 Phase 2",
+      "status": "verified"
+    },
+    {
+      "from": "n49",
+      "to": "n28",
+      "relation": "requires",
+      "grounding": "explicit",
+      "label": null,
+      "quote": "restricted runner trial + approver task + digest rule.",
+      "source_range": "§7 Phase 2",
+      "status": "verified"
+    },
+    {
+      "from": "n50",
+      "to": "n36",
+      "relation": "requires",
+      "grounding": "implied",
+      "label": null,
+      "quote": "Enforcement probes, allowlist, secrets channel.",
+      "source_range": "§7 Phase 3",
+      "status": "verified"
+    },
+    {
+      "from": "n51",
+      "to": "n37",
+      "relation": "requires",
+      "grounding": "implied",
+      "label": null,
+      "quote": "Container sandbox (M4.12), per-node explicit",
+      "source_range": "§7 Phase 4",
+      "status": "verified"
+    },
+    {
+      "from": "n51",
+      "to": "n18",
+      "relation": "requires",
+      "grounding": "explicit",
+      "label": null,
+      "quote": "full manifest node types (not only `tool.python`-shaped)",
+      "source_range": "§7 Phase 4",
+      "status": "verified"
+    },
+    {
+      "from": "n47",
+      "to": "n48",
+      "relation": "next",
+      "grounding": "explicit",
+      "label": null,
+      "quote": "Each phase ends with an owner demo and sign-off before the next begins.",
+      "source_range": "§7 closing",
+      "status": "verified"
+    },
+    {
+      "from": "n48",
+      "to": "n49",
+      "relation": "next",
+      "grounding": "explicit",
+      "label": null,
+      "quote": "Each phase ends with an owner demo and sign-off before the next begins.",
+      "source_range": "§7 closing",
+      "status": "verified"
+    },
+    {
+      "from": "n49",
+      "to": "n50",
+      "relation": "next",
+      "grounding": "explicit",
+      "label": null,
+      "quote": "Each phase ends with an owner demo and sign-off before the next begins.",
+      "source_range": "§7 closing",
+      "status": "verified"
+    },
+    {
+      "from": "n50",
+      "to": "n51",
+      "relation": "next",
+      "grounding": "explicit",
+      "label": null,
+      "quote": "Each phase ends with an owner demo and sign-off before the next begins.",
+      "source_range": "§7 closing",
+      "status": "verified"
+    },
+    {
+      "from": "n51",
+      "to": "n52",
+      "relation": "next",
+      "grounding": "explicit",
+      "label": null,
+      "quote": "Each phase ends with an owner demo and sign-off before the next begins.",
+      "source_range": "§7 closing",
+      "status": "verified"
+    },
+    {
+      "from": "n47",
+      "to": "n53",
+      "relation": "requires",
+      "grounding": "implied",
+      "label": null,
+      "quote": "Should Phase 0 (params-only builder) be pulled into v0.1.x as a preview, or stay the v0.2 opener?",
+      "source_range": "§8 question 1",
+      "status": "verified"
+    },
+    {
+      "from": "n6",
+      "to": "n54",
+      "relation": "requires",
+      "grounding": "implied",
+      "label": null,
+      "quote": "Which model should the builder use by default",
+      "source_range": "§8 question 2",
+      "status": "verified"
+    },
+    {
+      "from": "n48",
+      "to": "n55",
+      "relation": "requires",
+      "grounding": "implied",
+      "label": null,
+      "quote": "Should T0 subgraph proposals require an approver task too, or is the existing save+validate gate enough?",
+      "source_range": "§8 question 3",
+      "status": "verified"
+    },
+    {
+      "from": "n9",
+      "to": "n56",
+      "relation": "requires",
+      "grounding": "implied",
+      "label": null,
+      "quote": "Is a canvas Inbox view of approver tasks in scope for v0.2",
+      "source_range": "§8 question 5",
+      "status": "verified"
+    },
+    {
+      "from": "n35",
+      "to": "n57",
+      "relation": "requires",
+      "grounding": "implied",
+      "label": null,
+      "quote": "Do we require the reviewer-judge calibration set (labeled benign/malicious) before any T1 ships",
+      "source_range": "§8 question 8",
+      "status": "verified"
+    }
+  ],
+  "meta": {
+    "created": "2026-10-11T03:13:18.412Z",
+    "model_used": "anthropic/claude-sonnet-5.5",
+    "structured": "sent",
+    "granularity": "medium",
+    "prompt_sha": "e7cfaa2c5b54",
+    "verification": {
+      "exact": 125,
+      "normalized": 5,
+      "fuzzy": 0,
+      "unverified": 0
+    }
+  }
+}

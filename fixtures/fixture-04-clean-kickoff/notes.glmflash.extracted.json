@@ -1,0 +1,307 @@
+{
+  "graph_id": "e6eaddca-e616-4c48-9219-bfcd20204c93",
+  "map_type": "plan",
+  "nodes": [
+    {
+      "id": "n1",
+      "label": "Extend Riverside Trail 1.2 miles",
+      "kind": "claim",
+      "provenance": [
+        {
+          "source_range": "Purpose",
+          "quote": "extend the Riverside Trail by 1.2 miles from the Main Street bridge to the mill ruins"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n2",
+      "label": "Use abandoned rail bed alignment",
+      "kind": "decision",
+      "provenance": [
+        {
+          "source_range": "Decisions",
+          "quote": "use the abandoned rail bed alignment"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n3",
+      "label": "Rail bed avoids private parcels",
+      "kind": "option",
+      "provenance": [
+        {
+          "source_range": "Decisions",
+          "quote": "avoids two private parcels"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n4",
+      "label": "Rail bed has compacted base",
+      "kind": "option",
+      "provenance": [
+        {
+          "source_range": "Decisions",
+          "quote": "already has a compacted base"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n5",
+      "label": "Railroad easement required",
+      "kind": "prereq",
+      "provenance": [
+        {
+          "source_range": "Prerequisites",
+          "quote": "needs an easement from the railroad holding company before any design work"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n6",
+      "label": "Wetland delineation required",
+      "kind": "prereq",
+      "provenance": [
+        {
+          "source_range": "Prerequisites",
+          "quote": "wetland delineation must be completed before construction permits are filed"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n7",
+      "label": "Signed maintenance agreement required",
+      "kind": "prereq",
+      "provenance": [
+        {
+          "source_range": "Prerequisites",
+          "quote": "signed maintenance agreement before it will accept the trail dedication"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n8",
+      "label": "Request easement application packet",
+      "kind": "action",
+      "provenance": [
+        {
+          "source_range": "Plan",
+          "quote": "request the easement application packet"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n9",
+      "label": "Commission wetland delineation",
+      "kind": "action",
+      "provenance": [
+        {
+          "source_range": "Plan",
+          "quote": "commission the wetland delineation"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n10",
+      "label": "Draft maintenance agreement",
+      "kind": "action",
+      "provenance": [
+        {
+          "source_range": "Plan",
+          "quote": "draft the maintenance agreement for the parks department"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n11",
+      "label": "Solicit construction bids",
+      "kind": "action",
+      "provenance": [
+        {
+          "source_range": "Plan",
+          "quote": "solicit construction bids"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n12",
+      "label": "Fixed $180,000 grant budget",
+      "kind": "note",
+      "provenance": [
+        {
+          "source_range": "Constraints",
+          "quote": "grant budget is fixed at $180,000 and cannot absorb overruns"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n13",
+      "label": "Finish before October festival",
+      "kind": "note",
+      "provenance": [
+        {
+          "source_range": "Constraints",
+          "quote": "All work must finish before the October festival season begins"
+        }
+      ],
+      "provenance_status": "verified"
+    }
+  ],
+  "edges": [
+    {
+      "from": "n3",
+      "to": "n2",
+      "relation": "supports",
+      "grounding": "explicit",
+      "label": "Benefits justify alignment choice",
+      "quote": "avoids two private parcels and already has a compacted base",
+      "source_range": "Decisions",
+      "status": "verified"
+    },
+    {
+      "from": "n4",
+      "to": "n2",
+      "relation": "supports",
+      "grounding": "explicit",
+      "label": "Compacted base supports choice",
+      "quote": "already has a compacted base",
+      "source_range": "Decisions",
+      "status": "verified"
+    },
+    {
+      "from": "n2",
+      "to": "n1",
+      "relation": "part_of",
+      "grounding": "implied",
+      "label": "Alignment part of trail project",
+      "quote": "extend the Riverside Trail by 1.2 miles",
+      "source_range": "Decisions",
+      "status": "verified"
+    },
+    {
+      "from": "n8",
+      "to": "n5",
+      "relation": "requires",
+      "grounding": "implied",
+      "label": "Packet request needs easement",
+      "quote": "request the easement application packet",
+      "source_range": "Plan",
+      "status": "verified"
+    },
+    {
+      "from": "n9",
+      "to": "n6",
+      "relation": "requires",
+      "grounding": "implied",
+      "label": "Commissioning needs delineation",
+      "quote": "commission the wetland delineation",
+      "source_range": "Plan",
+      "status": "verified"
+    },
+    {
+      "from": "n10",
+      "to": "n7",
+      "relation": "requires",
+      "grounding": "implied",
+      "label": "Drafting needs agreement",
+      "quote": "draft the maintenance agreement",
+      "source_range": "Plan",
+      "status": "verified"
+    },
+    {
+      "from": "n9",
+      "to": "n8",
+      "relation": "next",
+      "grounding": "explicit",
+      "label": "Easement step precedes delineation",
+      "quote": "Next, the committee will commission the wetland delineation",
+      "source_range": "Plan",
+      "status": "verified"
+    },
+    {
+      "from": "n10",
+      "to": "n9",
+      "relation": "next",
+      "grounding": "explicit",
+      "label": "Delineation precedes agreement",
+      "quote": "Then, the committee will draft the maintenance agreement",
+      "source_range": "Plan",
+      "status": "verified"
+    },
+    {
+      "from": "n11",
+      "to": "n10",
+      "relation": "next",
+      "grounding": "explicit",
+      "label": "Agreement precedes bids",
+      "quote": "After those are approved, the committee will solicit construction bids",
+      "source_range": "Plan",
+      "status": "verified"
+    },
+    {
+      "from": "n6",
+      "to": "n11",
+      "relation": "requires",
+      "grounding": "implied",
+      "label": "Bids need prerequisites done",
+      "quote": "wetland delineation must be completed before construction permits are filed",
+      "source_range": "Prerequisites",
+      "status": "verified"
+    },
+    {
+      "from": "n13",
+      "to": "n11",
+      "relation": "requires",
+      "grounding": "implied",
+      "label": "Bids constrained by deadline",
+      "quote": "All work must finish before the October festival season begins",
+      "source_range": "Constraints",
+      "status": "verified"
+    },
+    {
+      "from": "n12",
+      "to": "n11",
+      "relation": "requires",
+      "grounding": "implied",
+      "label": "Bids constrained by budget",
+      "quote": "grant budget is fixed at $180,000",
+      "source_range": "Constraints",
+      "status": "verified"
+    },
+    {
+      "from": "n11",
+      "to": "n1",
+      "relation": "part_of",
+      "grounding": "implied",
+      "label": "Bidding part of trail project",
+      "quote": "the committee will solicit construction bids",
+      "source_range": "Plan",
+      "status": "verified"
+    }
+  ],
+  "meta": {
+    "created": "2026-10-11T14:18:50.415Z",
+    "model_used": "z-ai/glm-5.3-flash",
+    "structured": "strict",
+    "granularity": "medium",
+    "prompt_sha": "e7cfaa2c5b54",
+    "verification": {
+      "exact": 21,
+      "normalized": 5,
+      "fuzzy": 0,
+      "unverified": 0
+    }
+  }
+}

@@ -1,0 +1,1145 @@
+{
+  "graph_id": "17be698e-4f68-4eee-9879-00a5e0d4c92d",
+  "map_type": "plan",
+  "nodes": [
+    {
+      "id": "n1",
+      "label": "Literature repository builder recipe",
+      "kind": "action",
+      "provenance": [
+        {
+          "source_range": "L1 section intro",
+          "quote": "Build a repository of literature on a topic, end to end."
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n2",
+      "label": "Build boolean query via LLM loop",
+      "kind": "action",
+      "provenance": [
+        {
+          "source_range": "L1, step 1",
+          "quote": "Conversation with an LLM that produces a boolean query."
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n3",
+      "label": "Search and retrieve paper metadata",
+      "kind": "action",
+      "provenance": [
+        {
+          "source_range": "L1, step 2",
+          "quote": "Query to a table of titles, authors, abstracts, links."
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n4",
+      "label": "Check PDF availability per paper",
+      "kind": "action",
+      "provenance": [
+        {
+          "source_range": "L1, step 3",
+          "quote": "open-access lookup, `control.if` to split downloadable from not."
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n5",
+      "label": "Batched human task for paywalled papers",
+      "kind": "action",
+      "provenance": [
+        {
+          "source_range": "L1, step 3",
+          "quote": "The rest go to one batched contributor `human.task` (the paywall list), then `control.merge`."
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n6",
+      "label": "Extract text, figures, equations, tables",
+      "kind": "action",
+      "provenance": [
+        {
+          "source_range": "L1, step 4",
+          "quote": "Text, figures, equations, tables from each PDF into the repository."
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n7",
+      "label": "Upsert papers into repository by DOI",
+      "kind": "action",
+      "provenance": [
+        {
+          "source_range": "L1, step 5",
+          "quote": "Upsert by DOI so re-runs are incremental."
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n8",
+      "label": "Persistent repository node",
+      "kind": "prereq",
+      "provenance": [
+        {
+          "source_range": "Shared missing pieces, P1",
+          "quote": "**Repository node**: persistent dataset, upsert by key (e.g. DOI), idempotent, queryable across runs"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n9",
+      "label": "HTTP and MCP tool nodes",
+      "kind": "prereq",
+      "provenance": [
+        {
+          "source_range": "Shared missing pieces, P2",
+          "quote": "**HTTP / MCP tool nodes** (`tool.http`, `tool.mcp`)"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n10",
+      "label": "Batched human tasks with drop folder",
+      "kind": "prereq",
+      "provenance": [
+        {
+          "source_range": "Shared missing pieces, P3",
+          "quote": "**Batched human tasks + drop folder** (`items[]`, partial completion)"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n11",
+      "label": "PDF extraction node",
+      "kind": "prereq",
+      "provenance": [
+        {
+          "source_range": "Shared missing pieces, P4",
+          "quote": "**`pdf.extract`** (text layer, optional OCR for tables and equations)"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n12",
+      "label": "Image generation node",
+      "kind": "prereq",
+      "provenance": [
+        {
+          "source_range": "Shared missing pieces, P5",
+          "quote": "**Image generation node** (`image.generate`; cloud API or local runtime)"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n13",
+      "label": "Multimodal messages with image parts",
+      "kind": "prereq",
+      "provenance": [
+        {
+          "source_range": "Shared missing pieces, P6",
+          "quote": "**Multimodal messages** (image parts in `Message`, provider adapters, vision judge)"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n14",
+      "label": "Judge with rubric as input port",
+      "kind": "prereq",
+      "provenance": [
+        {
+          "source_range": "Shared missing pieces, P7",
+          "quote": "**Judge with rubric as an input port** (plus calibration keyed to a rubric version)"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n15",
+      "label": "Contact-sheet node for human review",
+      "kind": "prereq",
+      "provenance": [
+        {
+          "source_range": "Shared missing pieces, P8",
+          "quote": "**Contact-sheet node** (batch of images + scores into one `figure` for human review)"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n16",
+      "label": "Artifact-aware tool nodes",
+      "kind": "prereq",
+      "provenance": [
+        {
+          "source_range": "Shared missing pieces, P9",
+          "quote": "**Artifact-aware tools** (tool nodes that read and write refs: files, images, meshes)"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n17",
+      "label": "External-tool fittings",
+      "kind": "prereq",
+      "provenance": [
+        {
+          "source_range": "Shared missing pieces, P10",
+          "quote": "**External-tool fittings** (Inkscape, GIMP, Blender, vtracer, ComfyUI)"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n18",
+      "label": "Gated write to versioned guide",
+      "kind": "prereq",
+      "provenance": [
+        {
+          "source_range": "Shared missing pieces, P11",
+          "quote": "**Gated write to a versioned guide** (staged diff, approver task; same shape as audition `promote`)"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n19",
+      "label": "Recipe catalog",
+      "kind": "prereq",
+      "provenance": [
+        {
+          "source_range": "Shared missing pieces, P12",
+          "quote": "**Recipe catalog** (folder, listing, instantiate-with-args, version pin)"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n20",
+      "label": "Repository ingestion tools recipe",
+      "kind": "action",
+      "provenance": [
+        {
+          "source_range": "L2 section",
+          "quote": "Separate recipes that read from the repository: summarize each paper, extract claims or methods, tag by topic."
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n21",
+      "label": "Suitability analysis recipe",
+      "kind": "action",
+      "provenance": [
+        {
+          "source_range": "L3 section",
+          "quote": "Rate each paper's fit for a purpose (relevance, study type, data availability) from title and abstract."
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n22",
+      "label": "Prompt generator with rubric recipe",
+      "kind": "action",
+      "provenance": [
+        {
+          "source_range": "A1, step 1",
+          "quote": "An LLM turns an asset brief into a prompt **and** a rubric (criteria and weights)."
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n23",
+      "label": "Generate then improve with tools recipe",
+      "kind": "action",
+      "provenance": [
+        {
+          "source_range": "A2 section",
+          "quote": "Take a calibrated generator's output and increase its value."
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n24",
+      "label": "Style rubric and guide learning recipe",
+      "kind": "action",
+      "provenance": [
+        {
+          "source_range": "A3 section",
+          "quote": "Generate a long list of assets under one style. Judge good or not."
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n25",
+      "label": "2D image to 3D model recipe",
+      "kind": "action",
+      "provenance": [
+        {
+          "source_range": "A4 section",
+          "quote": "Image to 3D reconstruction model to headless Blender cleanup and renders to vision judge on the renders to human review."
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n26",
+      "label": "Unverified: human task inside loop body",
+      "kind": "question",
+      "provenance": [
+        {
+          "source_range": "Verified facts, last bullet",
+          "quote": "Unverified: whether a `human.task` inside a `control.loop` body works end to end."
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n27",
+      "label": "Google Scholar unsuitable for scraping",
+      "kind": "claim",
+      "provenance": [
+        {
+          "source_range": "L1, step 2",
+          "quote": "Google Scholar has no API and scraping is brittle and against its terms."
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n28",
+      "label": "Use OpenAlex, Crossref, Semantic Scholar, arXiv",
+      "kind": "option",
+      "provenance": [
+        {
+          "source_range": "L1, step 2",
+          "quote": "Use OpenAlex, Crossref, Semantic Scholar or arXiv"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n29",
+      "label": "Per-run changing rubric is uncalibrated",
+      "kind": "claim",
+      "provenance": [
+        {
+          "source_range": "A1 notes",
+          "quote": "A rubric that changes every run is automatically uncalibrated, because calibration is keyed to the question template."
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n30",
+      "label": "Spike outside engine for image-to-3D",
+      "kind": "action",
+      "provenance": [
+        {
+          "source_range": "A4 bullets",
+          "quote": "Suggest a spike outside the engine first, to see whether any current image-to-3D model gives acceptable results."
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n31",
+      "label": "Minimal image API plus image parts spike",
+      "kind": "action",
+      "provenance": [
+        {
+          "source_range": "Suggested order, item 3",
+          "quote": "after a minimal P5 + P6 spike (one image API plus image parts in messages)"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n32",
+      "label": "Should repository be core node, plugin, or convention?",
+      "kind": "question",
+      "provenance": [
+        {
+          "source_range": "Open questions, bullet 1",
+          "quote": "Should P1 (repository) be a core node, a plugin, or a convention over the artifact store plus SQLite?"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n33",
+      "label": "Add image pieces to M2/M3 or wait for M4?",
+      "kind": "question",
+      "provenance": [
+        {
+          "source_range": "Open questions, bullet 2",
+          "quote": "Should P5/P6 be added to M2/M3 or wait for M4? They have no roadmap slot today."
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n34",
+      "label": "Which image generators to target first?",
+      "kind": "question",
+      "provenance": [
+        {
+          "source_range": "Open questions, bullet 4",
+          "quote": "Which image generators to target first (cloud API, local ComfyUI, or both)?"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n35",
+      "label": "Messages cannot carry images yet",
+      "kind": "claim",
+      "provenance": [
+        {
+          "source_range": "Verified facts, bullet 2",
+          "quote": "`Message.content` is a plain string: **model requests cannot carry images yet**."
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n36",
+      "label": "tool.python cannot access image artifacts",
+      "kind": "claim",
+      "provenance": [
+        {
+          "source_range": "Verified facts, bullet 3",
+          "quote": "`tool.python` receives one JSON value and has no artifact access"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n37",
+      "label": "Producing a usable mesh is the hard part",
+      "kind": "claim",
+      "provenance": [
+        {
+          "source_range": "A4 bullets",
+          "quote": "The hard part is producing a usable mesh, which the engine cannot improve."
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n38",
+      "label": "Vision judge scores images against rubric",
+      "kind": "action",
+      "provenance": [
+        {
+          "source_range": "A1, step 3",
+          "quote": "A vision judge scores each image against the rubric (needs P6, P7)."
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n39",
+      "label": "Human reviews trend on contact sheet",
+      "kind": "action",
+      "provenance": [
+        {
+          "source_range": "A1, step 4",
+          "quote": "goes to a human who reviews the **trend** and gives feedback (needs P8)."
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n40",
+      "label": "Feed feedback back into prompt generator",
+      "kind": "action",
+      "provenance": [
+        {
+          "source_range": "A1, step 5",
+          "quote": "Feedback flows back into the prompt generator (`control.loop` carry)."
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n41",
+      "label": "Deterministic pixel art and rescale steps",
+      "kind": "action",
+      "provenance": [
+        {
+          "source_range": "A2 bullets",
+          "quote": "are deterministic. A pure, cacheable node is enough"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n42",
+      "label": "Vectorize with vtracer or potrace",
+      "kind": "action",
+      "provenance": [
+        {
+          "source_range": "A2 bullets",
+          "quote": "via `vtracer` or `potrace` as a CLI fitting (P10, M4)."
+        }
+      ],
+      "provenance_status": "verified"
+    }
+  ],
+  "edges": [
+    {
+      "from": "n2",
+      "to": "n1",
+      "relation": "part_of",
+      "grounding": "implied",
+      "label": null,
+      "quote": "Conversation with an LLM that produces a boolean query.",
+      "source_range": "L1, step 1",
+      "status": "verified"
+    },
+    {
+      "from": "n3",
+      "to": "n1",
+      "relation": "part_of",
+      "grounding": "implied",
+      "label": null,
+      "quote": "Query to a table of titles, authors, abstracts, links.",
+      "source_range": "L1, step 2",
+      "status": "verified"
+    },
+    {
+      "from": "n4",
+      "to": "n1",
+      "relation": "part_of",
+      "grounding": "implied",
+      "label": null,
+      "quote": "open-access lookup, `control.if` to split downloadable from not.",
+      "source_range": "L1, step 3",
+      "status": "verified"
+    },
+    {
+      "from": "n6",
+      "to": "n1",
+      "relation": "part_of",
+      "grounding": "implied",
+      "label": null,
+      "quote": "Text, figures, equations, tables from each PDF into the repository.",
+      "source_range": "L1, step 4",
+      "status": "verified"
+    },
+    {
+      "from": "n7",
+      "to": "n1",
+      "relation": "part_of",
+      "grounding": "implied",
+      "label": null,
+      "quote": "Upsert by DOI so re-runs are incremental.",
+      "source_range": "L1, step 5",
+      "status": "verified"
+    },
+    {
+      "from": "n2",
+      "to": "n3",
+      "relation": "next",
+      "grounding": "implied",
+      "label": null,
+      "quote": "Query to a table of titles, authors, abstracts, links.",
+      "source_range": "L1, steps 1-2",
+      "status": "verified"
+    },
+    {
+      "from": "n3",
+      "to": "n4",
+      "relation": "next",
+      "grounding": "implied",
+      "label": null,
+      "quote": "open-access lookup, `control.if` to split downloadable from not.",
+      "source_range": "L1, steps 2-3",
+      "status": "verified"
+    },
+    {
+      "from": "n4",
+      "to": "n6",
+      "relation": "next",
+      "grounding": "implied",
+      "label": null,
+      "quote": "Text, figures, equations, tables from each PDF into the repository.",
+      "source_range": "L1, steps 3-4",
+      "status": "verified"
+    },
+    {
+      "from": "n6",
+      "to": "n7",
+      "relation": "next",
+      "grounding": "implied",
+      "label": null,
+      "quote": "Upsert by DOI so re-runs are incremental.",
+      "source_range": "L1, steps 4-5",
+      "status": "verified"
+    },
+    {
+      "from": "n5",
+      "to": "n4",
+      "relation": "part_of",
+      "grounding": "explicit",
+      "label": null,
+      "quote": "The rest go to one batched contributor `human.task` (the paywall list), then `control.merge`.",
+      "source_range": "L1, step 3",
+      "status": "verified"
+    },
+    {
+      "from": "n2",
+      "to": "n26",
+      "relation": "requires",
+      "grounding": "explicit",
+      "label": "subject to verification",
+      "quote": "Feasibility: **A**, subject to verifying `human.task` inside a loop body.",
+      "source_range": "L1, step 1",
+      "status": "verified"
+    },
+    {
+      "from": "n1",
+      "to": "n8",
+      "relation": "requires",
+      "grounding": "explicit",
+      "label": null,
+      "quote": "Literature repository builder: **B** (needs P1, P2, P3, P4)",
+      "source_range": "L1 heading",
+      "status": "verified"
+    },
+    {
+      "from": "n1",
+      "to": "n9",
+      "relation": "requires",
+      "grounding": "explicit",
+      "label": null,
+      "quote": "Literature repository builder: **B** (needs P1, P2, P3, P4)",
+      "source_range": "L1 heading",
+      "status": "verified"
+    },
+    {
+      "from": "n1",
+      "to": "n10",
+      "relation": "requires",
+      "grounding": "explicit",
+      "label": null,
+      "quote": "Literature repository builder: **B** (needs P1, P2, P3, P4)",
+      "source_range": "L1 heading",
+      "status": "verified"
+    },
+    {
+      "from": "n1",
+      "to": "n11",
+      "relation": "requires",
+      "grounding": "explicit",
+      "label": null,
+      "quote": "Literature repository builder: **B** (needs P1, P2, P3, P4)",
+      "source_range": "L1 heading",
+      "status": "verified"
+    },
+    {
+      "from": "n3",
+      "to": "n9",
+      "relation": "requires",
+      "grounding": "explicit",
+      "label": null,
+      "quote": "An LLM translates the boolean query per backend, validated with `check.schema`. Needs P2.",
+      "source_range": "L1, step 2",
+      "status": "verified"
+    },
+    {
+      "from": "n5",
+      "to": "n10",
+      "relation": "requires",
+      "grounding": "explicit",
+      "label": null,
+      "quote": "Needs P2, P3.",
+      "source_range": "L1, step 3",
+      "status": "verified"
+    },
+    {
+      "from": "n6",
+      "to": "n11",
+      "relation": "requires",
+      "grounding": "explicit",
+      "label": null,
+      "quote": "Needs P4 and P1.",
+      "source_range": "L1, step 4",
+      "status": "verified"
+    },
+    {
+      "from": "n6",
+      "to": "n8",
+      "relation": "requires",
+      "grounding": "explicit",
+      "label": null,
+      "quote": "Needs P4 and P1.",
+      "source_range": "L1, step 4",
+      "status": "verified"
+    },
+    {
+      "from": "n7",
+      "to": "n8",
+      "relation": "requires",
+      "grounding": "explicit",
+      "label": null,
+      "quote": "Upsert by DOI so re-runs are incremental. The map is cached per item by content, so new papers are the only work. Needs P1.",
+      "source_range": "L1, step 5",
+      "status": "verified"
+    },
+    {
+      "from": "n27",
+      "to": "n28",
+      "relation": "causes",
+      "grounding": "implied",
+      "label": "motivates alternatives",
+      "quote": "Google Scholar has no API and scraping is brittle and against its terms.",
+      "source_range": "L1, step 2",
+      "status": "verified"
+    },
+    {
+      "from": "n28",
+      "to": "n3",
+      "relation": "part_of",
+      "grounding": "implied",
+      "label": null,
+      "quote": "Use OpenAlex, Crossref, Semantic Scholar or arXiv",
+      "source_range": "L1, step 2",
+      "status": "verified"
+    },
+    {
+      "from": "n20",
+      "to": "n8",
+      "relation": "requires",
+      "grounding": "explicit",
+      "label": null,
+      "quote": "Only the repository read and write is missing (P1).",
+      "source_range": "L2 bullets",
+      "status": "verified"
+    },
+    {
+      "from": "n21",
+      "to": "n19",
+      "relation": "supports",
+      "grounding": "explicit",
+      "label": "exercises catalog",
+      "quote": "as a first recipe to exercise the recipe catalog (P12) and the calibration loop.",
+      "source_range": "Suggested order, item 1",
+      "status": "verified"
+    },
+    {
+      "from": "n22",
+      "to": "n12",
+      "relation": "requires",
+      "grounding": "explicit",
+      "label": null,
+      "quote": "Prompt generator with rubric and human trend review: **C** today, **B** once P5-P8 exist",
+      "source_range": "A1 heading",
+      "status": "verified"
+    },
+    {
+      "from": "n22",
+      "to": "n13",
+      "relation": "requires",
+      "grounding": "explicit",
+      "label": null,
+      "quote": "Prompt generator with rubric and human trend review: **C** today, **B** once P5-P8 exist",
+      "source_range": "A1 heading",
+      "status": "verified"
+    },
+    {
+      "from": "n22",
+      "to": "n14",
+      "relation": "requires",
+      "grounding": "explicit",
+      "label": null,
+      "quote": "Prompt generator with rubric and human trend review: **C** today, **B** once P5-P8 exist",
+      "source_range": "A1 heading",
+      "status": "verified"
+    },
+    {
+      "from": "n22",
+      "to": "n15",
+      "relation": "requires",
+      "grounding": "explicit",
+      "label": null,
+      "quote": "Prompt generator with rubric and human trend review: **C** today, **B** once P5-P8 exist",
+      "source_range": "A1 heading",
+      "status": "verified"
+    },
+    {
+      "from": "n38",
+      "to": "n22",
+      "relation": "part_of",
+      "grounding": "implied",
+      "label": null,
+      "quote": "A vision judge scores each image against the rubric (needs P6, P7).",
+      "source_range": "A1, step 3",
+      "status": "verified"
+    },
+    {
+      "from": "n39",
+      "to": "n22",
+      "relation": "part_of",
+      "grounding": "implied",
+      "label": null,
+      "quote": "goes to a human who reviews the **trend** and gives feedback (needs P8).",
+      "source_range": "A1, step 4",
+      "status": "verified"
+    },
+    {
+      "from": "n38",
+      "to": "n39",
+      "relation": "next",
+      "grounding": "implied",
+      "label": null,
+      "quote": "A contact sheet of the batch and scores goes to a human",
+      "source_range": "A1, steps 3-4",
+      "status": "verified"
+    },
+    {
+      "from": "n39",
+      "to": "n40",
+      "relation": "next",
+      "grounding": "explicit",
+      "label": null,
+      "quote": "Feedback flows back into the prompt generator (`control.loop` carry).",
+      "source_range": "A1, step 5",
+      "status": "verified"
+    },
+    {
+      "from": "n38",
+      "to": "n13",
+      "relation": "requires",
+      "grounding": "explicit",
+      "label": null,
+      "quote": "A vision judge scores each image against the rubric (needs P6, P7).",
+      "source_range": "A1, step 3",
+      "status": "verified"
+    },
+    {
+      "from": "n38",
+      "to": "n14",
+      "relation": "requires",
+      "grounding": "explicit",
+      "label": null,
+      "quote": "A vision judge scores each image against the rubric (needs P6, P7).",
+      "source_range": "A1, step 3",
+      "status": "verified"
+    },
+    {
+      "from": "n39",
+      "to": "n15",
+      "relation": "requires",
+      "grounding": "explicit",
+      "label": null,
+      "quote": "goes to a human who reviews the **trend** and gives feedback (needs P8).",
+      "source_range": "A1, step 4",
+      "status": "verified"
+    },
+    {
+      "from": "n29",
+      "to": "n14",
+      "relation": "causes",
+      "grounding": "explicit",
+      "label": "motivates versioned rubric",
+      "quote": "Prefer a rubric that is revised on purpose and versioned (P7).",
+      "source_range": "A1 notes",
+      "status": "verified"
+    },
+    {
+      "from": "n35",
+      "to": "n13",
+      "relation": "causes",
+      "grounding": "implied",
+      "label": "motivates multimodal support",
+      "quote": "model requests cannot carry images yet",
+      "source_range": "Verified facts, bullet 2",
+      "status": "verified"
+    },
+    {
+      "from": "n41",
+      "to": "n23",
+      "relation": "part_of",
+      "grounding": "implied",
+      "label": null,
+      "quote": "are deterministic. A pure, cacheable node is enough",
+      "source_range": "A2 bullets",
+      "status": "verified"
+    },
+    {
+      "from": "n42",
+      "to": "n23",
+      "relation": "part_of",
+      "grounding": "implied",
+      "label": null,
+      "quote": "via `vtracer` or `potrace` as a CLI fitting (P10, M4).",
+      "source_range": "A2 bullets",
+      "status": "verified"
+    },
+    {
+      "from": "n41",
+      "to": "n16",
+      "relation": "requires",
+      "grounding": "explicit",
+      "label": null,
+      "quote": "but it needs P9, since `tool.python` cannot read image refs today.",
+      "source_range": "A2 bullets",
+      "status": "verified"
+    },
+    {
+      "from": "n36",
+      "to": "n16",
+      "relation": "causes",
+      "grounding": "explicit",
+      "label": "motivates artifact-aware tools",
+      "quote": "but it needs P9, since `tool.python` cannot read image refs today.",
+      "source_range": "A2 bullets",
+      "status": "verified"
+    },
+    {
+      "from": "n42",
+      "to": "n17",
+      "relation": "requires",
+      "grounding": "explicit",
+      "label": null,
+      "quote": "via `vtracer` or `potrace` as a CLI fitting (P10, M4).",
+      "source_range": "A2 bullets",
+      "status": "verified"
+    },
+    {
+      "from": "n24",
+      "to": "n12",
+      "relation": "requires",
+      "grounding": "explicit",
+      "label": null,
+      "quote": "Needs P5, P6, P7, P8.",
+      "source_range": "A3 bullets",
+      "status": "verified"
+    },
+    {
+      "from": "n24",
+      "to": "n13",
+      "relation": "requires",
+      "grounding": "explicit",
+      "label": null,
+      "quote": "Needs P5, P6, P7, P8.",
+      "source_range": "A3 bullets",
+      "status": "verified"
+    },
+    {
+      "from": "n24",
+      "to": "n14",
+      "relation": "requires",
+      "grounding": "explicit",
+      "label": null,
+      "quote": "Needs P5, P6, P7, P8.",
+      "source_range": "A3 bullets",
+      "status": "verified"
+    },
+    {
+      "from": "n24",
+      "to": "n15",
+      "relation": "requires",
+      "grounding": "explicit",
+      "label": null,
+      "quote": "Needs P5, P6, P7, P8.",
+      "source_range": "A3 bullets",
+      "status": "verified"
+    },
+    {
+      "from": "n24",
+      "to": "n18",
+      "relation": "requires",
+      "grounding": "explicit",
+      "label": null,
+      "quote": "Changes to it should be staged diffs approved by the owner (P11, the same shape as audition `promote`).",
+      "source_range": "A3 bullets",
+      "status": "verified"
+    },
+    {
+      "from": "n25",
+      "to": "n12",
+      "relation": "requires",
+      "grounding": "explicit",
+      "label": null,
+      "quote": "It also needs P5, P6, P9, P10 and a GPU or API for the reconstruction model.",
+      "source_range": "A4 bullets",
+      "status": "verified"
+    },
+    {
+      "from": "n25",
+      "to": "n13",
+      "relation": "requires",
+      "grounding": "explicit",
+      "label": null,
+      "quote": "It also needs P5, P6, P9, P10 and a GPU or API for the reconstruction model.",
+      "source_range": "A4 bullets",
+      "status": "verified"
+    },
+    {
+      "from": "n25",
+      "to": "n16",
+      "relation": "requires",
+      "grounding": "explicit",
+      "label": null,
+      "quote": "It also needs P5, P6, P9, P10 and a GPU or API for the reconstruction model.",
+      "source_range": "A4 bullets",
+      "status": "verified"
+    },
+    {
+      "from": "n25",
+      "to": "n17",
+      "relation": "requires",
+      "grounding": "explicit",
+      "label": null,
+      "quote": "It also needs P5, P6, P9, P10 and a GPU or API for the reconstruction model.",
+      "source_range": "A4 bullets",
+      "status": "verified"
+    },
+    {
+      "from": "n37",
+      "to": "n30",
+      "relation": "causes",
+      "grounding": "explicit",
+      "label": "motivates spike",
+      "quote": "Suggest a spike outside the engine first, to see whether any current image-to-3D model gives acceptable results.",
+      "source_range": "A4 bullets",
+      "status": "verified"
+    },
+    {
+      "from": "n25",
+      "to": "n30",
+      "relation": "requires",
+      "grounding": "explicit",
+      "label": null,
+      "quote": "**A3**, then **A4** only after a feasibility spike.",
+      "source_range": "Suggested order, item 5",
+      "status": "verified"
+    },
+    {
+      "from": "n22",
+      "to": "n31",
+      "relation": "requires",
+      "grounding": "explicit",
+      "label": null,
+      "quote": "after a minimal P5 + P6 spike (one image API plus image parts in messages)",
+      "source_range": "Suggested order, item 3",
+      "status": "verified"
+    },
+    {
+      "from": "n21",
+      "to": "n1",
+      "relation": "next",
+      "grounding": "explicit",
+      "label": null,
+      "quote": "**L1** following the M3 roadmap (P1 added to it, since it is the main missing piece).",
+      "source_range": "Suggested order, item 2",
+      "status": "verified"
+    },
+    {
+      "from": "n1",
+      "to": "n22",
+      "relation": "next",
+      "grounding": "explicit",
+      "label": null,
+      "quote": "after a minimal P5 + P6 spike (one image API plus image parts in messages)",
+      "source_range": "Suggested order, item 3",
+      "status": "verified"
+    },
+    {
+      "from": "n22",
+      "to": "n23",
+      "relation": "next",
+      "grounding": "explicit",
+      "label": null,
+      "quote": "**A2** deterministic steps next (pixel art, rescale), then fittings.",
+      "source_range": "Suggested order, item 4",
+      "status": "verified"
+    },
+    {
+      "from": "n23",
+      "to": "n24",
+      "relation": "next",
+      "grounding": "explicit",
+      "label": null,
+      "quote": "**A3**, then **A4** only after a feasibility spike.",
+      "source_range": "Suggested order, item 5",
+      "status": "verified"
+    },
+    {
+      "from": "n24",
+      "to": "n25",
+      "relation": "next",
+      "grounding": "explicit",
+      "label": null,
+      "quote": "**A3**, then **A4** only after a feasibility spike.",
+      "source_range": "Suggested order, item 5",
+      "status": "verified"
+    },
+    {
+      "from": "n8",
+      "to": "n32",
+      "relation": "requires",
+      "grounding": "implied",
+      "label": "design decision pending",
+      "quote": "Should P1 (repository) be a core node, a plugin, or a convention over the artifact store plus SQLite?",
+      "source_range": "Open questions, bullet 1",
+      "status": "verified"
+    },
+    {
+      "from": "n12",
+      "to": "n33",
+      "relation": "requires",
+      "grounding": "implied",
+      "label": "roadmap slot pending",
+      "quote": "Should P5/P6 be added to M2/M3 or wait for M4? They have no roadmap slot today.",
+      "source_range": "Open questions, bullet 2",
+      "status": "verified"
+    },
+    {
+      "from": "n12",
+      "to": "n34",
+      "relation": "requires",
+      "grounding": "implied",
+      "label": "target choice pending",
+      "quote": "Which image generators to target first (cloud API, local ComfyUI, or both)?",
+      "source_range": "Open questions, bullet 4",
+      "status": "verified"
+    }
+  ],
+  "meta": {
+    "created": "2026-10-11T03:11:05.586Z",
+    "model_used": "anthropic/claude-sonnet-5.5",
+    "structured": "sent",
+    "granularity": "medium",
+    "prompt_sha": "e7cfaa2c5b54",
+    "verification": {
+      "exact": 104,
+      "normalized": 0,
+      "fuzzy": 0,
+      "unverified": 0
+    }
+  }
+}

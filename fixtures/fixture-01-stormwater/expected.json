@@ -1,0 +1,42 @@
+{
+  "nodes": [
+    { "label": "Maple Street flooding worsens", "kind": "claim" },
+    { "label": "1958 drains undersized", "kind": "claim" },
+    { "label": "October storms flooded basements", "kind": "claim" },
+    { "label": "Budget is 250,000 dollars", "kind": "assumption" },
+    { "label": "Solution maintainable by crew", "kind": "assumption" },
+    { "label": "School route stays unblocked", "kind": "assumption" },
+    { "label": "Permeable pavement and bioswales", "kind": "option" },
+    { "label": "Permeable pavement on 400 block", "kind": "action" },
+    { "label": "Two bioswales", "kind": "action" },
+    { "label": "Upsize 1958 storm drains", "kind": "option" },
+    { "label": "2024 pilot cut runoff 30 percent", "kind": "claim" },
+    { "label": "Choose green infrastructure", "kind": "decision" },
+    { "label": "Compaction-tested subgrade", "kind": "prereq" },
+    { "label": "Landscaping sign-off", "kind": "prereq" },
+    { "label": "Lane closure permit", "kind": "prereq" },
+    { "label": "Heavy equipment crew does not own", "kind": "claim" },
+    { "label": "Culvert replacement over 600,000", "kind": "claim" },
+    { "label": "Fund allows pavement spending", "kind": "question" },
+    { "label": "Alley right-of-way ownership", "kind": "question" }
+  ],
+  "edges": [
+    { "from": "1958 drains undersized", "to": "Maple Street flooding worsens", "relation": "causes" },
+    { "from": "October storms flooded basements", "to": "Maple Street flooding worsens", "relation": "supports" },
+    { "from": "Maple Street flooding worsens", "to": "Choose green infrastructure", "relation": "causes" },
+    { "from": "Permeable pavement and bioswales", "to": "Choose green infrastructure", "relation": "part_of" },
+    { "from": "Upsize 1958 storm drains", "to": "Choose green infrastructure", "relation": "part_of" },
+    { "from": "Permeable pavement on 400 block", "to": "Permeable pavement and bioswales", "relation": "part_of" },
+    { "from": "Two bioswales", "to": "Permeable pavement and bioswales", "relation": "part_of" },
+    { "from": "2024 pilot cut runoff 30 percent", "to": "Permeable pavement and bioswales", "relation": "supports" },
+    { "from": "Budget is 250,000 dollars", "to": "Permeable pavement and bioswales", "relation": "supports" },
+    { "from": "Permeable pavement on 400 block", "to": "Compaction-tested subgrade", "relation": "requires" },
+    { "from": "Two bioswales", "to": "Landscaping sign-off", "relation": "requires" },
+    { "from": "Permeable pavement and bioswales", "to": "School route stays unblocked", "relation": "requires" },
+    { "from": "Upsize 1958 storm drains", "to": "Lane closure permit", "relation": "requires" },
+    { "from": "Upsize 1958 storm drains", "to": "Heavy equipment crew does not own", "relation": "requires" },
+    { "from": "Culvert replacement over 600,000", "to": "Budget is 250,000 dollars", "relation": "contradicts" },
+    { "from": "Culvert replacement over 600,000", "to": "Upsize 1958 storm drains", "relation": "contradicts" },
+    { "from": "Heavy equipment crew does not own", "to": "Solution maintainable by crew", "relation": "contradicts" }
+  ]
+}

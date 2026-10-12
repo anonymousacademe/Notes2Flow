@@ -1,0 +1,2839 @@
+{
+  "graph_id": "76fff280-9dd4-4830-af4b-db18b53fe6d3",
+  "map_type": "plan",
+  "nodes": [
+    {
+      "id": "n1",
+      "label": "Design doc awaits owner approval",
+      "kind": "decision",
+      "provenance": [
+        {
+          "source_range": "header",
+          "quote": "Status: **DRAFT for owner approval** (design-first, standing rule"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n2",
+      "label": "Conversational node builder on canvas",
+      "kind": "claim",
+      "provenance": [
+        {
+          "source_range": "intro",
+          "quote": "click +, converse with an agent that can see the surrounding graph"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n3",
+      "label": "Builder reuses D20 pipeline",
+      "kind": "claim",
+      "provenance": [
+        {
+          "source_range": "intro",
+          "quote": "this is D20's pipeline behind a UI"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n4",
+      "label": "Builder speaks plain language",
+      "kind": "assumption",
+      "provenance": [
+        {
+          "source_range": "rules",
+          "quote": "Plain language. The canvas speaks in steps, not JSON"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n5",
+      "label": "JSON payloads rendered, never edited",
+      "kind": "assumption",
+      "provenance": [
+        {
+          "source_range": "rules",
+          "quote": "Never ask the user to write JSON. If a JSON payload must be inspected, it is rendered"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n6",
+      "label": "Builder cannot approve own node",
+      "kind": "assumption",
+      "provenance": [
+        {
+          "source_range": "rules",
+          "quote": "The builder never approves its own node (D20; D15)"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n7",
+      "label": "Owner approval gates permanence",
+      "kind": "assumption",
+      "provenance": [
+        {
+          "source_range": "rules",
+          "quote": "Owner approval is required for anything that becomes permanent"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n8",
+      "label": "Engine hashes untouched",
+      "kind": "assumption",
+      "provenance": [
+        {
+          "source_range": "rules",
+          "quote": "Nothing touches the engine's hashes: canvas-only keys live in `node.ui`"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n9",
+      "label": "Owner opens builder via plus or wire",
+      "kind": "action",
+      "provenance": [
+        {
+          "source_range": "1.1",
+          "quote": "The owner clicks **+** on the canvas (or drags a wire onto empty canvas"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n10",
+      "label": "Builder panel as side panel",
+      "kind": "action",
+      "provenance": [
+        {
+          "source_range": "1.1",
+          "quote": "This opens a *builder panel* — a side panel like the existing edit pane"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n11",
+      "label": "Server assembles graph context",
+      "kind": "action",
+      "provenance": [
+        {
+          "source_range": "1.1",
+          "quote": "the server assembles a **graph context** (§2.1): the neighboring steps' names"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n12",
+      "label": "Registry summary from existing endpoint",
+      "kind": "prereq",
+      "provenance": [
+        {
+          "source_range": "1.1",
+          "quote": "the installed node types (the registry summary the canvas already serves at `GET /api/registry`)"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n13",
+      "label": "Clarifying questions then proposal",
+      "kind": "action",
+      "provenance": [
+        {
+          "source_range": "1.1",
+          "quote": "The builder asks at most a couple of clarifying questions, then emits a **proposal**"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n14",
+      "label": "Ghost step preview on canvas",
+      "kind": "action",
+      "provenance": [
+        {
+          "source_range": "1.1",
+          "quote": "shows it as a preview on the canvas — a ghost step (or ghost sub-steps)"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n15",
+      "label": "Sandbox trial of proposal",
+      "kind": "action",
+      "provenance": [
+        {
+          "source_range": "1.1",
+          "quote": "the proposal first runs a **sandbox trial** (smoke test): the ghost step runs on a sample input"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n16",
+      "label": "No sandbox degrades to T0",
+      "kind": "decision",
+      "provenance": [
+        {
+          "source_range": "1.1",
+          "quote": "No sandbox available → the build stops at the proposal; the feature degrades to T0"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n17",
+      "label": "Out-of-band approval via inbox task",
+      "kind": "action",
+      "provenance": [
+        {
+          "source_range": "1.1",
+          "quote": "the proposal becomes an approver `human.task` in the inbox"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n18",
+      "label": "Reuses audition promote mechanism",
+      "kind": "claim",
+      "provenance": [
+        {
+          "source_range": "1.1",
+          "quote": "the same mechanism as audition `promote`"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n19",
+      "label": "Decision only via human-task channel",
+      "kind": "claim",
+      "provenance": [
+        {
+          "source_range": "1.1",
+          "quote": "**The builder agent has no path to that decision** — it is delivered through the human-task channel only"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n20",
+      "label": "Approved ghost becomes real step",
+      "kind": "action",
+      "provenance": [
+        {
+          "source_range": "1.1",
+          "quote": "After approval the ghost becomes a real step, wired where the owner started"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n21",
+      "label": "New node added to workspace registry",
+      "kind": "action",
+      "provenance": [
+        {
+          "source_range": "1.1",
+          "quote": "appears in the palette for reuse (workspace registry)"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n22",
+      "label": "T0 compose tier",
+      "kind": "option",
+      "provenance": [
+        {
+          "source_range": "1.3",
+          "quote": "T0 (compose) | Ghost steps + a wiring description"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n23",
+      "label": "T1 pure code tier",
+      "kind": "option",
+      "provenance": [
+        {
+          "source_range": "1.3",
+          "quote": "T1 (pure code) | Code + trial output + check report"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n24",
+      "label": "T2 network hosts tier",
+      "kind": "option",
+      "provenance": [
+        {
+          "source_range": "1.3",
+          "quote": "T2 (network/hosts) | Code + declared hosts + check report"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n25",
+      "label": "T3 executables GPU tier",
+      "kind": "option",
+      "provenance": [
+        {
+          "source_range": "1.3",
+          "quote": "T3 (executables/GPU) | Everything above + resource note"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n26",
+      "label": "Tier determines approval and preview",
+      "kind": "decision",
+      "provenance": [
+        {
+          "source_range": "1.3",
+          "quote": "What changes in the conversation across tiers"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n27",
+      "label": "Errors name node and fix",
+      "kind": "assumption",
+      "provenance": [
+        {
+          "source_range": "1.1",
+          "quote": "Errors name the node and the fix (the pattern `issueList()` already follows)"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "n28",
+      "label": "Open input port from wire drag",
+      "kind": "note",
+      "provenance": [
+        {
+          "source_range": "1.1",
+          "quote": "the open input port (if the owner dragged from a wire)"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "assembler",
+      "label": "Graph-context assembler component",
+      "kind": "action",
+      "provenance": [
+        {
+          "source_range": "2.1.1",
+          "quote": "Graph-context assembler (new, server-side, gui/)"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "assembler_fn",
+      "label": "Assembler produces bounded structured context",
+      "kind": "claim",
+      "provenance": [
+        {
+          "source_range": "2.1.1",
+          "quote": "for a given anchor (node id or wire endpoint), produce a bounded, structured context"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "injection_hygiene",
+      "label": "Graph content passed as quoted data",
+      "kind": "action",
+      "provenance": [
+        {
+          "source_range": "2.1.1",
+          "quote": "all graph content (titles, values, prompts, notes) is passed as quoted data, never as instructions"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "builder_step",
+      "label": "Builder agent step as node call",
+      "kind": "action",
+      "provenance": [
+        {
+          "source_range": "2.1.2",
+          "quote": "An llm.chat-style step (it IS a node call, recorded like any other"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "family_guard",
+      "label": "Reviewer model family differs from builder",
+      "kind": "claim",
+      "provenance": [
+        {
+          "source_range": "2.1.2",
+          "quote": "the reviewer in the check pipeline must be a different family than the builder"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "proposal_schema",
+      "label": "Proposal document schema",
+      "kind": "action",
+      "provenance": [
+        {
+          "source_range": "2.1.3",
+          "quote": "Proposal document schema (§2.2). The agent's structured output. Validated before it is ever shown"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "check_runner",
+      "label": "D20 check pipeline runner",
+      "kind": "action",
+      "provenance": [
+        {
+          "source_range": "2.1.4",
+          "quote": "D20 check pipeline runner (§2.3). Runs the five D20 stages and produces a report bundle"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "restricted_runner",
+      "label": "Restricted runner component",
+      "kind": "action",
+      "provenance": [
+        {
+          "source_range": "2.1.5",
+          "quote": "Restricted runner (§2.4). Executes trial runs and later real runs under the declared capabilities"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "approval_flow",
+      "label": "Approval flow with staged application",
+      "kind": "action",
+      "provenance": [
+        {
+          "source_range": "2.1.6",
+          "quote": "Approval flow (§2.5). Staged application + approver human task, reusing the promote shape"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "workspace_registry",
+      "label": "Workspace node registry",
+      "kind": "action",
+      "provenance": [
+        {
+          "source_range": "2.1.7",
+          "quote": "Workspace node registry (§2.6). Where an approved node type lives"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "kind_config",
+      "label": "Config proposal kind",
+      "kind": "option",
+      "provenance": [
+        {
+          "source_range": "2.2",
+          "quote": "kind: \"config\" — params for an existing node type (v0 slice)"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "kind_subgraph",
+      "label": "Subgraph proposal kind",
+      "kind": "option",
+      "provenance": [
+        {
+          "source_range": "2.2",
+          "quote": "kind: \"subgraph\" — T0: a small workflow fragment (nodes + edges, existing types only)"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "kind_tool_python",
+      "label": "tool_python proposal kind",
+      "kind": "option",
+      "provenance": [
+        {
+          "source_range": "2.2",
+          "quote": "kind: \"tool_python\" — T1/T2: {code_path, entry: module:function, manifest}"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "kind_node_type",
+      "label": "Full custom node type kind",
+      "kind": "option",
+      "provenance": [
+        {
+          "source_range": "2.2",
+          "quote": "kind: \"node_type\" (later phases): a full custom node type: manifest + implementation + smoke tests. Highest risk, last"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "tier_selfdecl",
+      "label": "Lower self-declared tier is hard fail",
+      "kind": "claim",
+      "provenance": [
+        {
+          "source_range": "2.2",
+          "quote": "treats a lower self-declaration than the scan finds as a hard fail"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "schema_validation",
+      "label": "Mechanical schema validation rules",
+      "kind": "claim",
+      "provenance": [
+        {
+          "source_range": "2.2",
+          "quote": "Schema validation is mechanical: unknown fields rejected, port types from PortType"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "stage_scan",
+      "label": "Static AST and regex scan",
+      "kind": "action",
+      "provenance": [
+        {
+          "source_range": "2.3",
+          "quote": "AST + regex scan of the code: dangerous imports/calls, dynamic code"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "stage_cover",
+      "label": "Capability cover check",
+      "kind": "action",
+      "provenance": [
+        {
+          "source_range": "2.3",
+          "quote": "Every capability the scan finds must be covered by the manifest declaration"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "stage_judge",
+      "label": "Reviewer judge LLM call",
+      "kind": "action",
+      "provenance": [
+        {
+          "source_range": "2.3",
+          "quote": "One llm.decision/judge.binary call over code + manifest + scan findings"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "stage_smoke",
+      "label": "Observed smoke test in runner",
+      "kind": "action",
+      "provenance": [
+        {
+          "source_range": "2.3",
+          "quote": "The manifest's smoke case runs in the restricted runner; files touched + network attempts recorded"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "stage_report",
+      "label": "Report bundle and diff",
+      "kind": "action",
+      "provenance": [
+        {
+          "source_range": "2.3",
+          "quote": "A report bundle: scan findings, judge verdict + rationale, smoke output, full code diff"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "honesty_rule",
+      "label": "Check informs but never replaces approval",
+      "kind": "claim",
+      "provenance": [
+        {
+          "source_range": "2.3",
+          "quote": "the check informs the owner and never replaces approval; it cannot prove safety"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "runner_env",
+      "label": "Scrubbed environment and limits",
+      "kind": "claim",
+      "provenance": [
+        {
+          "source_range": "2.4",
+          "quote": "Scrubbed environment (no secrets unless declared by name and resolved through the engine's secret channel)"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "runner_network",
+      "label": "Network recorded, blocked where enforceable",
+      "kind": "claim",
+      "provenance": [
+        {
+          "source_range": "2.4",
+          "quote": "Network: recorded (attempted endpoints) at T1; blocked only where a container/firewall rule is available"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "runner_seam",
+      "label": "Runner behind swap-friendly seam",
+      "kind": "claim",
+      "provenance": [
+        {
+          "source_range": "2.4",
+          "quote": "The runner is behind a seam (like Executor/CacheLookup), so a Docker-based sandbox later (M4.12, D10) is a swap"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "no_sandbox_no_t3",
+      "label": "Without sandbox T3 unavailable not unsafe",
+      "kind": "claim",
+      "provenance": [
+        {
+          "source_range": "2.4",
+          "quote": "Without a sandbox, T3 is unavailable, not unsafe"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "staging",
+      "label": "Pipeline stages artifact before approval",
+      "kind": "action",
+      "provenance": [
+        {
+          "source_range": "2.5",
+          "quote": "The pipeline stages the artifact: code file(s) under nodes/workspace/<name>/ + manifest"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "approver_task",
+      "label": "Approver human task out-of-band",
+      "kind": "action",
+      "provenance": [
+        {
+          "source_range": "2.5",
+          "quote": "An approver-role human.task is created: deliverable decision: choice[approve, reject]"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "promote",
+      "label": "On approve promote staged files",
+      "kind": "action",
+      "provenance": [
+        {
+          "source_range": "2.5",
+          "quote": "On approve: the staged files are promoted (registry picks them up), the ghost steps in the document become real"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "reject_path",
+      "label": "On reject delete and record reason",
+      "kind": "action",
+      "provenance": [
+        {
+          "source_range": "2.5",
+          "quote": "On reject: staged files deleted, reason recorded, the builder conversation can continue with the feedback"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "digest_rule",
+      "label": "Digest rule voids approval on edit",
+      "kind": "claim",
+      "provenance": [
+        {
+          "source_range": "2.5",
+          "quote": "Any later edit to the file invalidates the approval and reruns the check (D20)"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "text_files",
+      "label": "Approved types as text files",
+      "kind": "claim",
+      "provenance": [
+        {
+          "source_range": "2.6",
+          "quote": "Approved node types live as text files in the workspace (nodes/workspace/..., principle 6: text files over databases)"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "registry_merge",
+      "label": "Registry merges core plus approved workspace",
+      "kind": "claim",
+      "provenance": [
+        {
+          "source_range": "2.6",
+          "quote": "The registry loader merges: core registry (frozen) + workspace entries (approved digests only)"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "unapproved_invisible",
+      "label": "Unapproved entries invisible to planner",
+      "kind": "claim",
+      "provenance": [
+        {
+          "source_range": "2.6",
+          "quote": "Unapproved/staged entries are invisible to the planner — V03 \"type not registered\" is the enforcement that nothing runs before approval"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "tier_t0",
+      "label": "T0 config and subgraph runs free",
+      "kind": "claim",
+      "provenance": [
+        {
+          "source_range": "3",
+          "quote": "T0 | Config of an existing type; composed subgraph (existing types only) | Yes, normal validation + save gate"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "tier_t1",
+      "label": "T1 tool_python with full pipeline",
+      "kind": "claim",
+      "provenance": [
+        {
+          "source_range": "3",
+          "quote": "T1 | tool_python code: no network, no secrets, files only in the node's own folder, no subprocess"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "tier_t2",
+      "label": "T2 declared network hosts",
+      "kind": "claim",
+      "provenance": [
+        {
+          "source_range": "3",
+          "quote": "T2 | Adds declared network hosts + secrets-by-name | Restricted runner records attempts"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "tier_t3",
+      "label": "T3 requires full sandbox",
+      "kind": "claim",
+      "provenance": [
+        {
+          "source_range": "3",
+          "quote": "T3 | Executables, GPU, host reach | Only in a full sandbox (M4.12) or with a separate explicit owner approval"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "no_self_approval",
+      "label": "Builder never approves its own node",
+      "kind": "claim",
+      "provenance": [
+        {
+          "source_range": "3",
+          "quote": "The builder never approves its own node; nothing that can approve is ever returned to the agent"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "no_self_grant",
+      "label": "Builder never grants itself capabilities",
+      "kind": "claim",
+      "provenance": [
+        {
+          "source_range": "3",
+          "quote": "The builder never grants itself network, executables, budget, or permissions"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "registry_presence",
+      "label": "Canvas requires registry presence",
+      "kind": "claim",
+      "provenance": [
+        {
+          "source_range": "4.1",
+          "quote": "the type must be installed and approved (else V03 at plan time)"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "v_rules",
+      "label": "Planner V-rules validation",
+      "kind": "claim",
+      "provenance": [
+        {
+          "source_range": "4.2",
+          "quote": "V03 type registered; V04 params validate against the manifest's params schema"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "determinism_honest",
+      "label": "Determinism declarations cross-checked",
+      "kind": "claim",
+      "provenance": [
+        {
+          "source_range": "4.3",
+          "quote": "determinism and side_effects must be declared honestly — the scan + smoke test cross-check them"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "plain_surface",
+      "label": "Plain-language surface in manifest",
+      "kind": "claim",
+      "provenance": [
+        {
+          "source_range": "4.4",
+          "quote": "plain title, blurb, port labels (PORT_IN/PORT_OUT-style), param hints — the manifest carries these"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "error_fix_hints",
+      "label": "Errors name node and fix",
+      "kind": "claim",
+      "provenance": [
+        {
+          "source_range": "4.5",
+          "quote": "run-time failures surface through the existing NodeError(code, message) channel; the manifest may add fix-hints"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "canvas_placement",
+      "label": "Nodes appear via addStep path",
+      "kind": "claim",
+      "provenance": [
+        {
+          "source_range": "4.6",
+          "quote": "new nodes appear via the same addStep path (registry summary → defaults → node.ui)"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "wp1",
+      "label": "Graph-context assembler and builder API",
+      "kind": "action",
+      "provenance": [
+        {
+          "source_range": "WP1 row",
+          "quote": "WP1 | Graph-context assembler + builder API endpoints"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "wp2",
+      "label": "Builder panel UI",
+      "kind": "action",
+      "provenance": [
+        {
+          "source_range": "WP2 row",
+          "quote": "Builder panel UI (side panel, ghost-step preview, plain-language cards)"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "wp3",
+      "label": "Proposal schema with validation and retry",
+      "kind": "action",
+      "provenance": [
+        {
+          "source_range": "WP3 row",
+          "quote": "Proposal schema + validation + retry loop"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "wp4",
+      "label": "T0 config proposals through save gate",
+      "kind": "action",
+      "provenance": [
+        {
+          "source_range": "WP4 row",
+          "quote": "T0 path: config + subgraph proposals applied to the document"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "wp6",
+      "label": "Restricted runner v1",
+      "kind": "action",
+      "provenance": [
+        {
+          "source_range": "WP6 row",
+          "quote": "Restricted runner v1 (subprocess: scrubbed env, workdir confinement, limits"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "wp7",
+      "label": "Check pipeline static scan stage",
+      "kind": "action",
+      "provenance": [
+        {
+          "source_range": "WP7 row",
+          "quote": "Check pipeline stages (a)(b) static scan + capability cover"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "wp8",
+      "label": "Reviewer judge stage",
+      "kind": "action",
+      "provenance": [
+        {
+          "source_range": "WP8 row",
+          "quote": "Check pipeline stage (c) reviewer judge"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "wp9",
+      "label": "Smoke test stage and report bundle",
+      "kind": "action",
+      "provenance": [
+        {
+          "source_range": "WP9 row",
+          "quote": "Check pipeline stage (d) observed smoke test through WP6; report bundle (e)"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "wp10",
+      "label": "Approval flow with staged promote",
+      "kind": "action",
+      "provenance": [
+        {
+          "source_range": "WP10 row",
+          "quote": "Approval flow: staged promote + approver task + apply/reject"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "wp11",
+      "label": "Digest-invalidation for workspace nodes",
+      "kind": "action",
+      "provenance": [
+        {
+          "source_range": "WP11 row",
+          "quote": "Digest-invalidation wiring for workspace nodes"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "wp12",
+      "label": "T2 enforcement and capability probe",
+      "kind": "action",
+      "provenance": [
+        {
+          "source_range": "WP12 row",
+          "quote": "T2 enforcement: hosts allowlist, secrets-by-name channel"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "wp13",
+      "label": "T3 full sandbox integration",
+      "kind": "action",
+      "provenance": [
+        {
+          "source_range": "WP13 row",
+          "quote": "T3: full sandbox integration (Docker/WSL probe), per-node approval"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "wp14",
+      "label": "Fix-hints and smoke-test editing",
+      "kind": "action",
+      "provenance": [
+        {
+          "source_range": "WP14 row",
+          "quote": "Fix-hints + error rendering for builder-built nodes"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "order1",
+      "label": "Build order WP3 then WP4",
+      "kind": "decision",
+      "provenance": [
+        {
+          "source_range": "build order",
+          "quote": "Suggested build order: WP3 → WP4 (a usable v0 slice with almost no risk)"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "order2",
+      "label": "Then WP5 and WP6 plumbing",
+      "kind": "decision",
+      "provenance": [
+        {
+          "source_range": "build order",
+          "quote": "WP5+WP6 (the real plumbing)"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "order3",
+      "label": "Then pipeline WP7 to WP11",
+      "kind": "decision",
+      "provenance": [
+        {
+          "source_range": "build order",
+          "quote": "WP7–WP11 (the D20 pipeline end to end on T1)"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "order4",
+      "label": "Then WP12 then WP13",
+      "kind": "decision",
+      "provenance": [
+        {
+          "source_range": "build order",
+          "quote": "WP12 → WP13"
+        }
+      ],
+      "provenance_status": "unverified"
+    },
+    {
+      "id": "sandbox_rule",
+      "label": "No sandbox means no execution",
+      "kind": "claim",
+      "provenance": [
+        {
+          "source_range": "sandboxing",
+          "quote": "no sandbox capability on the machine means no execution, only proposal/validation"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "t3_container",
+      "label": "T3 requires container sandbox",
+      "kind": "claim",
+      "provenance": [
+        {
+          "source_range": "sandboxing",
+          "quote": "T3 additionally requires a container-class sandbox"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "no_network",
+      "label": "T1 nodes get no network",
+      "kind": "claim",
+      "provenance": [
+        {
+          "source_range": "no network",
+          "quote": "T1 nodes get no network; T2 declares hosts and the allowlist is checked"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "tier_cap",
+      "label": "Cannot enforce means tier capped",
+      "kind": "claim",
+      "provenance": [
+        {
+          "source_range": "no network",
+          "quote": "cannot enforce → tier capped or per-node approval required"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "file_confine",
+      "label": "T1 file access confined to node folder",
+      "kind": "claim",
+      "provenance": [
+        {
+          "source_range": "file boundaries",
+          "quote": "T1 file access is confined to the node's own folder"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "secrets_channel",
+      "label": "Secrets via name-only channel",
+      "kind": "claim",
+      "provenance": [
+        {
+          "source_range": "secrets",
+          "quote": "Never passed as literals; only declared names resolved through the engine's secret channel"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "builder_no_secrets",
+      "label": "Builder never sees secret values",
+      "kind": "claim",
+      "provenance": [
+        {
+          "source_range": "secrets",
+          "quote": "The builder never sees secret values — only which names exist"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "injection_risk",
+      "label": "Prompt injection from graph content",
+      "kind": "claim",
+      "provenance": [
+        {
+          "source_range": "prompt injection",
+          "quote": "Node titles, prompts, values and notes are attacker-influenceable"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "no_act_on_text",
+      "label": "Builder ignores instructions in graph text",
+      "kind": "action",
+      "provenance": [
+        {
+          "source_range": "mitigations",
+          "quote": "the builder never acts on instructions found in graph text"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "injection_finding",
+      "label": "Injection attempts surfaced as finding",
+      "kind": "action",
+      "provenance": [
+        {
+          "source_range": "mitigations",
+          "quote": "such attempts are surfaced in the report as a finding"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "approver_gate",
+      "label": "Consequential actions need approver task",
+      "kind": "claim",
+      "provenance": [
+        {
+          "source_range": "mitigations",
+          "quote": "every consequential action still goes through the out-of-band approver task"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "judge_report_only",
+      "label": "Reviewer judge is report input only",
+      "kind": "claim",
+      "provenance": [
+        {
+          "source_range": "self-approval",
+          "quote": "The check pipeline's reviewer judge is a *report input*, not a decision-maker"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "family_sep",
+      "label": "Builder and reviewer family-separated",
+      "kind": "claim",
+      "provenance": [
+        {
+          "source_range": "self-approval",
+          "quote": "family-separated from the builder so builder and reviewer do not share failure modes"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "budget",
+      "label": "Builder consumes budget like nodes",
+      "kind": "claim",
+      "provenance": [
+        {
+          "source_range": "budget",
+          "quote": "The builder consumes budget like any node call (reserve/reconcile); it cannot raise caps"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "replay",
+      "label": "Approvals keyed to code digests",
+      "kind": "claim",
+      "provenance": [
+        {
+          "source_range": "replayability",
+          "quote": "approvals are keyed to digests; a re-run of an approved workflow runs exactly the approved bytes"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "risk_craft",
+      "label": "Pipeline defeatable by craft",
+      "kind": "note",
+      "provenance": [
+        {
+          "source_range": "risks",
+          "quote": "The check pipeline can be *defeated by craft* (obfuscated payloads, steganographic prompts)"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "owner_gate",
+      "label": "Owner's eyes are the real gate",
+      "kind": "claim",
+      "provenance": [
+        {
+          "source_range": "risks",
+          "quote": "treats it as a filter that raises cost, with the owner's eyes as the real gate"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "risk_windows",
+      "label": "Uneven enforcement on Windows/macOS",
+      "kind": "note",
+      "provenance": [
+        {
+          "source_range": "risks",
+          "quote": "The restricted runner on Windows/macOS has uneven enforcement primitives"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "risk_dialogue",
+      "label": "Conversation quality is product risk",
+      "kind": "note",
+      "provenance": [
+        {
+          "source_range": "risks",
+          "quote": "Conversation quality is the actual product risk: a builder that needs five clarifications is a worse UX"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "risk_scope",
+      "label": "Scope explosion risk",
+      "kind": "note",
+      "provenance": [
+        {
+          "source_range": "risks",
+          "quote": "this feature is famously where scope explodes"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "phase0",
+      "label": "Phase 0 params-only builder",
+      "kind": "action",
+      "provenance": [
+        {
+          "source_range": "phase 0",
+          "quote": "Phase 0 — \"params builder\" (v0 slice, smallest)"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "phase1",
+      "label": "Phase 1 T0 subgraphs",
+      "kind": "action",
+      "provenance": [
+        {
+          "source_range": "phase 1",
+          "quote": "Phase 1 — T0 subgraphs. `kind: subgraph`"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "phase2",
+      "label": "Phase 2 T1 python tool nodes",
+      "kind": "action",
+      "provenance": [
+        {
+          "source_range": "phase 2",
+          "quote": "Phase 2 — T1 `tool.python` nodes. Workspace registry + staging + full check pipeline"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "phase3",
+      "label": "Phase 3 T2 declared hosts",
+      "kind": "action",
+      "provenance": [
+        {
+          "source_range": "phase 3",
+          "quote": "Phase 3 — T2 (declared hosts/secrets). Enforcement probes, allowlist, secrets channel"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "phase4",
+      "label": "Phase 4 T3 and full node types",
+      "kind": "action",
+      "provenance": [
+        {
+          "source_range": "phase 4",
+          "quote": "Phase 4 — T3 + full custom node types. Container sandbox"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "phase5",
+      "label": "Phase 5 polish",
+      "kind": "action",
+      "provenance": [
+        {
+          "source_range": "phase 5",
+          "quote": "Phase 5 — polish. Fix-hints library, smoke-test editing, calibration"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "signoff",
+      "label": "Owner demo and sign-off per phase",
+      "kind": "claim",
+      "provenance": [
+        {
+          "source_range": "phase ends",
+          "quote": "Each phase ends with an owner demo and sign-off before the next begins"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "q1",
+      "label": "Phase 0 in v0.1.x preview?",
+      "kind": "question",
+      "provenance": [
+        {
+          "source_range": "q1",
+          "quote": "Should Phase 0 (params-only builder) be pulled into v0.1.x as a preview"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "q2",
+      "label": "Which default builder model?",
+      "kind": "question",
+      "provenance": [
+        {
+          "source_range": "q2",
+          "quote": "Which model should the builder use by default"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "q3",
+      "label": "Approver task for T0 subgraphs?",
+      "kind": "question",
+      "provenance": [
+        {
+          "source_range": "q3",
+          "quote": "Should T0 subgraph proposals require an approver task too"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "q4",
+      "label": "Where workspace node types live",
+      "kind": "question",
+      "provenance": [
+        {
+          "source_range": "q4",
+          "quote": "Where do approved workspace node types live"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "q5",
+      "label": "Canvas inbox view in scope?",
+      "kind": "question",
+      "provenance": [
+        {
+          "source_range": "q5",
+          "quote": "Is a canvas Inbox view of approver tasks in scope for v0.2"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "q6",
+      "label": "Trial-run input story",
+      "kind": "question",
+      "provenance": [
+        {
+          "source_range": "q6",
+          "quote": "What is the trial-run input story"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "q7",
+      "label": "Persist conversations as artifact?",
+      "kind": "question",
+      "provenance": [
+        {
+          "source_range": "q7",
+          "quote": "Should every conversation be persisted as an artifact"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "q8",
+      "label": "Calibration set before T1 ships?",
+      "kind": "question",
+      "provenance": [
+        {
+          "source_range": "q8",
+          "quote": "Do we require the reviewer-judge calibration set before any T1 ships"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "q9",
+      "label": "Rejection reason as feedback?",
+      "kind": "question",
+      "provenance": [
+        {
+          "source_range": "q9",
+          "quote": "should the builder get the owner's rejection reason as feedback"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "q10",
+      "label": "Builder direct write after approval?",
+      "kind": "question",
+      "provenance": [
+        {
+          "source_range": "q10",
+          "quote": "Does the builder get write access to the document directly after approval"
+        }
+      ],
+      "provenance_status": "verified"
+    },
+    {
+      "id": "build_gate",
+      "label": "Build only after owner sign-off",
+      "kind": "claim",
+      "provenance": [
+        {
+          "source_range": "end",
+          "quote": "build starts only after owner sign-off on this design"
+        }
+      ],
+      "provenance_status": "verified"
+    }
+  ],
+  "edges": [
+    {
+      "from": "n1",
+      "to": "n2",
+      "relation": "supports",
+      "grounding": "explicit",
+      "label": "Owner vision supports builder",
+      "quote": "click +, converse with an agent that can see the surrounding graph",
+      "source_range": "intro",
+      "status": "verified"
+    },
+    {
+      "from": "n2",
+      "to": "n3",
+      "relation": "supports",
+      "grounding": "explicit",
+      "label": "D20 pipeline grounds builder",
+      "quote": "this is D20's pipeline behind a UI",
+      "source_range": "intro",
+      "status": "verified"
+    },
+    {
+      "from": "n9",
+      "to": "n10",
+      "relation": "next",
+      "grounding": "explicit",
+      "label": "Click opens builder panel",
+      "quote": "This opens a *builder panel*",
+      "source_range": "1.1",
+      "status": "verified"
+    },
+    {
+      "from": "n10",
+      "to": "n11",
+      "relation": "next",
+      "grounding": "explicit",
+      "label": "Panel start assembles context",
+      "quote": "When the conversation starts, the server assembles a **graph context**",
+      "source_range": "1.1",
+      "status": "verified"
+    },
+    {
+      "from": "n11",
+      "to": "n12",
+      "relation": "requires",
+      "grounding": "explicit",
+      "label": "Context requires registry endpoint",
+      "quote": "the registry summary the canvas already serves at `GET /api/registry`",
+      "source_range": "1.1",
+      "status": "verified"
+    },
+    {
+      "from": "n11",
+      "to": "n13",
+      "relation": "next",
+      "grounding": "implied",
+      "label": "Context enables conversation",
+      "quote": "The builder asks at most a couple of clarifying questions, then emits a **proposal**",
+      "source_range": "1.1",
+      "status": "verified"
+    },
+    {
+      "from": "n13",
+      "to": "n14",
+      "relation": "next",
+      "grounding": "explicit",
+      "label": "Proposal shown as ghost",
+      "quote": "shows it as a preview on the canvas — a ghost step",
+      "source_range": "1.1",
+      "status": "verified"
+    },
+    {
+      "from": "n14",
+      "to": "n15",
+      "relation": "next",
+      "grounding": "explicit",
+      "label": "Preview then sandbox trial",
+      "quote": "the proposal first runs a **sandbox trial** (smoke test)",
+      "source_range": "1.1",
+      "status": "verified"
+    },
+    {
+      "from": "n15",
+      "to": "n16",
+      "relation": "causes",
+      "grounding": "explicit",
+      "label": "Missing sandbox stops build",
+      "quote": "No sandbox available → the build stops at the proposal",
+      "source_range": "1.1",
+      "status": "verified"
+    },
+    {
+      "from": "n15",
+      "to": "n17",
+      "relation": "next",
+      "grounding": "implied",
+      "label": "Trial then approval task",
+      "quote": "the proposal becomes an approver `human.task` in the inbox",
+      "source_range": "1.1",
+      "status": "verified"
+    },
+    {
+      "from": "n17",
+      "to": "n18",
+      "relation": "requires",
+      "grounding": "explicit",
+      "label": "Approval reuses promote mechanism",
+      "quote": "the same mechanism as audition `promote`",
+      "source_range": "1.1",
+      "status": "verified"
+    },
+    {
+      "from": "n17",
+      "to": "n19",
+      "relation": "supports",
+      "grounding": "explicit",
+      "label": "Channel enforces no self-approval",
+      "quote": "it is delivered through the human-task channel only",
+      "source_range": "1.1",
+      "status": "verified"
+    },
+    {
+      "from": "n17",
+      "to": "n20",
+      "relation": "next",
+      "grounding": "explicit",
+      "label": "Approval applies proposal",
+      "quote": "After approval the ghost becomes a real step",
+      "source_range": "1.1",
+      "status": "verified"
+    },
+    {
+      "from": "n20",
+      "to": "n21",
+      "relation": "next",
+      "grounding": "explicit",
+      "label": "Real step joins palette",
+      "quote": "appears in the palette for reuse (workspace registry)",
+      "source_range": "1.1",
+      "status": "verified"
+    },
+    {
+      "from": "n22",
+      "to": "n26",
+      "relation": "part_of",
+      "grounding": "explicit",
+      "label": "T0 is a tier option",
+      "quote": "T0 (compose) | Ghost steps + a wiring description",
+      "source_range": "1.3",
+      "status": "verified"
+    },
+    {
+      "from": "n23",
+      "to": "n26",
+      "relation": "part_of",
+      "grounding": "explicit",
+      "label": "T1 is a tier option",
+      "quote": "T1 (pure code) | Code + trial output + check report",
+      "source_range": "1.3",
+      "status": "verified"
+    },
+    {
+      "from": "n24",
+      "to": "n26",
+      "relation": "part_of",
+      "grounding": "explicit",
+      "label": "T2 is a tier option",
+      "quote": "T2 (network/hosts) | Code + declared hosts + check report",
+      "source_range": "1.3",
+      "status": "verified"
+    },
+    {
+      "from": "n25",
+      "to": "n26",
+      "relation": "part_of",
+      "grounding": "explicit",
+      "label": "T3 is a tier option",
+      "quote": "T3 (executables/GPU) | Everything above + resource note",
+      "source_range": "1.3",
+      "status": "verified"
+    },
+    {
+      "from": "n28",
+      "to": "n14",
+      "relation": "requires",
+      "grounding": "implied",
+      "label": "Preview uses open port",
+      "quote": "the open input port (if the owner dragged from a wire)",
+      "source_range": "1.1",
+      "status": "verified"
+    },
+    {
+      "from": "n4",
+      "to": "n2",
+      "relation": "requires",
+      "grounding": "explicit",
+      "label": "Plain language required",
+      "quote": "Plain language. The canvas speaks in steps, not JSON",
+      "source_range": "rules",
+      "status": "verified"
+    },
+    {
+      "from": "n5",
+      "to": "n2",
+      "relation": "requires",
+      "grounding": "explicit",
+      "label": "No JSON authoring required",
+      "quote": "Never ask the user to write JSON",
+      "source_range": "rules",
+      "status": "verified"
+    },
+    {
+      "from": "n6",
+      "to": "n2",
+      "relation": "requires",
+      "grounding": "explicit",
+      "label": "No self-approval required",
+      "quote": "The builder never approves its own node (D20; D15)",
+      "source_range": "rules",
+      "status": "verified"
+    },
+    {
+      "from": "n7",
+      "to": "n2",
+      "relation": "requires",
+      "grounding": "explicit",
+      "label": "Approval gate required",
+      "quote": "Owner approval is required for anything that becomes permanent (D10/D15/D20)",
+      "source_range": "rules",
+      "status": "verified"
+    },
+    {
+      "from": "n8",
+      "to": "n2",
+      "relation": "requires",
+      "grounding": "explicit",
+      "label": "Hash safety required",
+      "quote": "Nothing touches the engine's hashes: canvas-only keys live in `node.ui`",
+      "source_range": "rules",
+      "status": "verified"
+    },
+    {
+      "from": "n27",
+      "to": "n2",
+      "relation": "requires",
+      "grounding": "explicit",
+      "label": "Error style required",
+      "quote": "Errors name the node and the fix (the pattern `issueList()` already follows)",
+      "source_range": "rules",
+      "status": "verified"
+    },
+    {
+      "from": "assembler",
+      "to": "assembler_fn",
+      "relation": "supports",
+      "grounding": "explicit",
+      "label": "assembler produces bounded context",
+      "quote": "for a given anchor (node id or wire endpoint), produce a bounded, structured context",
+      "source_range": "2.1.1",
+      "status": "verified"
+    },
+    {
+      "from": "injection_hygiene",
+      "to": "assembler",
+      "relation": "part_of",
+      "grounding": "explicit",
+      "label": "hygiene part of assembler",
+      "quote": "Prompt-injection hygiene: all graph content (titles, values, prompts, notes) is passed as quoted data",
+      "source_range": "2.1.1",
+      "status": "verified"
+    },
+    {
+      "from": "assembler",
+      "to": "builder_step",
+      "relation": "requires",
+      "grounding": "implied",
+      "label": "builder needs assembled context",
+      "quote": "Graph-context assembler (new, server-side, gui/)",
+      "source_range": "2.1.1",
+      "status": "verified"
+    },
+    {
+      "from": "family_guard",
+      "to": "stage_judge",
+      "relation": "supports",
+      "grounding": "explicit",
+      "label": "family guard applies to judge",
+      "quote": "model family ≠ builder family",
+      "source_range": "2.3",
+      "status": "verified"
+    },
+    {
+      "from": "proposal_schema",
+      "to": "builder_step",
+      "relation": "requires",
+      "grounding": "implied",
+      "label": "builder outputs proposal schema",
+      "quote": "Proposal document schema (§2.2). The agent's structured output",
+      "source_range": "2.1.3",
+      "status": "verified"
+    },
+    {
+      "from": "proposal_schema",
+      "to": "kind_config",
+      "relation": "part_of",
+      "grounding": "explicit",
+      "label": "config kind in schema",
+      "quote": "A proposal is a JSON document with a kind discriminator",
+      "source_range": "2.2",
+      "status": "verified"
+    },
+    {
+      "from": "proposal_schema",
+      "to": "kind_subgraph",
+      "relation": "part_of",
+      "grounding": "explicit",
+      "label": "subgraph kind in schema",
+      "quote": "A proposal is a JSON document with a kind discriminator",
+      "source_range": "2.2",
+      "status": "verified"
+    },
+    {
+      "from": "proposal_schema",
+      "to": "kind_tool_python",
+      "relation": "part_of",
+      "grounding": "explicit",
+      "label": "tool_python kind in schema",
+      "quote": "A proposal is a JSON document with a kind discriminator",
+      "source_range": "2.2",
+      "status": "verified"
+    },
+    {
+      "from": "proposal_schema",
+      "to": "kind_node_type",
+      "relation": "part_of",
+      "grounding": "explicit",
+      "label": "node_type kind in schema",
+      "quote": "A proposal is a JSON document with a kind discriminator",
+      "source_range": "2.2",
+      "status": "verified"
+    },
+    {
+      "from": "kind_config",
+      "to": "kind_subgraph",
+      "relation": "next",
+      "grounding": "implied",
+      "label": "config before subgraph",
+      "quote": "kind: \"config\" — params for an existing node type (v0 slice)",
+      "source_range": "2.2",
+      "status": "verified"
+    },
+    {
+      "from": "kind_subgraph",
+      "to": "kind_tool_python",
+      "relation": "next",
+      "grounding": "implied",
+      "label": "subgraph before tool_python",
+      "quote": "kind: \"subgraph\" — T0: a small workflow fragment",
+      "source_range": "2.2",
+      "status": "verified"
+    },
+    {
+      "from": "kind_tool_python",
+      "to": "kind_node_type",
+      "relation": "next",
+      "grounding": "explicit",
+      "label": "tool_python before node_type",
+      "quote": "Highest risk, last",
+      "source_range": "2.2",
+      "status": "verified"
+    },
+    {
+      "from": "tier_selfdecl",
+      "to": "proposal_schema",
+      "relation": "part_of",
+      "grounding": "explicit",
+      "label": "tier field in schema",
+      "quote": "tier (self-declared; the pipeline re-derives it",
+      "source_range": "2.2",
+      "status": "verified"
+    },
+    {
+      "from": "schema_validation",
+      "to": "proposal_schema",
+      "relation": "requires",
+      "grounding": "explicit",
+      "label": "validation before showing",
+      "quote": "Validated before it is ever shown",
+      "source_range": "2.1.3",
+      "status": "verified"
+    },
+    {
+      "from": "stage_scan",
+      "to": "check_runner",
+      "relation": "part_of",
+      "grounding": "explicit",
+      "label": "scan is pipeline stage",
+      "quote": "Runs the five D20 stages and produces a report bundle",
+      "source_range": "2.1.4",
+      "status": "verified"
+    },
+    {
+      "from": "stage_cover",
+      "to": "check_runner",
+      "relation": "part_of",
+      "grounding": "explicit",
+      "label": "cover is pipeline stage",
+      "quote": "Runs the five D20 stages and produces a report bundle",
+      "source_range": "2.1.4",
+      "status": "verified"
+    },
+    {
+      "from": "stage_judge",
+      "to": "check_runner",
+      "relation": "part_of",
+      "grounding": "explicit",
+      "label": "judge is pipeline stage",
+      "quote": "Runs the five D20 stages and produces a report bundle",
+      "source_range": "2.1.4",
+      "status": "verified"
+    },
+    {
+      "from": "stage_smoke",
+      "to": "check_runner",
+      "relation": "part_of",
+      "grounding": "explicit",
+      "label": "smoke is pipeline stage",
+      "quote": "Runs the five D20 stages and produces a report bundle",
+      "source_range": "2.1.4",
+      "status": "verified"
+    },
+    {
+      "from": "stage_report",
+      "to": "check_runner",
+      "relation": "part_of",
+      "grounding": "explicit",
+      "label": "report is pipeline stage",
+      "quote": "Runs the five D20 stages and produces a report bundle",
+      "source_range": "2.1.4",
+      "status": "verified"
+    },
+    {
+      "from": "stage_scan",
+      "to": "stage_cover",
+      "relation": "next",
+      "grounding": "implied",
+      "label": "scan feeds cover",
+      "quote": "Every capability the scan finds must be covered by the manifest declaration",
+      "source_range": "2.3",
+      "status": "verified"
+    },
+    {
+      "from": "stage_cover",
+      "to": "stage_judge",
+      "relation": "next",
+      "grounding": "implied",
+      "label": "cover feeds judge",
+      "quote": "One llm.decision/judge.binary call over code + manifest + scan findings",
+      "source_range": "2.3",
+      "status": "verified"
+    },
+    {
+      "from": "stage_judge",
+      "to": "stage_smoke",
+      "relation": "next",
+      "grounding": "implied",
+      "label": "judge before smoke",
+      "quote": "(d) observed smoke test",
+      "source_range": "2.3",
+      "status": "verified"
+    },
+    {
+      "from": "stage_smoke",
+      "to": "stage_report",
+      "relation": "next",
+      "grounding": "implied",
+      "label": "smoke feeds report",
+      "quote": "A report bundle: scan findings, judge verdict + rationale, smoke output",
+      "source_range": "2.3",
+      "status": "verified"
+    },
+    {
+      "from": "stage_smoke",
+      "to": "restricted_runner",
+      "relation": "requires",
+      "grounding": "explicit",
+      "label": "smoke needs restricted runner",
+      "quote": "The manifest's smoke case runs in the restricted runner",
+      "source_range": "2.3",
+      "status": "verified"
+    },
+    {
+      "from": "honesty_rule",
+      "to": "check_runner",
+      "relation": "supports",
+      "grounding": "explicit",
+      "label": "honesty rule governs pipeline",
+      "quote": "the check informs the owner and never replaces approval; it cannot prove safety",
+      "source_range": "2.3",
+      "status": "verified"
+    },
+    {
+      "from": "runner_env",
+      "to": "restricted_runner",
+      "relation": "part_of",
+      "grounding": "explicit",
+      "label": "env scrubbing in runner",
+      "quote": "A subprocess wrapper used by (d) and later by the scheduler for workspace nodes",
+      "source_range": "2.4",
+      "status": "verified"
+    },
+    {
+      "from": "runner_network",
+      "to": "tier_t2",
+      "relation": "supports",
+      "grounding": "explicit",
+      "label": "network enforcement caps T2",
+      "quote": "no T2 claims without a real enforcement mechanism",
+      "source_range": "2.4",
+      "status": "verified"
+    },
+    {
+      "from": "runner_seam",
+      "to": "restricted_runner",
+      "relation": "part_of",
+      "grounding": "explicit",
+      "label": "seam part of runner design",
+      "quote": "The runner is behind a seam (like Executor/CacheLookup)",
+      "source_range": "2.4",
+      "status": "verified"
+    },
+    {
+      "from": "runner_seam",
+      "to": "no_sandbox_no_t3",
+      "relation": "supports",
+      "grounding": "explicit",
+      "label": "seam enables sandbox swap",
+      "quote": "a Docker-based sandbox later (M4.12, D10) is a swap, not a rewrite",
+      "source_range": "2.4",
+      "status": "verified"
+    },
+    {
+      "from": "check_runner",
+      "to": "staging",
+      "relation": "next",
+      "grounding": "explicit",
+      "label": "pipeline stages artifact",
+      "quote": "The pipeline stages the artifact",
+      "source_range": "2.5",
+      "status": "verified"
+    },
+    {
+      "from": "staging",
+      "to": "approver_task",
+      "relation": "next",
+      "grounding": "explicit",
+      "label": "staging then approver task",
+      "quote": "An approver-role human.task is created",
+      "source_range": "2.5",
+      "status": "verified"
+    },
+    {
+      "from": "approver_task",
+      "to": "promote",
+      "relation": "next",
+      "grounding": "explicit",
+      "label": "approve then promote",
+      "quote": "On approve: the staged files are promoted",
+      "source_range": "2.5",
+      "status": "verified"
+    },
+    {
+      "from": "approver_task",
+      "to": "reject_path",
+      "relation": "next",
+      "grounding": "explicit",
+      "label": "reject path alternative",
+      "quote": "On reject: staged files deleted, reason recorded",
+      "source_range": "2.5",
+      "status": "verified"
+    },
+    {
+      "from": "promote",
+      "to": "workspace_registry",
+      "relation": "requires",
+      "grounding": "implied",
+      "label": "promotion feeds registry",
+      "quote": "the staged files are promoted (registry picks them up)",
+      "source_range": "2.5",
+      "status": "verified"
+    },
+    {
+      "from": "digest_rule",
+      "to": "check_runner",
+      "relation": "causes",
+      "grounding": "explicit",
+      "label": "edit reruns check",
+      "quote": "Any later edit to the file invalidates the approval and reruns the check (D20)",
+      "source_range": "2.5",
+      "status": "verified"
+    },
+    {
+      "from": "text_files",
+      "to": "workspace_registry",
+      "relation": "part_of",
+      "grounding": "explicit",
+      "label": "text files in registry",
+      "quote": "Approved node types live as text files in the workspace",
+      "source_range": "2.6",
+      "status": "verified"
+    },
+    {
+      "from": "registry_merge",
+      "to": "unapproved_invisible",
+      "relation": "supports",
+      "grounding": "explicit",
+      "label": "merge hides unapproved",
+      "quote": "Unapproved/staged entries are invisible to the planner",
+      "source_range": "2.6",
+      "status": "verified"
+    },
+    {
+      "from": "tier_t0",
+      "to": "kind_config",
+      "relation": "supports",
+      "grounding": "implied",
+      "label": "T0 covers config kind",
+      "quote": "T0 | Config of an existing type; composed subgraph (existing types only)",
+      "source_range": "3",
+      "status": "verified"
+    },
+    {
+      "from": "tier_t1",
+      "to": "kind_tool_python",
+      "relation": "supports",
+      "grounding": "implied",
+      "label": "T1 covers tool_python",
+      "quote": "T1 | tool_python code: no network, no secrets",
+      "source_range": "3",
+      "status": "verified"
+    },
+    {
+      "from": "tier_t2",
+      "to": "tier_t1",
+      "relation": "next",
+      "grounding": "implied",
+      "label": "T2 extends T1",
+      "quote": "T2 | Adds declared network hosts + secrets-by-name",
+      "source_range": "3",
+      "status": "verified"
+    },
+    {
+      "from": "tier_t3",
+      "to": "tier_t2",
+      "relation": "next",
+      "grounding": "implied",
+      "label": "T3 above T2",
+      "quote": "T3 | Executables, GPU, host reach",
+      "source_range": "3",
+      "status": "verified"
+    },
+    {
+      "from": "no_self_approval",
+      "to": "approver_task",
+      "relation": "supports",
+      "grounding": "implied",
+      "label": "approval is human-only",
+      "quote": "The builder never approves its own node; nothing that can approve is ever returned to the agent",
+      "source_range": "3",
+      "status": "verified"
+    },
+    {
+      "from": "no_self_grant",
+      "to": "tier_selfdecl",
+      "relation": "supports",
+      "grounding": "explicit",
+      "label": "self-grant fails pipeline",
+      "quote": "a self-declared tier below the scanned reality fails the pipeline outright",
+      "source_range": "3",
+      "status": "verified"
+    },
+    {
+      "from": "registry_presence",
+      "to": "workspace_registry",
+      "relation": "requires",
+      "grounding": "explicit",
+      "label": "canvas needs registry presence",
+      "quote": "the type must be installed and approved (else V03 at plan time)",
+      "source_range": "4.1",
+      "status": "verified"
+    },
+    {
+      "from": "v_rules",
+      "to": "registry_presence",
+      "relation": "next",
+      "grounding": "implied",
+      "label": "V-rules after registry",
+      "quote": "V03 type registered; V04 params validate against the manifest's params schema",
+      "source_range": "4.2",
+      "status": "verified"
+    },
+    {
+      "from": "determinism_honest",
+      "to": "stage_smoke",
+      "relation": "requires",
+      "grounding": "explicit",
+      "label": "declarations cross-checked by smoke",
+      "quote": "the scan + smoke test cross-check them",
+      "source_range": "4.3",
+      "status": "verified"
+    },
+    {
+      "from": "plain_surface",
+      "to": "canvas_placement",
+      "relation": "requires",
+      "grounding": "implied",
+      "label": "plain surface enables canvas",
+      "quote": "the manifest carries these so the canvas renders it without code changes in naming.py",
+      "source_range": "4.4",
+      "status": "verified"
+    },
+    {
+      "from": "error_fix_hints",
+      "to": "canvas_placement",
+      "relation": "supports",
+      "grounding": "implied",
+      "label": "fix-hints rendered on canvas",
+      "quote": "rendered by the canvas's problem list",
+      "source_range": "4.5",
+      "status": "verified"
+    },
+    {
+      "from": "wp2",
+      "to": "wp1",
+      "relation": "requires",
+      "grounding": "explicit",
+      "label": "WP2 depends on WP1",
+      "quote": "WP2 | Builder panel UI ... | M | WP1",
+      "source_range": "WP2 row",
+      "status": "unverified"
+    },
+    {
+      "from": "wp4",
+      "to": "wp3",
+      "relation": "requires",
+      "grounding": "explicit",
+      "label": "WP4 depends on WP3",
+      "quote": "T0 path: config + subgraph proposals ... | S | WP3",
+      "source_range": "WP4 row",
+      "status": "unverified"
+    },
+    {
+      "from": "workspace_registry",
+      "to": "wp3",
+      "relation": "requires",
+      "grounding": "explicit",
+      "label": "WP5 depends on WP3",
+      "quote": "Workspace node registry ... | M | WP3",
+      "source_range": "WP5 row",
+      "status": "unverified"
+    },
+    {
+      "from": "wp7",
+      "to": "workspace_registry",
+      "relation": "requires",
+      "grounding": "explicit",
+      "label": "WP7 depends on WP5",
+      "quote": "Check pipeline stages (a)(b) ... | M | WP5",
+      "source_range": "WP7 row",
+      "status": "unverified"
+    },
+    {
+      "from": "wp8",
+      "to": "wp7",
+      "relation": "requires",
+      "grounding": "explicit",
+      "label": "WP8 depends on WP7",
+      "quote": "Check pipeline stage (c) reviewer judge ... | S | WP7",
+      "source_range": "WP8 row",
+      "status": "unverified"
+    },
+    {
+      "from": "wp9",
+      "to": "wp6",
+      "relation": "requires",
+      "grounding": "explicit",
+      "label": "WP9 depends on WP6",
+      "quote": "observed smoke test through WP6; report bundle (e) | M | WP6, WP7",
+      "source_range": "WP9 row",
+      "status": "verified"
+    },
+    {
+      "from": "wp9",
+      "to": "wp7",
+      "relation": "requires",
+      "grounding": "explicit",
+      "label": "WP9 depends on WP7",
+      "quote": "observed smoke test through WP6; report bundle (e) | M | WP6, WP7",
+      "source_range": "WP9 row",
+      "status": "verified"
+    },
+    {
+      "from": "wp10",
+      "to": "workspace_registry",
+      "relation": "requires",
+      "grounding": "explicit",
+      "label": "WP10 depends on WP5",
+      "quote": "Approval flow ... | M | WP5, WP9",
+      "source_range": "WP10 row",
+      "status": "unverified"
+    },
+    {
+      "from": "wp10",
+      "to": "wp9",
+      "relation": "requires",
+      "grounding": "explicit",
+      "label": "WP10 depends on WP9",
+      "quote": "Approval flow ... | M | WP5, WP9",
+      "source_range": "WP10 row",
+      "status": "unverified"
+    },
+    {
+      "from": "wp11",
+      "to": "workspace_registry",
+      "relation": "requires",
+      "grounding": "explicit",
+      "label": "WP11 depends on WP5",
+      "quote": "Digest-invalidation wiring ... | S | WP5, WP10",
+      "source_range": "WP11 row",
+      "status": "unverified"
+    },
+    {
+      "from": "wp11",
+      "to": "wp10",
+      "relation": "requires",
+      "grounding": "explicit",
+      "label": "WP11 depends on WP10",
+      "quote": "Digest-invalidation wiring ... | S | WP5, WP10",
+      "source_range": "WP11 row",
+      "status": "unverified"
+    },
+    {
+      "from": "wp12",
+      "to": "wp6",
+      "relation": "requires",
+      "grounding": "explicit",
+      "label": "WP12 depends on WP6",
+      "quote": "T2 enforcement ... | M | WP6",
+      "source_range": "WP12 row",
+      "status": "unverified"
+    },
+    {
+      "from": "wp13",
+      "to": "wp6",
+      "relation": "requires",
+      "grounding": "explicit",
+      "label": "WP13 depends on WP6",
+      "quote": "T3: full sandbox integration ... | L | WP6, WP12",
+      "source_range": "WP13 row",
+      "status": "unverified"
+    },
+    {
+      "from": "wp13",
+      "to": "wp12",
+      "relation": "requires",
+      "grounding": "explicit",
+      "label": "WP13 depends on WP12",
+      "quote": "T3: full sandbox integration ... | L | WP6, WP12",
+      "source_range": "WP13 row",
+      "status": "unverified"
+    },
+    {
+      "from": "wp14",
+      "to": "wp2",
+      "relation": "requires",
+      "grounding": "explicit",
+      "label": "WP14 depends on WP2",
+      "quote": "Fix-hints + error rendering ... | S | WP2, WP9",
+      "source_range": "WP14 row",
+      "status": "unverified"
+    },
+    {
+      "from": "wp14",
+      "to": "wp9",
+      "relation": "requires",
+      "grounding": "explicit",
+      "label": "WP14 depends on WP9",
+      "quote": "Fix-hints + error rendering ... | S | WP2, WP9",
+      "source_range": "WP14 row",
+      "status": "unverified"
+    },
+    {
+      "from": "order1",
+      "to": "order2",
+      "relation": "next",
+      "grounding": "explicit",
+      "label": "Then real plumbing",
+      "quote": "WP3 → WP4 ... → WP5+WP6 (the real plumbing)",
+      "source_range": "build order",
+      "status": "unverified"
+    },
+    {
+      "from": "order2",
+      "to": "order3",
+      "relation": "next",
+      "grounding": "explicit",
+      "label": "Then D20 pipeline",
+      "quote": "WP5+WP6 (the real plumbing) → WP7–WP11",
+      "source_range": "build order",
+      "status": "verified"
+    },
+    {
+      "from": "order3",
+      "to": "order4",
+      "relation": "next",
+      "grounding": "explicit",
+      "label": "Then T2 then T3",
+      "quote": "WP7–WP11 ... → WP12 → WP13",
+      "source_range": "build order",
+      "status": "unverified"
+    },
+    {
+      "from": "injection_risk",
+      "to": "injection_hygiene",
+      "relation": "causes",
+      "grounding": "explicit",
+      "label": "Risk motivates data contract",
+      "quote": "Mitigations: graph content enters the builder prompt as delimited, quoted data",
+      "source_range": "mitigations",
+      "status": "verified"
+    },
+    {
+      "from": "injection_risk",
+      "to": "no_act_on_text",
+      "relation": "causes",
+      "grounding": "explicit",
+      "label": "Risk motivates no-act rule",
+      "quote": "the builder never acts on instructions found in graph text",
+      "source_range": "mitigations",
+      "status": "verified"
+    },
+    {
+      "from": "no_act_on_text",
+      "to": "injection_finding",
+      "relation": "next",
+      "grounding": "explicit",
+      "label": "Attempts surfaced as finding",
+      "quote": "such attempts are surfaced in the report as a finding",
+      "source_range": "mitigations",
+      "status": "verified"
+    },
+    {
+      "from": "injection_finding",
+      "to": "wp8",
+      "relation": "supports",
+      "grounding": "explicit",
+      "label": "Finding feeds reviewer judge",
+      "quote": "which the reviewer judge should also see",
+      "source_range": "mitigations",
+      "status": "verified"
+    },
+    {
+      "from": "injection_risk",
+      "to": "approver_gate",
+      "relation": "causes",
+      "grounding": "explicit",
+      "label": "Risk motivates approver gate",
+      "quote": "every consequential action still goes through the out-of-band approver task",
+      "source_range": "mitigations",
+      "status": "verified"
+    },
+    {
+      "from": "approver_gate",
+      "to": "no_self_approval",
+      "relation": "supports",
+      "grounding": "explicit",
+      "label": "Credentials only in human channel",
+      "quote": "Approval credentials live only in the human-task channel",
+      "source_range": "self-approval",
+      "status": "verified"
+    },
+    {
+      "from": "no_self_approval",
+      "to": "judge_report_only",
+      "relation": "supports",
+      "grounding": "explicit",
+      "label": "Judge is report input",
+      "quote": "The check pipeline's reviewer judge is a *report input*, not a decision-maker",
+      "source_range": "self-approval",
+      "status": "verified"
+    },
+    {
+      "from": "judge_report_only",
+      "to": "family_sep",
+      "relation": "next",
+      "grounding": "explicit",
+      "label": "Also family-separated",
+      "quote": "it is also family-separated from the builder",
+      "source_range": "self-approval",
+      "status": "verified"
+    },
+    {
+      "from": "risk_craft",
+      "to": "owner_gate",
+      "relation": "causes",
+      "grounding": "explicit",
+      "label": "Craft risk motivates owner gate",
+      "quote": "The design treats it as a filter that raises cost, with the owner's eyes as the real gate",
+      "source_range": "risks",
+      "status": "verified"
+    },
+    {
+      "from": "risk_craft",
+      "to": "q8",
+      "relation": "causes",
+      "grounding": "implied",
+      "label": "Craft risk raises calibration question",
+      "quote": "Calibrating the reviewer judge on a labeled benign/malicious set (D20) is a real project",
+      "source_range": "risks",
+      "status": "verified"
+    },
+    {
+      "from": "risk_windows",
+      "to": "tier_cap",
+      "relation": "causes",
+      "grounding": "explicit",
+      "label": "Uneven primitives motivate tier cap",
+      "quote": "the tier-ceiling rule keeps us honest",
+      "source_range": "risks",
+      "status": "verified"
+    },
+    {
+      "from": "risk_dialogue",
+      "to": "phase0",
+      "relation": "causes",
+      "grounding": "explicit",
+      "label": "Dialogue risk motivates small slice",
+      "quote": "The T0-only first slice keeps the risk low while the dialogue matures",
+      "source_range": "risks",
+      "status": "verified"
+    },
+    {
+      "from": "risk_scope",
+      "to": "phase0",
+      "relation": "causes",
+      "grounding": "explicit",
+      "label": "Scope risk motivates phased plan",
+      "quote": "the phased plan exists precisely to make each slice independently shippable",
+      "source_range": "risks",
+      "status": "verified"
+    },
+    {
+      "from": "phase0",
+      "to": "phase1",
+      "relation": "next",
+      "grounding": "explicit",
+      "label": "Then T0 subgraphs",
+      "quote": "Phase 0 ... Phase 1 — T0 subgraphs",
+      "source_range": "phases",
+      "status": "unverified"
+    },
+    {
+      "from": "phase1",
+      "to": "phase2",
+      "relation": "next",
+      "grounding": "explicit",
+      "label": "Then T1 tool nodes",
+      "quote": "Phase 1 ... Phase 2 — T1 `tool.python` nodes",
+      "source_range": "phases",
+      "status": "unverified"
+    },
+    {
+      "from": "phase2",
+      "to": "phase3",
+      "relation": "next",
+      "grounding": "explicit",
+      "label": "Then T2",
+      "quote": "Phase 2 ... Phase 3 — T2 (declared hosts/secrets)",
+      "source_range": "phases",
+      "status": "unverified"
+    },
+    {
+      "from": "phase3",
+      "to": "phase4",
+      "relation": "next",
+      "grounding": "explicit",
+      "label": "Then T3",
+      "quote": "Phase 3 ... Phase 4 — T3 + full custom node types",
+      "source_range": "phases",
+      "status": "unverified"
+    },
+    {
+      "from": "phase4",
+      "to": "phase5",
+      "relation": "next",
+      "grounding": "explicit",
+      "label": "Then polish",
+      "quote": "Phase 4 ... Phase 5 — polish",
+      "source_range": "phases",
+      "status": "unverified"
+    },
+    {
+      "from": "phase0",
+      "to": "signoff",
+      "relation": "next",
+      "grounding": "explicit",
+      "label": "Each phase ends with sign-off",
+      "quote": "Each phase ends with an owner demo and sign-off before the next begins",
+      "source_range": "phase ends",
+      "status": "verified"
+    },
+    {
+      "from": "phase0",
+      "to": "q1",
+      "relation": "causes",
+      "grounding": "implied",
+      "label": "Phase 0 timing is open",
+      "quote": "Should Phase 0 (params-only builder) be pulled into v0.1.x as a preview",
+      "source_range": "q1",
+      "status": "verified"
+    },
+    {
+      "from": "phase1",
+      "to": "q3",
+      "relation": "causes",
+      "grounding": "implied",
+      "label": "T0 approval question",
+      "quote": "Should T0 subgraph proposals require an approver task too",
+      "source_range": "q3",
+      "status": "verified"
+    },
+    {
+      "from": "workspace_registry",
+      "to": "q4",
+      "relation": "causes",
+      "grounding": "implied",
+      "label": "Registry location question",
+      "quote": "Where do approved workspace node types live",
+      "source_range": "q4",
+      "status": "verified"
+    },
+    {
+      "from": "wp10",
+      "to": "q5",
+      "relation": "causes",
+      "grounding": "implied",
+      "label": "Inbox view scope question",
+      "quote": "Is a canvas Inbox view of approver tasks in scope for v0.2",
+      "source_range": "q5",
+      "status": "verified"
+    },
+    {
+      "from": "wp9",
+      "to": "q6",
+      "relation": "causes",
+      "grounding": "implied",
+      "label": "Trial input question",
+      "quote": "What is the trial-run input story",
+      "source_range": "q6",
+      "status": "verified"
+    },
+    {
+      "from": "wp9",
+      "to": "q7",
+      "relation": "causes",
+      "grounding": "implied",
+      "label": "Transcript persistence question",
+      "quote": "Should every conversation be persisted as an artifact (report bundle includes the full transcript)",
+      "source_range": "q7",
+      "status": "verified"
+    },
+    {
+      "from": "wp10",
+      "to": "q9",
+      "relation": "causes",
+      "grounding": "implied",
+      "label": "Rejection feedback question",
+      "quote": "should the builder get the owner's rejection reason as feedback",
+      "source_range": "q9",
+      "status": "verified"
+    },
+    {
+      "from": "wp10",
+      "to": "q10",
+      "relation": "causes",
+      "grounding": "implied",
+      "label": "Apply step ownership question",
+      "quote": "does it only ever stage and the apply step is owner-clicked in the canvas",
+      "source_range": "q10",
+      "status": "verified"
+    },
+    {
+      "from": "build_gate",
+      "to": "phase0",
+      "relation": "requires",
+      "grounding": "explicit",
+      "label": "Sign-off precedes build",
+      "quote": "build starts only after owner sign-off on this design (and on the phase order)",
+      "source_range": "end",
+      "status": "verified"
+    },
+    {
+      "from": "sandbox_rule",
+      "to": "wp6",
+      "relation": "supports",
+      "grounding": "implied",
+      "label": "Sandbox rule motivates runner",
+      "quote": "Trial runs always in the restricted runner",
+      "source_range": "sandboxing",
+      "status": "verified"
+    },
+    {
+      "from": "t3_container",
+      "to": "wp13",
+      "relation": "supports",
+      "grounding": "implied",
+      "label": "T3 needs container sandbox",
+      "quote": "T3 additionally requires a container-class sandbox",
+      "source_range": "sandboxing",
+      "status": "verified"
+    },
+    {
+      "from": "no_network",
+      "to": "wp12",
+      "relation": "supports",
+      "grounding": "implied",
+      "label": "Network rule motivates T2 work",
+      "quote": "T2 declares hosts and the allowlist is checked in the pipeline",
+      "source_range": "no network",
+      "status": "verified"
+    },
+    {
+      "from": "secrets_channel",
+      "to": "builder_no_secrets",
+      "relation": "supports",
+      "grounding": "explicit",
+      "label": "Channel hides values from builder",
+      "quote": "The builder never sees secret values — only which names exist",
+      "source_range": "secrets",
+      "status": "verified"
+    },
+    {
+      "from": "file_confine",
+      "to": "wp6",
+      "relation": "supports",
+      "grounding": "implied",
+      "label": "Confinement implemented in runner",
+      "quote": "everything touched is recorded in the smoke report and diffed against the declaration",
+      "source_range": "file boundaries",
+      "status": "verified"
+    },
+    {
+      "from": "replay",
+      "to": "wp11",
+      "relation": "supports",
+      "grounding": "implied",
+      "label": "Digest rule implemented in WP11",
+      "quote": "Code digest in the cache key; approvals are keyed to digests",
+      "source_range": "replayability",
+      "status": "verified"
+    },
+    {
+      "from": "budget",
+      "to": "wp3",
+      "relation": "supports",
+      "grounding": "implied",
+      "label": "Budget rule constrains builder calls",
+      "quote": "The builder consumes budget like any node call (reserve/reconcile)",
+      "source_range": "budget",
+      "status": "verified"
+    }
+  ],
+  "meta": {
+    "created": "2026-10-11T14:18:30.738Z",
+    "model_used": "z-ai/glm-5.3-flash",
+    "structured": "strict",
+    "granularity": "medium",
+    "prompt_sha": "e7cfaa2c5b54",
+    "verification": {
+      "exact": 126,
+      "normalized": 107,
+      "fuzzy": 1,
+      "unverified": 22
+    }
+  }
+}
