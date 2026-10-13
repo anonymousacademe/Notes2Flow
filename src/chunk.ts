@@ -73,11 +73,6 @@ export async function mergeSectionGraphs(parts: GraphPart[]): Promise<MergeResul
       idToIndex.set(nsId, idx);
       localToGlobal.set(n.id, idx);
     }
-    p.edges = p.edges.map((e) => ({
-      ...e,
-      from: `c${pi}_${e.from}`,
-      to: `c${pi}_${e.to}`,
-    })) as GraphPart["edges"];
     void localToGlobal;
   });
 
@@ -152,10 +147,11 @@ export async function mergeSectionGraphs(parts: GraphPart[]): Promise<MergeResul
 
   const seenEdges = new Set<string>();
   const edges: GraphPart["edges"] = [];
-  for (const p of parts) {
+  // Namespace edge ids here rather than rewriting parts[i].edges, so the caller's input is left as it was.
+  parts.forEach((p, pi) => {
     for (const e of p.edges) {
-      const fi = idToIndex.get(e.from);
-      const ti = idToIndex.get(e.to);
+      const fi = idToIndex.get(`c${pi}_${e.from}`);
+      const ti = idToIndex.get(`c${pi}_${e.to}`);
       if (fi === undefined || ti === undefined) continue;
       const rf = nodeToRep.get(fi)!;
       const rt = nodeToRep.get(ti)!;
@@ -167,7 +163,7 @@ export async function mergeSectionGraphs(parts: GraphPart[]): Promise<MergeResul
       seenEdges.add(key);
       edges.push({ ...e, from, to });
     }
-  }
+  });
   // Final ids: strip the chunk namespace, keeping the representative's suffix.
   const finalNodes = nodes.map((n) => ({ ...n, id: n.id.replace(/^c\d+_/, "") }));
   const finalEdges = edges.map((e) => ({
