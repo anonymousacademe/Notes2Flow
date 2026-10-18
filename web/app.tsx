@@ -41,6 +41,7 @@ interface N2fNode {
   id: string;
   label: string;
   kind: string;
+  details?: string[];
   provenance?: Provenance[];
   provenance_status?: string;
   style?: { shape?: Shape; color?: string };
@@ -73,6 +74,7 @@ interface N2fGraph {
 type NodeData = {
   label: string;
   kind: string;
+  details?: string[];
   shape?: Shape;
   color?: string;
   userAdded: boolean;
@@ -96,8 +98,14 @@ type AppEdge = RFEdge<EdgeData>;
 /* Constants                                                           */
 /* ------------------------------------------------------------------ */
 
-const NODE_KINDS = ["claim", "assumption", "option", "decision", "action", "prereq", "question", "note"];
+type MapType = "plan" | "process";
+const MAP_TYPE_LABELS: Record<MapType, string> = { plan: "Idea map", process: "Process map" };
+const KINDS_BY_MAP_TYPE: Record<MapType, string[]> = {
+  plan: ["claim", "assumption", "option", "decision", "action", "prereq", "question", "note"],
+  process: ["start", "step", "decision", "outcome", "note"],
+};
 const RELATIONS = ["causes", "requires", "supports", "contradicts", "part_of", "next"];
+const asMapType = (v: unknown): MapType => (v === "process" ? "process" : "plan");
 const SHAPES: { id: Shape; label: string; glyph: string }[] = [
   { id: "rectangle", label: "Rectangle", glyph: "▭" },
   { id: "rounded", label: "Rounded", glyph: "▢" },
@@ -122,6 +130,7 @@ const REL_ARROW: Record<string, string> = {
 
 // Mirrors src/schema.ts defaultShape (kept local so the browser bundle does not pull in zod).
 function defaultShape(kind: string): Shape {
+  if (kind === "start" || kind === "outcome") return "pill";
   return kind === "decision" || kind === "question" ? "diamond" : "rounded";
 }
 
@@ -194,6 +203,7 @@ function fromGraph(g: N2fGraph): { nodes: AppNode[]; edges: AppEdge[] } {
     data: {
       label: n.label,
       kind: n.kind,
+      details: n.details,
       shape: n.style?.shape,
       color: n.style?.color,
       userAdded: n.provenance_status === "user_added",
@@ -220,10 +230,10 @@ function fromGraph(g: N2fGraph): { nodes: AppNode[]; edges: AppEdge[] } {
 }
 
 /** Build the canonical graph (what exports / review consume) from the canvas state. */
-function toGraph(nodes: AppNode[], edges: AppEdge[], base: N2fGraph | null) {
+function toGraph(nodes: AppNode[], edges: AppEdge[], base: N2fGraph | null, mapType: MapType) {
   return {
     graph_id: base?.graph_id ?? "user-map",
-    map_type: "plan" as const,
+    map_type: mapType,
     meta: base?.meta,
     nodes: nodes.map((n) => {
       const style: { shape?: Shape; color?: string } = {};
@@ -233,6 +243,7 @@ function toGraph(nodes: AppNode[], edges: AppEdge[], base: N2fGraph | null) {
         id: n.id,
         label: n.data.label.trim() || "(untitled)",
         kind: n.data.kind,
+        ...(n.data.details && n.data.details.length > 0 ? { details: n.data.details } : {}),
         provenance: n.data.provenance ?? [USER_PROVENANCE],
         provenance_status: n.data.userAdded ? "user_added" : n.data.unverified ? "unverified" : "verified",
         ...(Object.keys(style).length > 0 ? { style } : {}),
@@ -252,15 +263,17 @@ function toGraph(nodes: AppNode[], edges: AppEdge[], base: N2fGraph | null) {
 }
 
 async function fetchPositions(
-  ids: string[],
+  nodes: { id: string; kind: string; label: string; details?: string[] }[],
   pairs: { from: string; to: string }[],
+  mapType: MapType,
 ): Promise<Map<string, { x: number; y: number }>> {
+  const ids = nodes.map((n) => n.id);
   const positions = new Map<string, { x: number; y: number }>();
   try {
     const res = await fetch("/api/layout", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ nodes: ids.map((id) => ({ id })), edges: pairs }),
+      body: JSON.stringify({ nodes, edges: pairs, map_type: mapType }),
     });
     const data = await res.json();
     for (const [id, pos] of Object.entries(data.positions ?? {})) {
@@ -280,10 +293,15 @@ async function fetchPositions(
 /* ------------------------------------------------------------------ */
 
 function N2fNodeView({ data, selected }: NodeProps<AppNode>) {
-  const shape = data.shape ?? defaultShape(data.kind);
+  const hasDetails = (data.details?.length ?? 0) > 0;
+  const chosen = data.shape ?? defaultShape(data.kind);
+  // A diamond cannot hold a criteria list, so such nodes draw as a box; the kind class still marks decisions.
+  const shape = chosen === "diamond" && hasDetails ? "rounded" : chosen;
   const cls = [
     "n2f-node",
     `shape-${shape}`,
+    `kind-${data.kind}`,
+    hasDetails ? "has-details" : "",
     selected ? "is-selected" : "",
     data.highlighted ? "is-highlight" : "",
     data.unverified ? "is-unverified" : "",
@@ -303,6 +321,13 @@ function N2fNodeView({ data, selected }: NodeProps<AppNode>) {
       )}
       <Handle type="target" position={Position.Top} className="n2f-handle" />
       <div className="n2f-label">{data.label}</div>
+      {data.details && data.details.length > 0 && (
+        <ul className="n2f-details">
+          {data.details.map((d, i) => (
+            <li key={i}>{d}</li>
+          ))}
+        </ul>
+      )}
       <span className="badge">
         {data.kind}
         {data.unverified ? " · unverified" : ""}
@@ -326,6 +351,7 @@ function FitController({ version }: { version: number }) {
 }
 
 function EditorToolbar(props: {
+  kinds: string[];
   kind: string;
   setKind: (k: string) => void;
   relation: string;
@@ -349,7 +375,7 @@ function EditorToolbar(props: {
         + Add node
       </button>
       <select value={props.kind} onChange={(e) => props.setKind(e.target.value)} title="Kind of the new node">
-        {NODE_KINDS.map((k) => (
+        {props.kinds.map((k) => (
           <option key={k} value={k}>
             {k}
           </option>
@@ -378,6 +404,7 @@ function App() {
   const [notes, setNotes] = useState<string>(STARTER_NOTES);
   const [model, setModel] = useState("z-ai/glm-5.3-flash");
   const [granularity, setGranularity] = useState("medium");
+  const [mapType, setMapType] = useState<MapType>("plan");
   const [job, setJob] = useState<{ status: string; progress: string[]; error?: string } | null>(null);
   const [graph, setGraph] = useState<N2fGraph | null>(null);
   const [issues, setIssues] = useState<Issue[]>([]);
@@ -386,6 +413,7 @@ function App() {
   const [fitVersion, setFitVersion] = useState(0);
   const [newKind, setNewKind] = useState("note");
   const [newRelation, setNewRelation] = useState("supports");
+  const kinds = KINDS_BY_MAP_TYPE[mapType];
   const [theme, setTheme] = useState(() => readPref("n2f.theme", Object.keys(THEMES), "clean"));
   const [font, setFont] = useState(() => readPref("n2f.font", Object.keys(FONTS), "auto"));
 
@@ -429,9 +457,14 @@ function App() {
   const loadGraph = useCallback(
     async (g: N2fGraph) => {
       const { nodes, edges } = fromGraph(g);
+      const mt = asMapType(g.map_type);
+      setMapType(mt);
+      setNewKind(mt === "process" ? "step" : "note");
+      setNewRelation(mt === "process" ? "next" : "supports");
       const positions = await fetchPositions(
-        nodes.map((n) => n.id),
+        nodes.map((n) => ({ id: n.id, kind: n.data.kind, label: n.data.label, details: n.data.details })),
         edges.map((e) => ({ from: e.source, to: e.target })),
+        mt,
       );
       setRfNodes(nodes.map((n) => ({ ...n, position: positions.get(n.id) ?? n.position })));
       setRfEdges(edges);
@@ -483,13 +516,13 @@ function App() {
     const res = await fetch("/api/extract", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ notes, model, granularity }),
+      body: JSON.stringify({ notes, model, granularity, map_type: mapType }),
     });
     const data = await res.json();
     if (data.error) return showToast(data.error);
     setJob({ status: "queued", progress: [] });
     poll(data.job_id);
-  }, [notes, model, granularity, poll, showToast]);
+  }, [notes, model, granularity, mapType, poll, showToast]);
 
   /* ---- editing ---- */
   const markDirty = () => {
@@ -616,21 +649,23 @@ function App() {
   const relayout = useCallback(async () => {
     if (rfNodes.length === 0) return;
     const positions = await fetchPositions(
-      rfNodes.map((n) => n.id),
+      rfNodes.map((n) => ({ id: n.id, kind: n.data.kind, label: n.data.label, details: n.data.details })),
       rfEdges.map((e) => ({ from: e.source, to: e.target })),
+      mapType,
     );
     setRfNodes((ns) => ns.map((n) => ({ ...n, position: positions.get(n.id) ?? n.position })));
     setFitVersion((v) => v + 1);
-  }, [rfNodes, rfEdges, setRfNodes]);
+  }, [rfNodes, rfEdges, setRfNodes, mapType]);
 
   // Re-run the (free, rule-based) logic review after structural edits.
   const structureKey = useMemo(
     () =>
       JSON.stringify([
         rfNodes.map((n) => [n.id, n.data.label, n.data.kind]),
-        rfEdges.map((e) => [e.source, e.target, e.data?.relation]),
+        rfEdges.map((e) => [e.source, e.target, e.data?.relation, e.data?.label]),
+        mapType,
       ]),
-    [rfNodes, rfEdges],
+    [rfNodes, rfEdges, mapType],
   );
   const graphRef = useRef(graph);
   graphRef.current = graph;
@@ -646,7 +681,7 @@ function App() {
         const res = await fetch("/api/review", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ graph: toGraph(nodesRef.current, edgesRef.current, graphRef.current) }),
+          body: JSON.stringify({ graph: toGraph(nodesRef.current, edgesRef.current, graphRef.current, mapType) }),
         });
         const data = await res.json();
         if (Array.isArray(data.issues)) setIssues(data.issues);
@@ -663,7 +698,7 @@ function App() {
       const res = await fetch("/api/export", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ graph: toGraph(rfNodes, rfEdges, graph), format }),
+        body: JSON.stringify({ graph: toGraph(rfNodes, rfEdges, graph, mapType), format }),
       });
       const data = await res.json();
       if (data.error) return showToast(data.error);
@@ -674,7 +709,7 @@ function App() {
       a.click();
       URL.revokeObjectURL(a.href);
     },
-    [rfNodes, rfEdges, graph, showToast],
+    [rfNodes, rfEdges, graph, mapType, showToast],
   );
 
   const highlight = useCallback((targets: string[]) => setHighlightTargets(new Set(targets)), []);
@@ -695,9 +730,11 @@ function App() {
         const stroke = e.selected ? t.accent : t.edge;
         return {
           ...e,
-          label: d
-            ? `${REL_ARROW[d.relation] ?? "→"} ${d.relation}${d.grounding === "implied" ? " (implied)" : ""}`
-            : undefined,
+          label: !d
+            ? undefined
+            : mapType === "process"
+              ? d.label ?? undefined
+              : `${REL_ARROW[d.relation] ?? "→"} ${d.relation}${d.grounding === "implied" ? " (implied)" : ""}`,
           labelStyle: { fill: t.ink, fontSize: 11 },
           labelBgStyle: { fill: t.labelBg, fillOpacity: 0.92 },
           style: {
@@ -708,7 +745,7 @@ function App() {
           markerEnd: { type: MarkerType.ArrowClosed, color: stroke },
         };
       }),
-    [rfEdges, t],
+    [rfEdges, t, mapType],
   );
 
   const stats = useMemo(() => {
@@ -745,7 +782,7 @@ function App() {
           <label className="field">
             <span>Kind</span>
             <select value={n.data.kind} onChange={(e) => updateNode(n.id, { kind: e.target.value })}>
-              {NODE_KINDS.map((k) => (
+              {(kinds.includes(n.data.kind) ? kinds : [...kinds, n.data.kind]).map((k) => (
                 <option key={k} value={k}>
                   {k}
                 </option>
@@ -813,6 +850,14 @@ function App() {
             <b>{from}</b> → <b>{to}</b>
           </div>
           <label className="field">
+            <span>Label{mapType === "process" ? " (Yes / No / ...)" : ""}</span>
+            <input
+              type="text"
+              value={e.data?.label ?? ""}
+              onChange={(ev) => updateEdge(e.id, { label: ev.target.value || null })}
+            />
+          </label>
+          <label className="field">
             <span>Relation</span>
             <select value={e.data?.relation} onChange={(ev) => updateEdge(e.id, { relation: ev.target.value })}>
               {RELATIONS.map((r) => (
@@ -869,6 +914,17 @@ function App() {
         <select value={model} onChange={(e) => setModel(e.target.value)} title="Model">
           <option value="z-ai/glm-5.3-flash">GLM 5.3 Flash (cheap)</option>
           <option value="anthropic/claude-sonnet-5.5">Claude Sonnet 5.5</option>
+        </select>
+        <select
+          value={mapType}
+          onChange={(e) => setMapType(asMapType(e.target.value))}
+          title="What kind of map to make: an idea map of claims and options, or a process flowchart of steps and decisions"
+        >
+          {(Object.keys(MAP_TYPE_LABELS) as MapType[]).map((mt) => (
+            <option key={mt} value={mt}>
+              {MAP_TYPE_LABELS[mt]}
+            </option>
+          ))}
         </select>
         <select value={granularity} onChange={(e) => setGranularity(e.target.value)} title="Detail level">
           <option value="low">Compact</option>
@@ -938,6 +994,7 @@ function App() {
           <Background gap={22} color={t.grid} />
           <Controls showInteractive={false} />
           <EditorToolbar
+            kinds={kinds}
             kind={newKind}
             setKind={setNewKind}
             relation={newRelation}
@@ -948,7 +1005,7 @@ function App() {
         </ReactFlow>
         {rfNodes.length === 0 && (
           <div className="empty-state">
-            Your idea map will appear here.
+            Your {mapType === "process" ? "process map" : "idea map"} will appear here.
             <br />
             Make it from your notes, or start by hand with “+ Add node”.
           </div>
@@ -975,7 +1032,7 @@ function App() {
         ))}
         <h2 style={{ marginTop: 18 }}>Legend</h2>
         <div className="legend">
-          {NODE_KINDS.map((k) => (
+          {kinds.map((k) => (
             <span key={k} style={{ background: `var(--kind-${k})` }}>
               {k}
             </span>

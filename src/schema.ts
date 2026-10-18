@@ -9,6 +9,9 @@ export const NODE_KINDS = [
   "prereq",
   "question",
   "note",
+  "start",
+  "step",
+  "outcome",
 ] as const;
 export const NodeKind = z.enum(NODE_KINDS);
 
@@ -21,6 +24,17 @@ export const RELATIONS = [
   "next",
 ] as const;
 export const Relation = z.enum(RELATIONS);
+
+/** idea: claims/options/decisions argument structure. process: ordered steps, yes/no decisions, outcomes. */
+export const MAP_TYPES = ["plan", "process"] as const;
+export const MapType = z.enum(MAP_TYPES);
+export type MapType = z.infer<typeof MapType>;
+
+/** Node kinds the model may use per map type (the schema enum stays the union of both). */
+export const KINDS_BY_MAP_TYPE: Record<MapType, readonly (typeof NODE_KINDS)[number][]> = {
+  plan: ["claim", "assumption", "option", "decision", "action", "prereq", "question", "note"],
+  process: ["start", "step", "decision", "outcome", "note"],
+};
 
 export const GROUNDINGS = ["explicit", "implied"] as const;
 export const Grounding = z.enum(GROUNDINGS);
@@ -44,6 +58,10 @@ export const Node = z.object({
     .describe("Short reference key used in edges, e.g. n1, n2 (ids are reassigned by the app)"),
   label: z.string().min(1).describe("Short node label, at most 8 words"),
   kind: NodeKind,
+  details: z
+    .array(z.string())
+    .optional()
+    .describe("Short bullet items shown inside the node (e.g. the criteria of a grouped decision); [] if none"),
   provenance: z.array(Provenance).min(1),
 });
 export type Node = z.infer<typeof Node>;
@@ -63,7 +81,7 @@ export type Edge = z.infer<typeof Edge>;
 
 export const Graph = z.object({
   graph_id: z.string(),
-  map_type: z.literal("plan"),
+  map_type: MapType,
   nodes: z.array(Node),
   edges: z.array(Edge),
   meta: z
@@ -97,6 +115,7 @@ export type NodeShape = z.infer<typeof NodeShape>;
 
 /** Default shape for a node kind when the user has not picked one. */
 export function defaultShape(kind: string): NodeShape {
+  if (kind === "start" || kind === "outcome") return "pill";
   return kind === "decision" || kind === "question" ? "diamond" : "rounded";
 }
 
