@@ -400,9 +400,15 @@ function EditorToolbar(props: {
 /* App                                                                 */
 /* ------------------------------------------------------------------ */
 
+// Mirrors src/models.ts: compact maps default to the compact model.
+const DEFAULT_MODEL = "z-ai/glm-5.3-flash";
+const COMPACT_MODEL = "google/gemini-4-argon";
+
 function App() {
   const [notes, setNotes] = useState<string>(STARTER_NOTES);
-  const [model, setModel] = useState("z-ai/glm-5.3-flash");
+  const [model, setModel] = useState(DEFAULT_MODEL);
+  // Once the user picks a model, changing the detail level no longer switches it.
+  const [modelChosen, setModelChosen] = useState(false);
   const [granularity, setGranularity] = useState("medium");
   const [mapType, setMapType] = useState<MapType>("plan");
   const [job, setJob] = useState<{ status: string; progress: string[]; error?: string } | null>(null);
@@ -911,8 +917,16 @@ function App() {
     <div className="app">
       <header className="header">
         <h1>Notes2Flow</h1>
-        <select value={model} onChange={(e) => setModel(e.target.value)} title="Model">
+        <select
+          value={model}
+          onChange={(e) => {
+            setModel(e.target.value);
+            setModelChosen(true);
+          }}
+          title="Model"
+        >
           <option value="z-ai/glm-5.3-flash">GLM 5.3 Flash (cheap)</option>
+          <option value="google/gemini-4-argon">Gemini 4 Argon (best for Compact)</option>
           <option value="anthropic/claude-sonnet-5.5">Claude Sonnet 5.5</option>
         </select>
         <select
@@ -926,7 +940,14 @@ function App() {
             </option>
           ))}
         </select>
-        <select value={granularity} onChange={(e) => setGranularity(e.target.value)} title="Detail level">
+        <select
+          value={granularity}
+          onChange={(e) => {
+            setGranularity(e.target.value);
+            if (!modelChosen) setModel(e.target.value === "low" ? COMPACT_MODEL : DEFAULT_MODEL);
+          }}
+          title="Detail level"
+        >
           <option value="low">Compact</option>
           <option value="medium">Thorough</option>
           <option value="high">Exhaustive</option>

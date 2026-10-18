@@ -12,6 +12,7 @@ import { toMermaid } from "./mermaid.js";
 import { toExcalidraw } from "./excalidraw.js";
 import { splitIntoChunks, mergeSectionGraphs, type GraphPart } from "./chunk.js";
 import { GraphWithStatus, MAP_TYPES, type MapType, type GraphWithStatus as GraphT } from "./schema.js";
+import { defaultModelFor } from "./models.js";
 
 const PORT = Number(process.env.N2F_PORT ?? 5175);
 const DEFAULT_MODEL = process.env.N2F_MODEL ?? "z-ai/glm-5.3-flash";
@@ -133,7 +134,9 @@ const server = createServer(async (req, res) => {
       if (!mapType) return send(res, 400, { error: `map_type must be one of ${MAP_TYPES.join(", ")}` });
       const job: Job = { id: randomUUID(), status: "queued", progress: [] };
       jobs.set(job.id, job);
-      void runExtraction(job, notes, body.model ?? DEFAULT_MODEL, body.granularity ?? "medium", mapType).catch((err) => {
+      const granularity = body.granularity ?? "medium";
+      const model = body.model ?? defaultModelFor(granularity, DEFAULT_MODEL);
+      void runExtraction(job, notes, model, granularity, mapType).catch((err) => {
         job.status = "error";
         job.error = err instanceof Error ? err.message : String(err);
       });

@@ -70,13 +70,14 @@ Environment variables for the server:
 | Variable | Default | Purpose |
 |---|---|---|
 | `N2F_PORT` | `5175` | API server port |
-| `N2F_MODEL` | `z-ai/glm-5.3-flash` | Default extraction model |
+| `N2F_MODEL` | `z-ai/glm-5.3-flash` | Default extraction model (Thorough and Exhaustive) |
+| `N2F_COMPACT_MODEL` | `google/gemini-4-argon` | Default model for Compact maps (`--granularity low`) |
 | `OPENROUTER_API_KEY` | (from keychain) | OpenRouter API key |
 
 ## Command line
 
 ```bash
-npm run extract -- --input notes.md [--model z-ai/glm-5.3-flash] [--granularity low|medium|high] [--timeout 600] [--chunk-size 12000]
+npm run extract -- --input notes.md [--model anthropic/claude-sonnet-5.5] [--granularity low|medium|high] [--timeout 600] [--chunk-size 12000]
 npm run review  -- graph.json          # run the logic review on a saved graph
 npm run eval    -- --fixtures fixtures  # score extraction against hand-built expected graphs
 npm run server                         # API server only
@@ -93,6 +94,14 @@ Automatic detection of the right type is planned, not built.
 
 `--granularity` sets how many nodes extraction produces. `medium` is the default. `high`
 can produce 100+ nodes on long documents, which is hard to read.
+
+Without `--model`, the CLI uses Claude Sonnet 5.5, and the web app uses GLM 5.3 Flash.
+Compact maps (`--granularity low`, or "Compact" in the web app) use Gemini 4 Argon
+instead: compact maps depend on the model deciding what to leave out, and in a
+comparison on a process document Gemini 4 Argon was the only model to hit the compact
+size with every branch correct, while GLM 5.3 Flash left dead-end steps. In the web
+app, picking a model yourself turns this switching off. Set `N2F_COMPACT_MODEL` to
+change the compact default.
 
 Long documents are split by Markdown section (`--chunk-size` sets the target size), then
 merged. Merging matches nodes across sections using embeddings.

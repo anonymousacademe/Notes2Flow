@@ -9,6 +9,7 @@ import { callModel, usageLine } from "./transport.js";
 import { verifyQuote } from "./textmatch.js";
 import { toMermaid } from "./mermaid.js";
 import { splitIntoChunks, mergeSectionGraphs, type GraphPart } from "./chunk.js";
+import { defaultModelFor } from "./models.js";
 
 const DEFAULT_MODEL = "anthropic/claude-sonnet-5.5";
 
@@ -306,9 +307,8 @@ interface Args {
 }
 
 function parseArgs(argv: string[]): Args {
-  const args: Args = {
+  const args: Omit<Args, "model"> & { model?: string } = {
     input: "",
-    model: DEFAULT_MODEL,
     granularity: "medium",
     timeoutMs: 300_000,
     chunkSize: 12000,
@@ -318,7 +318,7 @@ function parseArgs(argv: string[]): Args {
     const a = argv[i];
     if (a === "--input" || a === "-i") args.input = argv[++i] ?? "";
     else if (a === "--out" || a === "-o") args.out = argv[++i];
-    else if (a === "--model" || a === "-m") args.model = argv[++i] ?? DEFAULT_MODEL;
+    else if (a === "--model" || a === "-m") args.model = argv[++i];
     else if (a === "--granularity" || a === "-g") args.granularity = (argv[++i] ?? "") as Granularity;
     else if (a === "--timeout") args.timeoutMs = Number(argv[++i] ?? "300") * 1000;
     else if (a === "--chunk-size") args.chunkSize = Number(argv[++i] ?? "12000");
@@ -338,7 +338,8 @@ function parseArgs(argv: string[]): Args {
     );
     process.exit(2);
   }
-  return args;
+  // No --model: compact maps get the compact default, the rest DEFAULT_MODEL.
+  return { ...args, model: args.model ?? defaultModelFor(args.granularity, DEFAULT_MODEL) };
 }
 
 function isMain(): boolean {
