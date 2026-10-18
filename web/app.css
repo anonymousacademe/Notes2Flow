@@ -364,6 +364,41 @@ select, textarea, input {
 
 .n2f-label, .n2f-node .badge { position: relative; z-index: 1; }
 .n2f-node.has-details { width: 300px; align-items: stretch; }
+.n2f-details-toggle {
+  position: relative;
+  z-index: 1;
+  margin-top: 4px;
+  padding: 1px 8px;
+  font: inherit;
+  font-size: 10.5px;
+  color: inherit;
+  background: transparent;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  opacity: 0.75;
+  cursor: pointer;
+}
+.n2f-details-toggle:hover { opacity: 1; }
+.n2f-fold {
+  position: absolute;
+  z-index: 2;
+  right: -13px;
+  top: 50%;
+  transform: translateY(-50%);
+  min-width: 24px;
+  height: 24px;
+  padding: 0 6px;
+  font: inherit;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1;
+  color: var(--accent);
+  background: var(--panel);
+  border: 1.5px solid var(--accent);
+  border-radius: 999px;
+  cursor: pointer;
+}
+.n2f-fold.is-folded { color: #fff; background: var(--accent); }
 .n2f-node.has-details .n2f-label { text-align: center; font-weight: 600; }
 .n2f-node.has-details .badge { text-align: center; }
 .n2f-node.kind-decision.has-details { border-left: 6px solid #f59e0b; }

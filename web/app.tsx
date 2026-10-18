@@ -26,6 +26,7 @@ import {
   type Connection,
 } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
+import { computeFold } from "../src/fold.js";
 
 /* ------------------------------------------------------------------ */
 /* Types                                                               */
@@ -81,6 +82,11 @@ type NodeData = {
   unverified: boolean;
   provenance: Provenance[] | null;
   highlighted?: boolean;
+  /** View-only fold state, derived at render time (never saved). */
+  detailsOpen?: boolean;
+  hasChildren?: boolean;
+  branchFolded?: boolean;
+  hiddenCount?: number;
 };
 type AppNode = RFNode<NodeData, "n2f">;
 
@@ -243,7 +249,7 @@ function toGraph(nodes: AppNode[], edges: AppEdge[], base: N2fGraph | null, mapT
         id: n.id,
         label: n.data.label.trim() || "(untitled)",
         kind: n.data.kind,
-        ...(n.data.details && n.data.details.length > 0 ? { details: n.data.details } : {}),
+        ...(n.data.details?.some((d) => d.trim()) ? { details: n.data.details.map((d) => d.trim()).filter(Boolean) } : {}),
         provenance: n.data.provenance ?? [USER_PROVENANCE],
         provenance_status: n.data.userAdded ? "user_added" : n.data.unverified ? "unverified" : "verified",
         ...(Object.keys(style).length > 0 ? { style } : {}),
@@ -292,16 +298,25 @@ async function fetchPositions(
 /* Canvas pieces                                                       */
 /* ------------------------------------------------------------------ */
 
-function N2fNodeView({ data, selected }: NodeProps<AppNode>) {
-  const hasDetails = (data.details?.length ?? 0) > 0;
+interface FoldApi {
+  toggleDetails: (id: string) => void;
+  toggleBranch: (id: string) => void;
+}
+const FoldContext = React.createContext<FoldApi>({ toggleDetails: () => {}, toggleBranch: () => {} });
+
+function N2fNodeView({ id, data, selected }: NodeProps<AppNode>) {
+  const fold = React.useContext(FoldContext);
+  const detailCount = data.details?.length ?? 0;
+  const hasDetails = detailCount > 0;
+  const open = hasDetails && !!data.detailsOpen;
   const chosen = data.shape ?? defaultShape(data.kind);
-  // A diamond cannot hold a criteria list, so such nodes draw as a box; the kind class still marks decisions.
-  const shape = chosen === "diamond" && hasDetails ? "rounded" : chosen;
+  // A diamond cannot hold a criteria list, so an expanded node draws as a box; the kind class still marks decisions.
+  const shape = chosen === "diamond" && open ? "rounded" : chosen;
   const cls = [
     "n2f-node",
     `shape-${shape}`,
     `kind-${data.kind}`,
-    hasDetails ? "has-details" : "",
+    open ? "has-details" : "",
     selected ? "is-selected" : "",
     data.highlighted ? "is-highlight" : "",
     data.unverified ? "is-unverified" : "",
@@ -321,9 +336,21 @@ function N2fNodeView({ data, selected }: NodeProps<AppNode>) {
       )}
       <Handle type="target" position={Position.Top} className="n2f-handle" />
       <div className="n2f-label">{data.label}</div>
-      {data.details && data.details.length > 0 && (
+      {hasDetails && (
+        <button
+          className="n2f-details-toggle nodrag"
+          title={open ? "Hide the list" : "Show the list"}
+          onClick={(e) => {
+            e.stopPropagation();
+            fold.toggleDetails(id);
+          }}
+        >
+          {open ? "▾" : "▸"} {detailCount} {detailCount === 1 ? "item" : "items"}
+        </button>
+      )}
+      {open && (
         <ul className="n2f-details">
-          {data.details.map((d, i) => (
+          {data.details!.map((d, i) => (
             <li key={i}>{d}</li>
           ))}
         </ul>
@@ -334,6 +361,18 @@ function N2fNodeView({ data, selected }: NodeProps<AppNode>) {
         {data.userAdded ? " · yours" : ""}
       </span>
       <Handle type="source" position={Position.Bottom} className="n2f-handle" />
+      {data.hasChildren && (
+        <button
+          className={`n2f-fold nodrag ${data.branchFolded ? "is-folded" : ""}`}
+          title={data.branchFolded ? `Show ${data.hiddenCount ?? 0} hidden nodes` : "Hide everything after this node"}
+          onClick={(e) => {
+            e.stopPropagation();
+            fold.toggleBranch(id);
+          }}
+        >
+          {data.branchFolded ? `+${data.hiddenCount ?? 0}` : "−"}
+        </button>
+      )}
     </div>
   );
 }
@@ -414,6 +453,10 @@ function App() {
   const [newKind, setNewKind] = useState("note");
   const [newRelation, setNewRelation] = useState("supports");
   const kinds = KINDS_BY_MAP_TYPE[mapType];
+  // View-only fold state: nodes whose detail list is open, and nodes whose downstream branch is folded.
+  const [openDetails, setOpenDetails] = useState<Set<string>>(new Set());
+  const [folded, setFolded] = useState<Set<string>>(new Set());
+  const skipFoldRelayout = useRef(false);
   const [theme, setTheme] = useState(() => readPref("n2f.theme", Object.keys(THEMES), "clean"));
   const [font, setFont] = useState(() => readPref("n2f.font", Object.keys(FONTS), "auto"));
 
@@ -461,8 +504,12 @@ function App() {
       setMapType(mt);
       setNewKind(mt === "process" ? "step" : "note");
       setNewRelation(mt === "process" ? "next" : "supports");
+      if (openDetails.size > 0 || folded.size > 0) skipFoldRelayout.current = true;
+      setOpenDetails((s) => (s.size > 0 ? new Set() : s));
+      setFolded((s) => (s.size > 0 ? new Set() : s));
+      // Details start collapsed, so the first layout uses the compact node sizes.
       const positions = await fetchPositions(
-        nodes.map((n) => ({ id: n.id, kind: n.data.kind, label: n.data.label, details: n.data.details })),
+        nodes.map((n) => ({ id: n.id, kind: n.data.kind, label: n.data.label })),
         edges.map((e) => ({ from: e.source, to: e.target })),
         mt,
       );
@@ -471,7 +518,7 @@ function App() {
       dirty.current = false;
       setFitVersion((v) => v + 1);
     },
-    [setRfNodes, setRfEdges],
+    [setRfNodes, setRfEdges, openDetails, folded],
   );
 
   const poll = useCallback(
@@ -645,17 +692,74 @@ function App() {
     }
   }, [singleNodeId]);
 
+  /* ---- folding (view-only) ---- */
+  const topoKey = useMemo(
+    () => JSON.stringify([rfNodes.map((n) => n.id), rfEdges.map((e) => [e.source, e.target])]),
+    [rfNodes, rfEdges],
+  );
+  const foldInfo = useMemo(() => {
+    const [ids, pairs] = JSON.parse(topoKey) as [string[], [string, string][]];
+    return computeFold(ids, pairs, folded);
+  }, [topoKey, folded]);
+
+  const toggleIn = (set: Set<string>, id: string) => {
+    const next = new Set(set);
+    if (!next.delete(id)) next.add(id);
+    return next;
+  };
+  const foldApi = useMemo<FoldApi>(
+    () => ({
+      toggleDetails: (id) => setOpenDetails((s) => toggleIn(s, id)),
+      toggleBranch: (id) => setFolded((s) => toggleIn(s, id)),
+    }),
+    [],
+  );
+  const expandAll = useCallback(() => {
+    setOpenDetails(new Set(rfNodes.filter((n) => (n.data.details?.length ?? 0) > 0).map((n) => n.id)));
+    setFolded(new Set());
+  }, [rfNodes]);
+  // Fold every branching node: only the roots stay visible, and each + reveals one more layer.
+  const collapseAll = useCallback(() => {
+    setOpenDetails(new Set());
+    setFolded(new Set(foldInfo.hasChildren));
+  }, [foldInfo]);
+
   /* ---- layout, review, export (all driven by the edited canvas) ---- */
   const relayout = useCallback(async () => {
-    if (rfNodes.length === 0) return;
+    const shown = rfNodes.filter((n) => !foldInfo.hidden.has(n.id));
+    if (shown.length === 0) return;
     const positions = await fetchPositions(
-      rfNodes.map((n) => ({ id: n.id, kind: n.data.kind, label: n.data.label, details: n.data.details })),
-      rfEdges.map((e) => ({ from: e.source, to: e.target })),
+      shown.map((n) => ({
+        id: n.id,
+        kind: n.data.kind,
+        label: n.data.label,
+        details: openDetails.has(n.id) ? n.data.details : undefined,
+      })),
+      rfEdges
+        .filter((e) => !foldInfo.hidden.has(e.source) && !foldInfo.hidden.has(e.target))
+        .map((e) => ({ from: e.source, to: e.target })),
       mapType,
     );
     setRfNodes((ns) => ns.map((n) => ({ ...n, position: positions.get(n.id) ?? n.position })));
     setFitVersion((v) => v + 1);
-  }, [rfNodes, rfEdges, setRfNodes, mapType]);
+  }, [rfNodes, rfEdges, setRfNodes, mapType, foldInfo, openDetails]);
+
+  // Folding or opening a list changes the node sizes, so lay out again (not on the first render
+  // and not when a fresh extraction just reset the fold state).
+  const relayoutRef = useRef(relayout);
+  relayoutRef.current = relayout;
+  const foldMounted = useRef(false);
+  useEffect(() => {
+    if (!foldMounted.current) {
+      foldMounted.current = true;
+      return;
+    }
+    if (skipFoldRelayout.current) {
+      skipFoldRelayout.current = false;
+      return;
+    }
+    void relayoutRef.current();
+  }, [folded, openDetails]);
 
   // Re-run the (free, rule-based) logic review after structural edits.
   const structureKey = useMemo(
@@ -717,11 +821,27 @@ function App() {
   /* ---- render-time decoration (kept out of state so theme switches are instant) ---- */
   const nodesView = useMemo(
     () =>
-      rfNodes.map((n) => {
-        const h = highlightTargets.has(n.id);
-        return (n.data.highlighted ?? false) === h ? n : { ...n, data: { ...n.data, highlighted: h } };
+      rfNodes.map((n): AppNode => {
+        const highlighted = highlightTargets.has(n.id);
+        const detailsOpen = openDetails.has(n.id);
+        const hasChildren = foldInfo.hasChildren.has(n.id);
+        const branchFolded = hasChildren && folded.has(n.id);
+        const hiddenCount = foldInfo.hiddenCounts.get(n.id) ?? 0;
+        const hidden = foldInfo.hidden.has(n.id);
+        const d = n.data;
+        if (
+          (d.highlighted ?? false) === highlighted &&
+          (d.detailsOpen ?? false) === detailsOpen &&
+          (d.hasChildren ?? false) === hasChildren &&
+          (d.branchFolded ?? false) === branchFolded &&
+          (d.hiddenCount ?? 0) === hiddenCount &&
+          (n.hidden ?? false) === hidden
+        ) {
+          return n;
+        }
+        return { ...n, hidden, data: { ...d, highlighted, detailsOpen, hasChildren, branchFolded, hiddenCount } };
       }),
-    [rfNodes, highlightTargets],
+    [rfNodes, highlightTargets, openDetails, folded, foldInfo],
   );
   const edgesView = useMemo<AppEdge[]>(
     () =>
@@ -730,6 +850,7 @@ function App() {
         const stroke = e.selected ? t.accent : t.edge;
         return {
           ...e,
+          hidden: foldInfo.hidden.has(e.source) || foldInfo.hidden.has(e.target),
           label: !d
             ? undefined
             : mapType === "process"
@@ -745,7 +866,7 @@ function App() {
           markerEnd: { type: MarkerType.ArrowClosed, color: stroke },
         };
       }),
-    [rfEdges, t, mapType],
+    [rfEdges, t, mapType, foldInfo],
   );
 
   const stats = useMemo(() => {
@@ -789,6 +910,16 @@ function App() {
               ))}
             </select>
           </label>
+          {((n.data.details?.length ?? 0) > 0 || mapType === "process") && (
+            <label className="field">
+              <span>List items (one per line)</span>
+              <textarea
+                rows={Math.min(10, Math.max(3, (n.data.details?.length ?? 0) + 1))}
+                value={(n.data.details ?? []).join("\n")}
+                onChange={(e) => updateNode(n.id, { details: e.target.value.split("\n") })}
+              />
+            </label>
+          )}
           <div className="field">
             <span>Shape</span>
             <div className="shape-row">
@@ -959,6 +1090,12 @@ function App() {
         <button className="btn" onClick={relayout} disabled={rfNodes.length === 0}>
           Re-layout
         </button>
+        <button className="btn" onClick={collapseAll} disabled={rfNodes.length === 0} title="Fold every branch; click + on a node to reveal the next layer">
+          Collapse all
+        </button>
+        <button className="btn" onClick={expandAll} disabled={rfNodes.length === 0} title="Show every node and every list">
+          Expand all
+        </button>
         <button className="btn" onClick={() => exportAs("mermaid")} disabled={rfNodes.length === 0}>
           Mermaid
         </button>
@@ -977,6 +1114,7 @@ function App() {
       </div>
 
       <div className="canvas-area">
+        <FoldContext.Provider value={foldApi}>
         <ReactFlow
           nodes={nodesView}
           edges={edgesView}
@@ -1003,6 +1141,7 @@ function App() {
           />
           <FitController version={fitVersion} />
         </ReactFlow>
+        </FoldContext.Provider>
         {rfNodes.length === 0 && (
           <div className="empty-state">
             Your {mapType === "process" ? "process map" : "idea map"} will appear here.

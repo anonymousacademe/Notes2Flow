@@ -169,7 +169,6 @@ const server = createServer(async (req, res) => {
       const elk = new (ELK as new () => {
         layout: (g: unknown) => Promise<{ children?: { id: string; x?: number; y?: number }[] }>;
       })();
-      const hasOutgoing = new Set(elkEdges.map((e) => e.sources[0]));
       const hasIncoming = new Set(elkEdges.map((e) => e.targets[0]));
       const out = await elk.layout({
         id: "root",
@@ -184,11 +183,7 @@ const server = createServer(async (req, res) => {
         children: (body.nodes ?? []).map((n) => ({
           id: n.id,
           ...nodeSize(n, process),
-          // Outcomes sit together at the bottom so the flow reads top to bottom.
-          // ELK refuses a FIRST/LAST constraint on a node that has an edge on the wrong side.
-          ...(process && n.kind === "outcome" && !hasOutgoing.has(n.id)
-            ? { layoutOptions: { "elk.layered.layering.layerConstraint": "LAST" } }
-            : {}),
+          // ELK refuses a FIRST constraint on a node that has an incoming edge.
           ...(process && n.kind === "start" && !hasIncoming.has(n.id)
             ? { layoutOptions: { "elk.layered.layering.layerConstraint": "FIRST" } }
             : {}),
