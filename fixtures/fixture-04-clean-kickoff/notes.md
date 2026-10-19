@@ -1,6 +1,6 @@
 # Project Kickoff Meeting Notes — Riverside Trail Segment
 
-Attending: T. Aziz, M. Chen, and the parks department liaison.
+Attending: A. Rivera, M. Chen, and the parks department liaison.
 
 ## Purpose
 
