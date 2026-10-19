@@ -30,6 +30,9 @@
   --kind-prereq: #fce8e6;
   --kind-question: #fff8e1;
   --kind-note: #f1f3f4;
+  --kind-start: #e6f4ea;
+  --kind-step: #e8f0fe;
+  --kind-outcome: #fce8e6;
 }
 
 :root[data-theme="sketch"] {
@@ -73,6 +76,9 @@
   --kind-prereq: #6b2a2a;
   --kind-question: #78350f;
   --kind-note: #374151;
+  --kind-start: #14532d;
+  --kind-step: #1e3a5f;
+  --kind-outcome: #6b2a2a;
 }
 
 /* ------------------------------------------------------------------ */
@@ -357,6 +363,45 @@ select, textarea, input {
 .n2f-node.is-unverified .n2f-diamond polygon { stroke-dasharray: 6 4; }
 
 .n2f-label, .n2f-node .badge { position: relative; z-index: 1; }
+.n2f-node.has-details { width: 300px; align-items: stretch; }
+.n2f-details-toggle {
+  position: relative;
+  z-index: 1;
+  margin-top: 4px;
+  padding: 1px 8px;
+  font: inherit;
+  font-size: 10.5px;
+  color: inherit;
+  background: transparent;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  opacity: 0.75;
+  cursor: pointer;
+}
+.n2f-details-toggle:hover { opacity: 1; }
+.n2f-fold {
+  position: absolute;
+  z-index: 2;
+  right: -13px;
+  top: 50%;
+  transform: translateY(-50%);
+  min-width: 24px;
+  height: 24px;
+  padding: 0 6px;
+  font: inherit;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1;
+  color: var(--accent);
+  background: var(--panel);
+  border: 1.5px solid var(--accent);
+  border-radius: 999px;
+  cursor: pointer;
+}
+.n2f-fold.is-folded { color: #fff; background: var(--accent); }
+.n2f-node.has-details .n2f-label { text-align: center; font-weight: 600; }
+.n2f-node.has-details .badge { text-align: center; }
+.n2f-node.kind-decision.has-details { border-left: 6px solid #f59e0b; }
 .n2f-node .badge { font-size: 10px; opacity: 0.65; display: block; margin-top: 4px; }
 
 .n2f-handle {
@@ -400,4 +445,14 @@ select, textarea, input {
   border-radius: 8px;
   font-size: 13px;
   z-index: 10;
+}
+
+.n2f-details {
+  position: relative;
+  z-index: 1;
+  margin: 4px 0 0;
+  padding-left: 16px;
+  font-size: 11px;
+  text-align: left;
+  line-height: 1.3;
 }

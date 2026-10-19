@@ -7,7 +7,12 @@ export type IssueKind =
   | "duplicate_label"
   | "unverified_provenance"
   | "missing_prereq"
-  | "decision_without_options";
+  | "decision_without_options"
+  | "no_start"
+  | "dead_end"
+  | "unreachable"
+  | "decision_branches"
+  | "unlabeled_branch";
 
 export type IssueSeverity = "info" | "warn";
 
@@ -27,6 +32,8 @@ export function reviewGraph(graph: GraphWithStatus): Issue[] {
   const issues: Issue[] = [];
   const nodeIds = new Set(graph.nodes.map((n) => n.id));
   const edges = graph.edges.filter((e) => nodeIds.has(e.from) && nodeIds.has(e.to));
+
+  if (graph.map_type === "process") return reviewProcess(graph, edges);
 
   issues.push(...findCycles(graph, edges));
   issues.push(...findDangling(graph, edges));
@@ -246,6 +253,104 @@ function findDecisionsWithoutOptions(graph: GraphWithStatus, edges: Edge[]): Iss
       });
     }
   }
+  return issues;
+}
+
+/**
+ * Flowchart checks for process maps. Loops are legitimate here (retry/recheck steps),
+ * so there is no cycle rule; instead every path must start somewhere, branch cleanly,
+ * and end at an outcome.
+ */
+function reviewProcess(graph: GraphWithStatus, edges: Edge[]): Issue[] {
+  const issues: Issue[] = [];
+  const out = new Map<string, Edge[]>();
+  for (const e of edges) out.set(e.from, [...(out.get(e.from) ?? []), e]);
+
+  const explicitStarts = graph.nodes.filter((n) => n.kind === "start");
+  const hasIncoming = new Set(edges.map((e) => e.to));
+  // Models sometimes omit the start node; a single node nothing points at is an acceptable entry.
+  const starts =
+    explicitStarts.length > 0
+      ? explicitStarts
+      : graph.nodes.filter((n) => n.kind !== "note" && !hasIncoming.has(n.id));
+  if (starts.length === 0) {
+    issues.push({
+      kind: "no_start",
+      severity: "warn",
+      message: "The flowchart has no start node. Where does the procedure begin?",
+      targets: [],
+    });
+  } else if (starts.length > 1) {
+    issues.push({
+      kind: "no_start",
+      severity: "warn",
+      message: `The flowchart has ${starts.length} possible starting points (${starts.map((n) => `"${n.label}"`).join(", ")}). A procedure should have one.`,
+      targets: starts.map((n) => n.id),
+    });
+  }
+
+  for (const n of graph.nodes) {
+    const leaving = out.get(n.id) ?? [];
+    if (n.kind === "decision") {
+      if (leaving.length < 2) {
+        issues.push({
+          kind: "decision_branches",
+          severity: "warn",
+          message: `Decision "${n.label}" has ${leaving.length === 0 ? "no" : "only one"} outgoing branch. Each answer needs its own path.`,
+          targets: [n.id],
+        });
+      } else if (leaving.some((e) => !e.label)) {
+        issues.push({
+          kind: "unlabeled_branch",
+          severity: "info",
+          message: `Decision "${n.label}" has a branch with no answer label (Yes/No/...).`,
+          targets: [n.id],
+        });
+      }
+    } else if (n.kind !== "outcome" && n.kind !== "note" && leaving.length === 0) {
+      issues.push({
+        kind: "dead_end",
+        severity: "warn",
+        message: `"${n.label}" leads nowhere. Where does the flow go next, or should it be an outcome?`,
+        targets: [n.id],
+      });
+    }
+    if (n.kind === "outcome" && leaving.length > 0) {
+      issues.push({
+        kind: "dead_end",
+        severity: "info",
+        message: `Outcome "${n.label}" has arrows leaving it. Outcomes normally end the flow.`,
+        targets: [n.id],
+      });
+    }
+  }
+
+  if (starts.length > 0) {
+    const seen = new Set<string>(starts.map((n) => n.id));
+    const queue = [...seen];
+    while (queue.length > 0) {
+      const id = queue.pop()!;
+      for (const e of out.get(id) ?? []) {
+        if (!seen.has(e.to)) {
+          seen.add(e.to);
+          queue.push(e.to);
+        }
+      }
+    }
+    for (const n of graph.nodes) {
+      if (!seen.has(n.id) && n.kind !== "note") {
+        issues.push({
+          kind: "unreachable",
+          severity: "warn",
+          message: `"${n.label}" cannot be reached from the start. Is a link missing?`,
+          targets: [n.id],
+        });
+      }
+    }
+  }
+
+  issues.push(...findDuplicateLabels(graph));
+  issues.push(...findUnverified(graph));
   return issues;
 }
 

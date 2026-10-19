@@ -85,6 +85,12 @@ npm test                               # unit tests (vitest)
 npm run typecheck                      # tsc --noEmit
 ```
 
+`--map-type plan|process` picks the kind of map (default `plan`, the idea map). Use `process` for
+procedures, protocols, and standard work: it produces a top-to-bottom flowchart with a start,
+steps, yes/no decisions, and outcomes, and collapses "if yes to any of the above" lists into
+one decision. The web app has the same choice in the header ("Idea map" / "Process map").
+Automatic detection of the right type is planned, not built.
+
 `--granularity` sets how many nodes extraction produces. `medium` is the default. `high`
 can produce 100+ nodes on long documents, which is hard to read.
 

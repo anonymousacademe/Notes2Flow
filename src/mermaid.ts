@@ -3,6 +3,8 @@ import { Graph, GraphWithStatus, type Graph as GraphT } from "./schema.js";
 const SHAPE: Record<string, string> = {
   decision: "{%s}",
   question: "{{%s}}",
+  start: "([%s])",
+  outcome: "([%s])",
 };
 
 // Mermaid reserved words that cannot be used as node ids.
@@ -54,7 +56,9 @@ export function toMermaid(graph: GraphT): string {
     const tail = shape.slice(shape.indexOf("%s") + 2);
     const status =
       "provenance_status" in node && (node as any).provenance_status === "unverified" ? " [?]" : "";
-    lines.push(`  ${node.id}${head}"${esc(node.label)}${status}"${tail}`);
+    const details = (node as { details?: string[] }).details ?? [];
+    const body = [esc(node.label) + status, ...details.map((d) => `- ${esc(d)}`)].join("<br/>");
+    lines.push(`  ${node.id}${head}"${body}"${tail}`);
     if (userStyle?.color && /^#[0-9a-fA-F]{6}$/.test(userStyle.color)) {
       styleLines.push(`  style ${node.id} fill:${userStyle.color}`);
     }
@@ -64,6 +68,10 @@ export function toMermaid(graph: GraphT): string {
       throw new Error(`edge references reserved Mermaid id`);
     }
     const status = "status" in edge && (edge as any).status === "unverified" ? " -.->" : " -->";
+    if (graph.map_type === "process") {
+      lines.push(edge.label ? `  ${edge.from}${status}|"${esc(edge.label)}"| ${edge.to}` : `  ${edge.from}${status} ${edge.to}`);
+      continue;
+    }
     const rel = RELATION_LABEL[edge.relation] ?? edge.relation;
     const label = edge.label ? `${rel}: ${esc(edge.label)}` : rel;
     lines.push(`  ${edge.from}${status}|"${label}"| ${edge.to}`);

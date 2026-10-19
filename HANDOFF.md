@@ -1,7 +1,7 @@
 # Notes2Flow — Agent Handoff (updated 2026-10-11, end of day)
 
 Instructions for any AI agent (or person) picking this up. Read this fully; you need no
-knowledge of earlier conversations. Owner: Tarek (research professor; first user).
+knowledge of earlier conversations. Owner: the project owner (first user).
 
 ## 1. What this project is
 
@@ -190,8 +190,7 @@ history, also summarized in NIGHT_SUMMARY.md).
 - **Ollama:** DO NOT spend time on it. The owner said "build that later; use APIs."
   There is a WSL-side Ollama squatting on port 11434 without embeddings; a Windows
   Ollama may be running on 11435. Ignore both. Local models are a P3 phase.
-- **Fixture sources:** fixture-02/03 are copies of real owner docs in
-  `C:\Users\user\OneDrive - North Carolina State University\CoWork\PERSONAL\AgenticNodes Project\`
+- **Fixture sources:** fixture-02/03 are copies of the owner's own docs
   (Recipe_Ideas.md, Node_Builder_Design_DRAFT.md). Don't modify the originals.
 
 ## 9. Numbers to beat (embedding matcher, GLM Flash runs)

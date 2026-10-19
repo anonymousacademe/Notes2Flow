@@ -52,6 +52,9 @@ const BG = {
   prereq: "#fce8e6",
   question: "#fff8e1",
   note: "#f1f3f4",
+  start: "#e6f4ea",
+  step: "#e8f0fe",
+  outcome: "#fce8e6",
 };
 
 function nodeText(label: string): string {
@@ -111,7 +114,7 @@ export function toExcalidraw(
       strokeStyle: "solid",
       roughness: 1,
       roundness: null,
-      text: nodeText(node.label),
+      text: nodeText(node.label) + ((node as { details?: string[] }).details ?? []).map((d) => "\n- " + d.slice(0, 40)).join(""),
       fontSize: 14,
       textAlign: "center",
       verticalAlign: "middle",
@@ -169,7 +172,10 @@ export function toExcalidraw(
       startArrowhead: null,
       endArrowhead: "arrow",
       label: {
-        text: edge.relation + (edge.grounding === "implied" ? " (implied)" : ""),
+        text:
+          graph.map_type === "process"
+            ? edge.label ?? ""
+            : edge.relation + (edge.grounding === "implied" ? " (implied)" : ""),
         fontSize: 11,
       },
       customData: { n2f_edge_from: edge.from, n2f_edge_to: edge.to, n2f_relation: edge.relation },
