@@ -305,7 +305,16 @@ interface Args {
   mapType: MapType;
 }
 
-function parseArgs(argv: string[]): Args {
+function parsePositiveNumber(flag: string, value: string | undefined, fallback: number): number {
+  if (value === undefined) return fallback;
+  const n = Number(value);
+  if (!Number.isFinite(n) || n <= 0) {
+    throw new Error(`Invalid ${flag} "${value}"; expected a positive number`);
+  }
+  return n;
+}
+
+export function parseArgs(argv: string[]): Args {
   const args: Args = {
     input: "",
     model: DEFAULT_MODEL,
@@ -320,8 +329,8 @@ function parseArgs(argv: string[]): Args {
     else if (a === "--out" || a === "-o") args.out = argv[++i];
     else if (a === "--model" || a === "-m") args.model = argv[++i] ?? DEFAULT_MODEL;
     else if (a === "--granularity" || a === "-g") args.granularity = (argv[++i] ?? "") as Granularity;
-    else if (a === "--timeout") args.timeoutMs = Number(argv[++i] ?? "300") * 1000;
-    else if (a === "--chunk-size") args.chunkSize = Number(argv[++i] ?? "12000");
+    else if (a === "--timeout") args.timeoutMs = parsePositiveNumber("--timeout", argv[++i], 300) * 1000;
+    else if (a === "--chunk-size") args.chunkSize = parsePositiveNumber("--chunk-size", argv[++i], 12000);
     else if (a === "--map-type") args.mapType = (argv[++i] ?? "") as MapType;
   }
   if (!MAP_TYPES.includes(args.mapType)) {
